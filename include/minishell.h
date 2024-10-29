@@ -6,12 +6,15 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:47:31 by etien             #+#    #+#             */
-/*   Updated: 2024/10/17 17:32:11 by etien            ###   ########.fr       */
+/*   Updated: 2024/10/29 13:38:55 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+// program header files
+# include "parser.h"
 
 // libft library
 # include "../libft/libft/libft.h"
