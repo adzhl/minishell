@@ -6,11 +6,11 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:29:21 by etien             #+#    #+#             */
-/*   Updated: 2024/10/29 13:38:12 by etien            ###   ########.fr       */
+/*   Updated: 2024/10/29 17:15:12 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../include/minishell.h"
+#include "../include/minishell.h"
 
 // This file contains the constructor functions for the various nodes
 // that will be used to construct the parsing tree.
@@ -29,13 +29,16 @@ t_cmd	*execcmd(void)
 	cmd = malloc(sizeof(t_execcmd));
 	ft_memset(cmd, 0, sizeof(*cmd));
 	cmd->type = EXEC;
-	return (t_cmd *)cmd;
+	return ((t_cmd *)cmd);
 }
 
 // Constructor for redircmd node
-// Other than type, all other node fields are extracted from function parameters.
+// Other than type and fd, all other node fields are extracted from
+// function parameters.
+// fd is set to -1 by default and will be manually updated when the
+// redircmd node is initialized to keep within 4 function parameters.
 // cmd parameter renamed to subcmd to prevent naming confusion.
-t_cmd	*redircmd(char *file, char *efile, int mode, int fd, t_cmd *subcmd)
+t_cmd	*redircmd(char *file, char *efile, int mode, t_cmd *subcmd)
 {
 	t_redircmd	*cmd;
 
@@ -45,13 +48,14 @@ t_cmd	*redircmd(char *file, char *efile, int mode, int fd, t_cmd *subcmd)
 	cmd->file = file;
 	cmd->efile = efile;
 	cmd->mode = mode;
-	cmd->fd = fd;
+	cmd->fd = -1;
 	cmd->cmd = subcmd;
-	return (t_cmd *)cmd;
+	return ((t_cmd *)cmd);
 }
 
 // Constructor for pipecmd node
-// Other than type, all other node fields are extracted from function parameters.
+// Other than type, all other node fields are extracted from
+// function parameters.
 t_cmd	*pipecmd(t_cmd *left, t_cmd *right)
 {
 	t_pipecmd	*cmd;
@@ -61,5 +65,5 @@ t_cmd	*pipecmd(t_cmd *left, t_cmd *right)
 	cmd->type = PIPE;
 	cmd->left = left;
 	cmd->right = right;
-	return (t_cmd *)cmd;
+	return ((t_cmd *)cmd);
 }
