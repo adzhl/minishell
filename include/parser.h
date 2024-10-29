@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:19:09 by etien             #+#    #+#             */
-/*   Updated: 2024/10/29 13:40:41 by etien            ###   ########.fr       */
+/*   Updated: 2024/10/29 17:43:45 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@
 
 // Array size for the execcmd node.
 # define MAX_ARGS 10
+
+// Space, tab, carriage return, newline, verical tab
+# define WHITESPACE " \t\r\n\v"
+// Symbol tokens that have to be detected by the parser
+# define SYMBOLS "|<>"
 
 // Struct declarations for parsing tree nodes
 // General cmd struct to allow typecasting between different types of nodes.
@@ -70,7 +75,7 @@ typedef struct s_pipecmd
 
 // Constructor functions for parsing tree nodes
 t_cmd	*execcmd(void);
-t_cmd	*redircmd(char *file, char *efile, int mode, int fd, t_cmd *subcmd);
+t_cmd	*redircmd(char *file, char *efile, int mode, t_cmd *subcmd);
 t_cmd	*pipecmd(t_cmd *left, t_cmd *right);
 
 #endif
