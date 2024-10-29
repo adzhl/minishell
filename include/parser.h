@@ -6,15 +6,12 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:19:09 by etien             #+#    #+#             */
-/*   Updated: 2024/10/29 11:23:29 by etien            ###   ########.fr       */
+/*   Updated: 2024/10/29 13:40:41 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
-
-// Macros for fd opening modes
-# include <fcntl.h>
 
 // The type of parsing tree node is given an integer representation.
 # define EXEC 1
@@ -24,6 +21,7 @@
 // Array size for the execcmd node.
 # define MAX_ARGS 10
 
+// Struct declarations for parsing tree nodes
 // General cmd struct to allow typecasting between different types of nodes.
 typedef struct s_cmd
 {
@@ -69,5 +67,10 @@ typedef struct s_pipecmd
 	t_cmd	*left;
 	t_cmd	*right;
 }	t_pipecmd;
+
+// Constructor functions for parsing tree nodes
+t_cmd	*execcmd(void);
+t_cmd	*redircmd(char *file, char *efile, int mode, int fd, t_cmd *subcmd);
+t_cmd	*pipecmd(t_cmd *left, t_cmd *right);
 
 #endif
