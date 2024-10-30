@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:29:21 by etien             #+#    #+#             */
-/*   Updated: 2024/10/29 17:15:12 by etien            ###   ########.fr       */
+/*   Updated: 2024/10/30 12:47:26 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,29 +20,29 @@
 // - fill in the fields in the node with parameters passed in to
 //   the constructor function
 
-// Constructor for execcmd node
-// Only type is set as arrays will be filled up in the parseexec function.
-t_cmd	*execcmd(void)
+// Constructor for EXEC node
+// Only type is set as arrays will be filled up in the parse_exec function.
+t_cmd	*exec_cmd(void)
 {
-	t_execcmd	*cmd;
+	t_exec_cmd	*cmd;
 
-	cmd = malloc(sizeof(t_execcmd));
+	cmd = malloc(sizeof(*cmd));
 	ft_memset(cmd, 0, sizeof(*cmd));
 	cmd->type = EXEC;
 	return ((t_cmd *)cmd);
 }
 
-// Constructor for redircmd node
+// Constructor for REDIR node
 // Other than type and fd, all other node fields are extracted from
 // function parameters.
 // fd is set to -1 by default and will be manually updated when the
 // redircmd node is initialized to keep within 4 function parameters.
 // cmd parameter renamed to subcmd to prevent naming confusion.
-t_cmd	*redircmd(char *file, char *efile, int mode, t_cmd *subcmd)
+t_cmd	*redir_cmd(char *file, char *efile, int mode, t_cmd *subcmd)
 {
-	t_redircmd	*cmd;
+	t_redir_cmd	*cmd;
 
-	cmd = malloc(sizeof(t_redircmd));
+	cmd = malloc(sizeof(*cmd));
 	ft_memset(cmd, 0, sizeof(*cmd));
 	cmd->type = REDIR;
 	cmd->file = file;
@@ -53,14 +53,14 @@ t_cmd	*redircmd(char *file, char *efile, int mode, t_cmd *subcmd)
 	return ((t_cmd *)cmd);
 }
 
-// Constructor for pipecmd node
+// Constructor for PIPE node
 // Other than type, all other node fields are extracted from
 // function parameters.
-t_cmd	*pipecmd(t_cmd *left, t_cmd *right)
+t_cmd	*pipe_cmd(t_cmd *left, t_cmd *right)
 {
-	t_pipecmd	*cmd;
+	t_pipe_cmd	*cmd;
 
-	cmd = malloc(sizeof(t_pipecmd));
+	cmd = malloc(sizeof(*cmd));
 	ft_memset(cmd, 0, sizeof(*cmd));
 	cmd->type = PIPE;
 	cmd->left = left;
