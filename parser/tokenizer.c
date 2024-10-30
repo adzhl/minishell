@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokens.c                                           :+:      :+:    :+:   */
+/*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:51:34 by etien             #+#    #+#             */
-/*   Updated: 2024/10/29 18:13:50 by etien            ###   ########.fr       */
+/*   Updated: 2024/10/30 11:04:12 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 // @brief
 // This function will:
 // 1) skip over leading whitespace
-// 2) detect for tokens (|, <, >, >> (labelled as '+') or words (labelled as 'w'))
+// 2) detect for tokens (|, <, >, >> ('+') or words ('w'))
 // 3) mark position of tokens (st and et)
 // 4) skip over trailing whitespace
 // 5) update start of scan pointer
@@ -28,8 +28,9 @@
 // @note
 // Double pointers are used to update the positions of the input buffer
 // pointers. A local pointer is created and walked along the input buffer.
-// The local pointer's position is copied over to the input buffer pointers.
-int get_token(char **ss, char *es, char **st, char **et)
+// The local pointer's position is then copied over to the input buffer/
+// token pointers.
+int	get_token(char **ss, char *es, char **st, char **et)
 {
 	char	*s;
 	int		tok;
@@ -43,23 +44,25 @@ int get_token(char **ss, char *es, char **st, char **et)
 	detect_token(&tok, &s, es);
 	if (et)
 		*et = s;
-
-
-
+	while (s < es && ft_strchr(WHITESPACE, *s))
+		s++;
+	*ss = s;
 	return (tok);
 }
 
 // Outsourced get_token control structure to fit line count.
 // This function advances the s pointer beyond the token and
 // updates tok when the token is ">>" (+) or a word (w).
-void detect_token(int *tok, char **s, char *es)
+// A word is defined as anything that is non-whitespace and
+// non-symbol.
+void	detect_token(int *tok, char **s, char *es)
 {
 	if (**s == '|' || **s == '<')
 		(*s)++;
 	else if (**s == '>')
 	{
 		(*s)++;
-		if  (**s == '>')
+		if (**s == '>')
 		{
 			*tok = '+';
 			(*s)++;
@@ -68,7 +71,30 @@ void detect_token(int *tok, char **s, char *es)
 	else
 	{
 		*tok = 'w';
-		while (*s < es && !ft_strchr(WHITESPACE, **s) && !ft_strchr(SYMBOLS, **s))
+		while (*s < es && !ft_strchr(WHITESPACE, **s)
+			&& !ft_strchr(SYMBOLS, **s))
 			(*s)++;
 	}
+}
+
+// Originally named peek().
+// This function works as a lookahead.
+// It advances past leading whitespace and returns an int boolean for whether
+// the token matches the string of tokens given in the parameter.
+// *s check in the returned int boolean is necessary just in case s is advanced
+// to the null terminator since it would evaluate as 0.
+// The function is ideal for use with conditional structures to confirm
+// the existence of certain tokens before deciding on further actions.
+// The ss pointer is updated with the local pointer after skipping whitespace.
+// @param ss Pointer to start of the scan.
+// @param es Pointer to end of the scan, i.e. end of the input buffer.
+void	check_for_token(char **ss, char *es, char *toks)
+{
+	char	*s;
+
+	s = *ss;
+	while (*s < es && ft_strchr(WHITESPACE, *s))
+		s++;
+	*ss = s;
+	return (*s && )
 }
