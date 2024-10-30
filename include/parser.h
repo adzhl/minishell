@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:19:09 by etien             #+#    #+#             */
-/*   Updated: 2024/10/30 13:29:35 by etien            ###   ########.fr       */
+/*   Updated: 2024/10/30 16:51:18 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@
 # define WHITESPACE " \t\r\n\v"
 // Symbol tokens that have to be detected by the parser
 # define SYMBOLS "|<>"
+
+// Redirection modes
+# define INPUT 1
+# define OUTPUT 2
+# define APPEND 3
 
 // Struct declarations for parsing tree nodes
 // General cmd struct to allow typecasting between different types of nodes.
@@ -75,7 +80,7 @@ typedef struct s_pipe_cmd
 
 // Constructor functions for parsing tree nodes
 t_cmd	*exec_cmd(void);
-t_cmd	*redir_cmd(char *file, char *efile, int mode, t_cmd *subcmd);
+t_cmd	*redir_cmd(char *file, char *efile, int redir_mode, t_cmd *subcmd);
 t_cmd	*pipe_cmd(t_cmd *left, t_cmd *right);
 
 // Token functions

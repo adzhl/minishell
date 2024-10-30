@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:51:34 by etien             #+#    #+#             */
-/*   Updated: 2024/10/30 15:32:01 by etien            ###   ########.fr       */
+/*   Updated: 2024/10/30 17:59:21 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 // @param ss Pointer to start of the scan.
 // @param es Pointer to end of the scan, i.e. end of the input buffer.
-// @param st Pointer to start of the token.
-// @param et Pointer to end of the token.
+// @param st Pointer to start of the token. (Optional)
+// @param et Pointer to end of the token. (Optional)
 // @brief
 // This function will:
 // 1) skip over leading whitespace
@@ -32,7 +32,9 @@
 // The local pointer's position is then copied over to the input buffer/
 // token pointers.
 // If the st and et parameters are set to NULL, this function will just
-// update the scan space to begin at the next token..
+// update the scan space to begin at the next token.
+// st and et parameters are usually only relevant if the token is 'w'
+// because we will want to capture the entire word for string manipulation.
 int	get_token(char **ss, char *es, char **st, char **et)
 {
 	char	*s;
@@ -60,7 +62,9 @@ int	get_token(char **ss, char *es, char **st, char **et)
 // non-symbol.
 void	detect_token(int *tok, char **s, char *es)
 {
-	if (**s == '|' || **s == '<')
+	if (**s == 0)
+		return ;
+	else if (**s == '|' || **s == '<')
 		(*s)++;
 	else if (**s == '>')
 	{
@@ -85,7 +89,7 @@ void	detect_token(int *tok, char **s, char *es)
 // It advances past leading whitespace and returns an int boolean for whether
 // the token matches the string of tokens given in the parameter.
 // *s check in the boolean evaluation is necessary just in case s is advanced
-// to the null terminator since it would evaluate to 0.
+// to the null terminator, since it would evaluate to 0.
 // The function is ideal for use with conditional structures to confirm
 // the existence of certain tokens before deciding on further actions.
 // The ss pointer is updated with the local pointer after skipping whitespace.
