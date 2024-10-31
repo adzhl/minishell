@@ -1,40 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_pwd.c                                      :+:      :+:    :+:   */
+/*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/29 14:06:37 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/10/31 12:09:44 by abinti-a         ###   ########.fr       */
+/*   Created: 2024/10/30 09:43:12 by abinti-a          #+#    #+#             */
+/*   Updated: 2024/10/31 12:08:39 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/builtin.h"
 
 /**
- * Function to print current working directory using getcwd from <unistd.h>
+ * Function to loop over the environment variables to print to output
  */
-int	builtin_pwd(char **args, char **env)
+int	builtin_env(char **args, char **env)
 {
-	char	cwd[PATH_MAX];
+	int	i;
 
 	(void)args;
-	(void)env;
-	if (!getcwd(cwd, sizeof(cwd)))
+	if (!env)
 	{
-		perror("pwd");
+		write(2, "Error: No environment variables available\n", 42);
 		return (1);
 	}
-	ft_putendl_fd(cwd, STDOUT_FILENO);
+	i = 0;
+	while (env[i])
+	{
+		ft_printf("%s\n", env[i]);
+		i++;
+	}
 	return (0);
 }
 
-/* int main(void)
+/* int main(int argc, char **argv, char **env)
 {
-    if (builtin_pwd(NULL, NULL) != 0)
+    (void)argc;
+    (void)argv;
+
+    if (builtin_env(NULL, env) != 0)
     {
-        printf("Error\n");
+        write(2, "Error: builtin_env failed\n", 26);
         return (1);
     }
     return (0);
