@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:19:09 by etien             #+#    #+#             */
-/*   Updated: 2024/10/30 16:51:18 by etien            ###   ########.fr       */
+/*   Updated: 2024/10/31 11:36:57 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,10 @@ void	detect_token(int *tok, char **s, char *es);
 int		check_for_token(char **ss, char *es, char *toks);
 
 // Parsing functions
-
-// Parsing util functions
-t_cmd	*null_terminate(t_cmd *cmd);
+t_cmd	*parse_cmd(char *s);
+t_cmd	*parse_pipe(char **ss, char *es);
+t_cmd	*parse_exec(char **ss, char *es);
+t_cmd	*parse_redir(t_cmd *cmd, char **ss, char *es);
+void	null_terminate(t_cmd *cmd);
 
 #endif

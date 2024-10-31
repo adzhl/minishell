@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 12:04:18 by etien             #+#    #+#             */
-/*   Updated: 2024/10/30 18:43:50 by etien            ###   ########.fr       */
+/*   Updated: 2024/10/31 11:37:20 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,22 @@
 // All of the functions will return the root node of the part of the tree
 // it has built.
 // The parsing will flow as follows:
-// parse_line -> parse_cmd -> parse_pipe/parse_redir/parse_exec
+// parse_cmd -> parse_pipe -> parse_exec/parse_redir/parse_pipe
 // For complex commands, the tree hierarchy from root to leaf will be:
 // PIPE - REDIR - EXEC
 
-t_cmd	*parse_line(char **ss, char *es)
+// This function is the entry point for parsing and will call parse_pipe
+// to start building the parsing tree. After the recursive calls are complete,
+// it will call null_terminate to cap off the strings in the tree.
+// The input buffer is passed in as a parameter to the function.
+t_cmd	*parse_cmd(char *s)
 {
 	t_cmd	*cmd;
+	char	*es;
 
-	return (cmd);
-}
-
-t_cmd	*parse_cmd(char **ss, char *es)
-{
-	t_cmd	*cmd;
-
+	es = s + ft_strlen(s);
+	cmd = parse_pipe(&s, es);
+	null_terminate(cmd);
 	return (cmd);
 }
 
@@ -61,7 +62,7 @@ t_cmd	*parse_pipe(char **ss, char *es)
 }
 
 // parse_exec -> parse_redir
-// GRAMMAR: [REDIR] aaa (command with arguments) [REDIR]
+// GRAMMAR: [REDIR] EXEC [REDIR]
 // This function will set up the EXEC node and sandwich it
 // between parse_redir calls.
 // The function will have two pointers, root and cmd.
@@ -102,6 +103,7 @@ t_cmd	*parse_exec(char **ss, char *es)
 }
 
 // independent function - no recursion or function calls
+// GRAMMAR: [REDIR] [REDIR]
 // This function will set up the REDIR nodes and apply the correct
 // fd and mode based on the redirection symbol detected.
 // The while loop allows this function to parse multiple redirection
@@ -133,4 +135,41 @@ t_cmd	*parse_redir(t_cmd *cmd, char **ss, char *es)
 			cmd = redir_cmd(st, et, APPEND, cmd);
 	}
 	return (cmd);
+}
+
+// This function will walk the parsing tree and null-terminate
+// the strings that have been extracted from the input buffer:
+// 	1) argv array elements in EXEC nodes
+// 	2) filenames in REDIR nodes
+// eargv and efile are pointers to where the null terminator should
+// go within a string, and are therefore set to 0 (NULL).
+// If a leaf node (usually EXEC) is not reached yet, the function is called
+// recursively to continue descending down the tree.
+// Typecasting is important here to access the specific fields of different
+// types of nodes.
+// Aside from being a safety measure, the null pointer check doubles as the base
+// case so that recursive calls stop at the end of each branch in the tree/
+// at NULL nodes.
+void	null_terminate(t_cmd *cmd)
+{
+	int	i;
+
+	if (!cmd)
+		return (NULL);
+	if (cmd->type == EXEC)
+	{
+		i = -1;
+		while (((t_exec_cmd *)cmd)->argv[++i])
+			*(((t_exec_cmd *)cmd)->eargv[i]) = 0;
+	}
+	else if (cmd->type == REDIR)
+	{
+		null_terminate(((t_redir_cmd *)cmd)->cmd);
+		*(((t_redir_cmd *)cmd)->efile) = 0;
+	}
+	else if (cmd->type == PIPE)
+	{
+		null_terminate(((t_pipe_cmd *)cmd)->left);
+		null_terminate(((t_pipe_cmd *)cmd)->right);
+	}
 }
