@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 12:04:18 by etien             #+#    #+#             */
-/*   Updated: 2024/10/31 11:37:20 by etien            ###   ########.fr       */
+/*   Updated: 2024/10/31 12:01:49 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ t_cmd	*parse_exec(char **ss, char *es)
 		cmd->eargv[i] = et;
 		i++;
 		if (i >= MAX_ARGS)
-			perror("Command argument count has exceeded MAXARGS.");
+			perror(EXCEEDED_MAX_ARGS);
 		root = parse_redir(root, ss, es);
 	}
 	cmd->argv[i] = 0;
@@ -126,7 +126,7 @@ t_cmd	*parse_redir(t_cmd *cmd, char **ss, char *es)
 	{
 		tok = get_token(ss, es, 0, 0);
 		if (get_token(ss, es, &st, &et) != 'w')
-			perror("No file specified for redirection.");
+			perror(NO_FILE);
 		if (tok == '<')
 			cmd = redir_cmd(st, et, INPUT, cmd);
 		else if (tok == '>')

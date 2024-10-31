@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:19:09 by etien             #+#    #+#             */
-/*   Updated: 2024/10/31 11:36:57 by etien            ###   ########.fr       */
+/*   Updated: 2024/10/31 12:43:15 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,32 @@
 # define OUTPUT 2
 # define APPEND 3
 
+// Pipe ends
+# define READ 0
+# define WRITE 1
+
+// Error messages
+# define NO_FILE "No file specified for redirection."
+# define EXCEEDED_MAX_ARGS "Command arguments count has exceeded MAX_ARGS."
+# define PIPE_ERR "A pipe error occurred."
+# define FORK_ERR "A fork error occurred."
+
 // Struct declarations for parsing tree nodes
 // General cmd struct to allow typecasting between different types of nodes.
 typedef struct s_cmd
 {
 	int	type;
 }	t_cmd;
+
+// Pipes will connect two processes.
+// The left and right pointers will point to the two processes
+// respectively that are connected by the pipe.
+typedef struct s_pipe_cmd
+{
+	int		type;
+	t_cmd	*left;
+	t_cmd	*right;
+}	t_pipe_cmd;
 
 // argv array will store pointers to the commands, command options and arguments
 // e.g. echo -n "Hello", argv = ["echo", "-n", "Hello"]
@@ -68,20 +88,10 @@ typedef struct s_redir_cmd
 	t_cmd	*cmd;
 }	t_redir_cmd;
 
-// Pipes will connect two processes.
-// The left and right pointers will point to the two processes
-// respectively that are connected by the pipe.
-typedef struct s_pipe_cmd
-{
-	int		type;
-	t_cmd	*left;
-	t_cmd	*right;
-}	t_pipe_cmd;
-
 // Constructor functions for parsing tree nodes
+t_cmd	*pipe_cmd(t_cmd *left, t_cmd *right);
 t_cmd	*exec_cmd(void);
 t_cmd	*redir_cmd(char *file, char *efile, int redir_mode, t_cmd *subcmd);
-t_cmd	*pipe_cmd(t_cmd *left, t_cmd *right);
 
 // Token functions
 int		get_token(char **ss, char *es, char **st, char **et);
