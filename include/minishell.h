@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:47:31 by etien             #+#    #+#             */
-/*   Updated: 2024/10/29 13:38:55 by etien            ###   ########.fr       */
+/*   Updated: 2024/10/31 15:44:01 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,6 @@
 // add_history
 # include <readline/history.h>
 
-struct s_parsed
-{
-
-} t_parsed;
-
-int open_fd(char *input_file, char *output_file);
+int open_fd_main(char *input_file, char *output_file);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:19:09 by etien             #+#    #+#             */
-/*   Updated: 2024/10/31 12:43:15 by etien            ###   ########.fr       */
+/*   Updated: 2024/10/31 16:03:46 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define REDIR 2
 # define PIPE 3
 
-// Array size for the execcmd node.
+// Array size for the EXEC node.
 # define MAX_ARGS 10
 
 // Space, tab, carriage return, newline, verical tab
@@ -40,6 +40,8 @@
 # define EXCEEDED_MAX_ARGS "Command arguments count has exceeded MAX_ARGS."
 # define PIPE_ERR "A pipe error occurred."
 # define FORK_ERR "A fork error occurred."
+# define FILE_OPEN_ERR "Error opening file: "
+# define EXEC_ERR "Error executing program: "
 
 // Struct declarations for parsing tree nodes
 // General cmd struct to allow typecasting between different types of nodes.
@@ -74,10 +76,10 @@ typedef struct s_exec_cmd
 // file and efile store pointers to the beginning and end of the filename.
 // efile is included as a convenient way to null terminate the string.
 // mode: O_WRONLY | O_RDONLY | O_CREATE | O_TRUNC | O_APPEND
-// fd: STDOUT = 0; STDIN = 1;
-// cmd stores the execcmd node that the redirection will be applied to.
+// fd (the old fd to be redirected from): STDOUT = 0; STDIN = 1
+// cmd stores the EXEC node that the redirection will be applied to.
 // This implies that if there is redirection, it will always be the
-// parent node to an execcmd node.
+// parent node to an EXEC node.
 typedef struct s_redir_cmd
 {
 	int		type;
@@ -104,5 +106,12 @@ t_cmd	*parse_pipe(char **ss, char *es);
 t_cmd	*parse_exec(char **ss, char *es);
 t_cmd	*parse_redir(t_cmd *cmd, char **ss, char *es);
 void	null_terminate(t_cmd *cmd);
+
+// Run command functions
+void	run_cmd(t_cmd *cmd);
+void	set_pipes(t_pipe_cmd *pcmd);
+void	close_pipes(int *pipefd);
+int		fork_and_check(void);
+void	open_fd(t_redir_cmd *rcmd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:43:10 by etien             #+#    #+#             */
-/*   Updated: 2024/10/31 11:44:17 by etien            ###   ########.fr       */
+/*   Updated: 2024/10/31 15:43:55 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int main(int ac, char **av, char **envp)
             add_history(input);
 			char	*input_file = "lala.txt";
 			char	*output_file = "hello.txt";
-			if (open_fd(input_file, output_file))
+			if (open_fd_main(input_file, output_file))
 			{
 				free(input);
 				continue ;
