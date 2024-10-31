@@ -6,11 +6,11 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:43:10 by etien             #+#    #+#             */
-/*   Updated: 2024/10/17 17:29:22 by etien            ###   ########.fr       */
+/*   Updated: 2024/10/31 11:44:17 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 // The string returned by readline is dynamically-allocated,
 // hence it needs to be freed.

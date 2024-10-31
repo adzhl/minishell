@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:29:21 by etien             #+#    #+#             */
-/*   Updated: 2024/10/30 16:51:06 by etien            ###   ########.fr       */
+/*   Updated: 2024/10/31 12:11:54 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,21 @@
 // - call memset as an initialization measure to prevent undefined behaviour
 // - fill in the fields in the node with parameters passed in to
 //   the constructor function
+
+// Constructor for PIPE node
+// Other than type, all other node fields are extracted from
+// function parameters.
+t_cmd	*pipe_cmd(t_cmd *left, t_cmd *right)
+{
+	t_pipe_cmd	*cmd;
+
+	cmd = malloc(sizeof(*cmd));
+	ft_memset(cmd, 0, sizeof(*cmd));
+	cmd->type = PIPE;
+	cmd->left = left;
+	cmd->right = right;
+	return ((t_cmd *)cmd);
+}
 
 // Constructor for EXEC node
 // Only type is set as arrays will be filled up in the parse_exec function.
@@ -62,20 +77,5 @@ t_cmd	*redir_cmd(char *file, char *efile, int redir_mode, t_cmd *subcmd)
 	}
 	set_redir_mode(redir_mode, cmd);
 	cmd->cmd = subcmd;
-	return ((t_cmd *)cmd);
-}
-
-// Constructor for PIPE node
-// Other than type, all other node fields are extracted from
-// function parameters.
-t_cmd	*pipe_cmd(t_cmd *left, t_cmd *right)
-{
-	t_pipe_cmd	*cmd;
-
-	cmd = malloc(sizeof(*cmd));
-	ft_memset(cmd, 0, sizeof(*cmd));
-	cmd->type = PIPE;
-	cmd->left = left;
-	cmd->right = right;
 	return ((t_cmd *)cmd);
 }
