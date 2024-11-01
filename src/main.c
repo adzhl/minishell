@@ -6,11 +6,44 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:43:10 by etien             #+#    #+#             */
-/*   Updated: 2024/10/31 16:24:05 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/01 16:57:02 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+// The string returned by readline is dynamically-allocated,
+// hence it needs to be freed.
+int	main(int ac, char **av, char **envp)
+{
+	(void) ac;
+	(void) av;
+	(void) envp;
+	char	*input;
+	char	*exp_input;
+
+	while (1)
+	{
+		input = readline("minishell$ ");
+		if (!input)
+			break ;
+		if (*input)
+		{
+			add_history(input);
+			printf("Original input: %s\n", input);
+			exp_input = expand_var(input);
+			if (exp_input)
+			{
+				printf("Expanded input: %s\n", exp_input);
+				free(exp_input); // Free after using it
+			}
+			else
+				printf("Error expanding variable\n");
+		}
+		free(input);
+	}
+	return (0);
+}
 
 // // The string returned by readline is dynamically-allocated,
 // // hence it needs to be freed.
