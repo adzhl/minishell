@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 10:59:56 by etien             #+#    #+#             */
-/*   Updated: 2024/11/01 16:26:41 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/01 17:35:53 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,11 @@ char	*sub_in_var(char **s, char *expanded_s)
 	char	*var_value;
 	char	*joined_s;
 
-	(**s)++;
+	(*s)++;
 	start = *s;
-	while (**s && **s != WHITESPACE && **s != '\''
+	while (**s && !ft_strchr(WHITESPACE, **s) && **s != '\''
 		&& **s != '\"' && **s != '$')
-		(**s)++;
+		(*s)++;
 	var_name = ft_substr(start, 0, *s - start);
 	if (!check_var_name(var_name))
 	{

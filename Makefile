@@ -1,6 +1,7 @@
 NAME = minishell
 
-SRC = $(addprefix src/, main.c)
+# SRC = $(addprefix src/, main.c e)
+SRC = src/main.c expansion/expansion.c
 
 OBJ = $(SRC:.c=.o)
 
