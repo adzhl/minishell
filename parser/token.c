@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:51:34 by etien             #+#    #+#             */
-/*   Updated: 2024/10/30 17:59:21 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/01 11:28:07 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	detect_token(int *tok, char **s, char *es)
 
 // Originally named peek().
 // This function works as a lookahead.
-// It advances past leading whitespace and returns an int boolean for whether
+// It advances past leading whitespace and returns a boolean for whether
 // the token matches the string of tokens given in the parameter.
 // *s check in the boolean evaluation is necessary just in case s is advanced
 // to the null terminator, since it would evaluate to 0.
@@ -96,7 +96,7 @@ void	detect_token(int *tok, char **s, char *es)
 // @param ss Pointer to start of the scan.
 // @param es Pointer to end of the scan, i.e. end of the input buffer.
 // @param toks String of token characters you want to look ahead for.
-int	check_for_token(char **ss, char *es, char *toks)
+bool	check_for_token(char **ss, char *es, char *toks)
 {
 	char	*s;
 
