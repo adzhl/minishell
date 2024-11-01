@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 10:59:56 by etien             #+#    #+#             */
-/*   Updated: 2024/11/01 17:35:53 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/01 18:03:17 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,23 @@ char	*expand_var(char *s)
 		return (s);
 	while (*s)
 	{
+		printf("Processing: '%c', in_sq: %d, in_dq: %d\n", *s, in_sq, in_dq);
 		if ((*s == '\'') && !in_dq)
 			in_sq = !in_sq;
 		else if ((*s == '\"') && !in_sq)
 			in_dq = !in_dq;
 		else if ((*s == '$') && !in_sq)
+		{
 			expanded_s = sub_in_var(&s, expanded_s);
+			s--;
+			printf("Expanded input after calling sub_in_var: %s\n", expanded_s);
+		}
 		else
+		{
 			expanded_s = append_str(&s, expanded_s);
+			s--;
+			 printf("Expanded input after calling append_str: %s\n", expanded_s);
+		}
 		s++;
 	}
 	if (in_sq || in_dq)
@@ -74,17 +83,25 @@ char	*sub_in_var(char **s, char *expanded_s)
 	char	*joined_s;
 
 	(*s)++;
+	printf("Processing variable after $: ");
 	start = *s;
 	while (**s && !ft_strchr(WHITESPACE, **s) && **s != '\''
 		&& **s != '\"' && **s != '$')
+	{
+		printf("%c", **s);
 		(*s)++;
+	}
+	printf("'\n");
 	var_name = ft_substr(start, 0, *s - start);
+	printf("Extracted variable name: '%s'\n", var_name);
 	if (!check_var_name(var_name))
 	{
 		free(var_name);
+		printf("Invalid variable name: '%s'\n", var_name);
 		return (expanded_s);
 	}
 	var_value = getenv(var_name);
+	printf("Value of variable '%s': '%s'\n", var_name, var_value);
 	free(var_name);
 	if (!var_value)
 		return (expanded_s);
@@ -110,11 +127,13 @@ char	*append_str(char **s, char *expanded_s)
 	while (**s && **s != '\'' && **s != '\"' && **s != '$')
 		(*s)++;
 	append_s = ft_substr(start, 0, *s - start);
+	printf("Appending from: '%s'\n", append_s);
 	if (!append_s)
 		return (expanded_s);
 	joined_s = ft_strjoin(expanded_s, append_s);
 	if (!joined_s)
 		return (expanded_s);
+	printf("After append, expanded_s: '%s'\n", joined_s);
 	free(expanded_s);
 	free(append_s);
 	return (joined_s);
