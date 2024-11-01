@@ -6,15 +6,12 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:19:09 by etien             #+#    #+#             */
-/*   Updated: 2024/11/01 11:29:54 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/01 16:23:35 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
-
-// boolean data type
-# include <stdbool.h>
 
 // The type of parsing tree node is given an integer representation.
 # define EXEC 1
