@@ -6,12 +6,15 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:19:09 by etien             #+#    #+#             */
-/*   Updated: 2024/10/31 16:03:46 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/01 11:29:54 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
+
+// boolean data type
+# include <stdbool.h>
 
 // The type of parsing tree node is given an integer representation.
 # define EXEC 1
@@ -98,7 +101,7 @@ t_cmd	*redir_cmd(char *file, char *efile, int redir_mode, t_cmd *subcmd);
 // Token functions
 int		get_token(char **ss, char *es, char **st, char **et);
 void	detect_token(int *tok, char **s, char *es);
-int		check_for_token(char **ss, char *es, char *toks);
+bool	check_for_token(char **ss, char *es, char *toks);
 
 // Parsing functions
 t_cmd	*parse_cmd(char *s);
