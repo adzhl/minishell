@@ -6,6 +6,9 @@ CFLAGS = -Wall -Wextra -Werror -I./include -I./libft #-fsanitize=address -g3
 LIBFT = libft/libft.a
 
 SRCS =  src/builtin/builtin.c \
+		src/builtin/builtin_echo.c \
+		src/builtin/builtin_env.c \
+		src/builtin/builtin_pwd.c \
 
 OBJ_DIR = obj
 OBJS = $(SRCS:src/%.c=$(OBJ_DIR)/%.o)
