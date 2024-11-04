@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 10:59:56 by etien             #+#    #+#             */
-/*   Updated: 2024/11/01 18:03:17 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/04 13:31:51 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,12 @@ char	*sub_in_var(char **s, char *expanded_s)
 	(*s)++;
 	printf("Processing variable after $: ");
 	start = *s;
-	while (**s && !ft_strchr(WHITESPACE, **s) && **s != '\''
-		&& **s != '\"' && **s != '$')
+	if (ft_isdigit(**s))
+	{
+		(*s)++;
+		return (expanded_s);
+	}
+	while (**s && (ft_isalnum(**s) || **s == '_'))
 	{
 		printf("%c", **s);
 		(*s)++;
@@ -142,12 +146,12 @@ char	*append_str(char **s, char *expanded_s)
 // This function checks that the variable name has a valid syntax
 // before it can be passed to getenv.
 // It returns true if the syntax is valid or false otherwise.
-// $VAR should not start with underscores or digits.
+// $VAR should not start with digits.
 // The rest of the $VAR should be composed of alphanumeric characters
 // and underscores only.
 bool	check_var_name(char *s)
 {
-	if (!s || *s == '_' || ft_isdigit(*s))
+	if (!s || ft_isdigit(*s))
 		return (false);
 	while (*s)
 	{
