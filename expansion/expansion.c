@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 10:59:56 by etien             #+#    #+#             */
-/*   Updated: 2024/11/04 13:31:51 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/04 17:17:18 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*expand_var(char *s)
 		}
 		else
 		{
-			expanded_s = append_str(&s, expanded_s);
+			expanded_s = append_str(&s, expanded_s, in_sq);
 			s--;
 			 printf("Expanded input after calling append_str: %s\n", expanded_s);
 		}
@@ -98,12 +98,6 @@ char	*sub_in_var(char **s, char *expanded_s)
 	printf("'\n");
 	var_name = ft_substr(start, 0, *s - start);
 	printf("Extracted variable name: '%s'\n", var_name);
-	if (!check_var_name(var_name))
-	{
-		free(var_name);
-		printf("Invalid variable name: '%s'\n", var_name);
-		return (expanded_s);
-	}
 	var_value = getenv(var_name);
 	printf("Value of variable '%s': '%s'\n", var_name, var_value);
 	free(var_name);
@@ -119,7 +113,7 @@ char	*sub_in_var(char **s, char *expanded_s)
 // This function will append non-expanding sections of the input string
 // to the expanded string and update the pointer's position in the
 // expand_var function.
-char	*append_str(char **s, char *expanded_s)
+char	*append_str(char **s, char *expanded_s, bool in_sq)
 {
 	char	*start;
 	char	*append_s;
@@ -128,36 +122,22 @@ char	*append_str(char **s, char *expanded_s)
 	start = *s;
 	if (!**s)
 		return (expanded_s);
-	while (**s && **s != '\'' && **s != '\"' && **s != '$')
+	while (**s)
+	{
+		if ((in_sq && **s == '\'') ||
+			(!in_sq && (**s == '\'' || **s == '\"' || **s == '$')))
+			break ;
 		(*s)++;
+	}
 	append_s = ft_substr(start, 0, *s - start);
 	printf("Appending from: '%s'\n", append_s);
 	if (!append_s)
 		return (expanded_s);
 	joined_s = ft_strjoin(expanded_s, append_s);
+	free(append_s);
 	if (!joined_s)
 		return (expanded_s);
 	printf("After append, expanded_s: '%s'\n", joined_s);
 	free(expanded_s);
-	free(append_s);
 	return (joined_s);
-}
-
-// This function checks that the variable name has a valid syntax
-// before it can be passed to getenv.
-// It returns true if the syntax is valid or false otherwise.
-// $VAR should not start with digits.
-// The rest of the $VAR should be composed of alphanumeric characters
-// and underscores only.
-bool	check_var_name(char *s)
-{
-	if (!s || ft_isdigit(*s))
-		return (false);
-	while (*s)
-	{
-		if (!(ft_isalnum(*s) || *s == '_'))
-			return (false);
-		s++;
-	}
-	return (true);
 }
