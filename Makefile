@@ -9,6 +9,7 @@ SRCS =  src/builtin/builtin.c \
 		src/builtin/builtin_echo.c \
 		src/builtin/builtin_env.c \
 		src/builtin/builtin_pwd.c \
+		src/builtin/builtin_exit.c \
 
 OBJ_DIR = obj
 OBJS = $(SRCS:src/%.c=$(OBJ_DIR)/%.o)

@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 09:09:39 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/04 07:43:12 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/04 09:28:23 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <limits.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include "utils.h"
 
 /**
  * Built-in command function pointer type

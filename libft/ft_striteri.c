@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 11:18:00 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/06/13 13:24:13 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/04 08:40:30 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,3 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 		i++;
 	}
 }
-
-/*void	to_lower(unsigned int i, char *c)
-{
-	(void)i;
-	if (*c >= 'A' && *c <= 'Z')
-		*c = *c - ('A' - 'a');
-}
-
-int	main(void)
-{
-	char s[] = "HAPPY BIRTHDAY";
-	ft_striteri(s, to_lower);
-	printf("%s\n", s);
-	return (0);
-}*/
