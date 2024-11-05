@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 10:59:56 by etien             #+#    #+#             */
-/*   Updated: 2024/11/05 11:10:59 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/05 13:31:35 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,11 @@ char	*expand_var(char *s)
 		{
 			expanded_s = sub_in_var(&s, expanded_s);
 			s--;
-			printf("Expanded input after calling sub_in_var: %s\n", expanded_s);
 		}
 		else
 		{
 			expanded_s = append_str(&s, expanded_s, initial_quote);
 			s--;
-			 printf("Expanded input after calling append_str: %s\n", expanded_s);
 		}
 		s++;
 	}
@@ -88,25 +86,26 @@ char	*sub_in_var(char **s, char *expanded_s)
 	char	*joined_s;
 
 	(*s)++;
-	printf("Processing variable after $: ");
 	start = *s;
 	if (ft_isdigit(**s))
 	{
 		(*s)++;
 		return (expanded_s);
 	}
-	while (**s && (ft_isalnum(**s) || **s == '_'))
+	if (!(ft_isalnum(**s) || **s == '_'))
 	{
-		printf("%c", **s);
-		(*s)++;
+		joined_s = ft_strjoin(expanded_s, "$");
+		if (!joined_s)
+			return (expanded_s);
+		free(expanded_s);
+		return (joined_s);
 	}
-	printf("'\n");
+	while (**s && (ft_isalnum(**s) || **s == '_'))
+		(*s)++;
 	var_name = ft_substr(start, 0, *s - start);
 	if (!var_name)
 		return (expanded_s);
-	printf("Extracted variable name: '%s'\n", var_name);
 	var_value = getenv(var_name);
-	printf("Value of variable '%s': '%s'\n", var_name, var_value);
 	free(var_name);
 	if (!var_value)
 		return (expanded_s);
@@ -142,14 +141,12 @@ char	*append_str(char **s, char *expanded_s, char initial_quote)
 		(*s)++;
 	}
 	append_s = ft_substr(start, 0, *s - start);
-	printf("Appending from: '%s'\n", append_s);
 	if (!append_s)
 		return (expanded_s);
 	joined_s = ft_strjoin(expanded_s, append_s);
 	free(append_s);
 	if (!joined_s)
 		return (expanded_s);
-	printf("After append, expanded_s: '%s'\n", joined_s);
 	free(expanded_s);
 	return (joined_s);
 }
