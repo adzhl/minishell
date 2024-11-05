@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 09:43:12 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/10/31 12:08:39 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/06 07:38:20 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	builtin_env(char **args, char **env)
 	(void)args;
 	if (!env)
 	{
-		write(2, "Error: No environment variables available\n", 42);
+		ft_putendl_fd("Error: No environment variables available", 2);
 		return (1);
 	}
 	i = 0;

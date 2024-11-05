@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 13:24:23 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/04 12:59:02 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/06 07:35:29 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ static int	is_numeric(const char *str)
  * 2. Check for arguments. If no arguments, exit with exit code 0
  * 3. Check if the argument is numeric
  * 4. Check if there is more than one argument
- * 5. Exit with the program with the exit code from the argument
+ * 5. Exit the program with the exit code from the argument
+ * 6. Exit code range is 0 - 255 so other values will wrap around
  */
 int	builtin_exit(char **args, char **env)
 {

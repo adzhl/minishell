@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:04:01 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/05 14:47:03 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/06 07:30:58 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	builtin_unset(char **args, char **env)
 
 	exit_status = 0;
 	if (!args[1])
-		return (1);
+		return (0);
 	i = 1;
 	while (args[i])
 	{
