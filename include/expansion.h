@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 14:16:29 by etien             #+#    #+#             */
-/*   Updated: 2024/11/04 14:00:07 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/05 10:35:37 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,6 @@
 
 char	*expand_var(char *s);
 char	*sub_in_var(char **s, char *expanded_s);
-char	*append_str(char **s, char *expanded_s, bool in_sq);
+char	*append_str(char **s, char *expanded_s, char initial_quote);
 
 #endif
