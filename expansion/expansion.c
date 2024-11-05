@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 10:59:56 by etien             #+#    #+#             */
-/*   Updated: 2024/11/04 17:17:18 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/05 11:10:59 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,37 +20,42 @@
 // last command exit status, environment variables, current working
 // directory, etc.
 
-// This function will expand the variables in the input after considering
-// the precedence of single quotes, double quotes or the absence of any quotes.
-// Two booleans, in_sq (in single quotes) and in_dq (in double quotes) are set
-// to false by default. The pointer is then walked along the string.
-// At any given time, only one boolean can be set to true to indicate the
-// outermost quote when there are nested quotes. This type of quote will have
-// precedence and will control whether expansion happens.
-// Variables expand only when they are not within single quotes.
-// A boolean that has been set to true can only be toggled false when the same
-// type of quote is encountered again. This will enable to function to detect
-// unclosed quotes and trigger the necessary syntax error.
-// The function will return the input with expanded variables substituted in.
+// This function expands variables in the input string based on quote contexts.
+// By default, the quote context (`initial_quote`) is null, meaning no quotes are active.
+// When the first quote is detected, it opens a quote context (setting `initial_quote`).
+// The context only closes when an identical closing quote is found.
+// Non-matching quotes within an active context are ignored (do not change `initial_quote`).
+// Behavior within each context:
+// - In a single-quote context: everything is treated literally (no expansions).
+// - In a double-quote context: variable expansions are allowed.
+// Using the various states of `initial_quote` and `in_quote_context`, the function
+// correctly processes nested and mixed quotes, performing expansions as required.
+// The function returns a new string with variables expanded as specified by the quotes.
 char	*expand_var(char *s)
 {
-	bool	in_sq;
-	bool	in_dq;
+	char	initial_quote;
+	int		in_quote_context;
 	char	*expanded_s;
 
-	in_sq = false;
-	in_dq = false;
+	initial_quote = '\0';
+	in_quote_context = 0;
 	expanded_s = ft_strdup("");
 	if (!expanded_s)
 		return (s);
 	while (*s)
 	{
-		printf("Processing: '%c', in_sq: %d, in_dq: %d\n", *s, in_sq, in_dq);
-		if ((*s == '\'') && !in_dq)
-			in_sq = !in_sq;
-		else if ((*s == '\"') && !in_sq)
-			in_dq = !in_dq;
-		else if ((*s == '$') && !in_sq)
+		if ((*s == '\'' || *s == '\"') && !in_quote_context)
+		{
+			initial_quote = *s;
+			in_quote_context = 1;
+		}
+		else if (*s == initial_quote && in_quote_context)
+		{
+			initial_quote = '\0';
+			in_quote_context = 0;
+		}
+		else if ((*s == '$') && ((in_quote_context && initial_quote == '\"')
+			|| (!in_quote_context && initial_quote == '\0')))
 		{
 			expanded_s = sub_in_var(&s, expanded_s);
 			s--;
@@ -58,13 +63,13 @@ char	*expand_var(char *s)
 		}
 		else
 		{
-			expanded_s = append_str(&s, expanded_s, in_sq);
+			expanded_s = append_str(&s, expanded_s, initial_quote);
 			s--;
 			 printf("Expanded input after calling append_str: %s\n", expanded_s);
 		}
 		s++;
 	}
-	if (in_sq || in_dq)
+	if (in_quote_context)
 		return (perror(UNCLOSED_QUOTES), free(expanded_s), NULL);
 	return (expanded_s);
 }
@@ -97,6 +102,8 @@ char	*sub_in_var(char **s, char *expanded_s)
 	}
 	printf("'\n");
 	var_name = ft_substr(start, 0, *s - start);
+	if (!var_name)
+		return (expanded_s);
 	printf("Extracted variable name: '%s'\n", var_name);
 	var_value = getenv(var_name);
 	printf("Value of variable '%s': '%s'\n", var_name, var_value);
@@ -113,7 +120,11 @@ char	*sub_in_var(char **s, char *expanded_s)
 // This function will append non-expanding sections of the input string
 // to the expanded string and update the pointer's position in the
 // expand_var function.
-char	*append_str(char **s, char *expanded_s, bool in_sq)
+// The length of string to be appended will depend on the quote context:
+// 1) No quotes: Until a quote or $ sign is encountered
+// 2) Single quotes: Until another single quote is encountered
+// 3) Double quotes: Until another double quote or $ sign is encountered
+char	*append_str(char **s, char *expanded_s, char initial_quote)
 {
 	char	*start;
 	char	*append_s;
@@ -124,8 +135,9 @@ char	*append_str(char **s, char *expanded_s, bool in_sq)
 		return (expanded_s);
 	while (**s)
 	{
-		if ((in_sq && **s == '\'') ||
-			(!in_sq && (**s == '\'' || **s == '\"' || **s == '$')))
+		if ((initial_quote == '\0' && (**s == '\'' || **s == '\"' || **s == '$'))
+			|| (initial_quote == '\'' && **s == '\'')
+			|| (initial_quote == '\"' && (**s == '\"' || **s == '$')))
 			break ;
 		(*s)++;
 	}
