@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 10:59:56 by etien             #+#    #+#             */
-/*   Updated: 2024/11/05 13:31:35 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/06 11:35:47 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,18 @@
 // directory, etc.
 
 // This function expands variables in the input string based on quote contexts.
-// By default, the quote context (`initial_quote`) is null, meaning no quotes are active.
-// When the first quote is detected, it opens a quote context (setting `initial_quote`).
-// The context only closes when an identical closing quote is found.
-// Non-matching quotes within an active context are ignored (do not change `initial_quote`).
+// By default, the quote context (`initial_quote`) is null, meaning no
+// quotes are active. When the first quote is detected, it opens a quote context
+// (setting `initial_quote`). The context only closes when an identical closing
+// quote is found. Non-matching quotes within an active context are ignored
+// (do not change `initial_quote`).
 // Behavior within each context:
 // - In a single-quote context: everything is treated literally (no expansions).
 // - In a double-quote context: variable expansions are allowed.
-// Using the various states of `initial_quote` and `in_quote_context`, the function
-// correctly processes nested and mixed quotes, performing expansions as required.
-// The function returns a new string with variables expanded as specified by the quotes.
+// Using the various states of `initial_quote` and `in_quote_context`,
+// the function correctly processes nested and mixed quotes, performing
+// expansions as required. The function returns a new string with
+// variables expanded as specified by the quotes.
 char	*expand_var(char *s)
 {
 	char	initial_quote;
@@ -55,7 +57,7 @@ char	*expand_var(char *s)
 			in_quote_context = 0;
 		}
 		else if ((*s == '$') && ((in_quote_context && initial_quote == '\"')
-			|| (!in_quote_context && initial_quote == '\0')))
+				|| (!in_quote_context && initial_quote == '\0')))
 		{
 			expanded_s = sub_in_var(&s, expanded_s);
 			s--;
@@ -83,23 +85,15 @@ char	*sub_in_var(char **s, char *expanded_s)
 	char	*start;
 	char	*var_name;
 	char	*var_value;
-	char	*joined_s;
 
 	(*s)++;
-	start = *s;
+	if (**s == '?')
+		return (append_exit_status(s, expanded_s));
 	if (ft_isdigit(**s))
-	{
-		(*s)++;
-		return (expanded_s);
-	}
+		return ((*s)++, expanded_s);
 	if (!(ft_isalnum(**s) || **s == '_'))
-	{
-		joined_s = ft_strjoin(expanded_s, "$");
-		if (!joined_s)
-			return (expanded_s);
-		free(expanded_s);
-		return (joined_s);
-	}
+		return (append_expansion(expanded_s, "$"));
+	start = *s;
 	while (**s && (ft_isalnum(**s) || **s == '_'))
 		(*s)++;
 	var_name = ft_substr(start, 0, *s - start);
@@ -109,11 +103,30 @@ char	*sub_in_var(char **s, char *expanded_s)
 	free(var_name);
 	if (!var_value)
 		return (expanded_s);
-	joined_s = ft_strjoin(expanded_s, var_value);
+	return (append_expansion(expanded_s, var_value));
+}
+
+// This is a helper function for appending the expansion to the
+// input string. It works for appending a static string to a
+// dynamically-allocated string.
+char	*append_expansion(char *expanded_s, char *expansion)
+{
+	char *joined_s;
+
+	joined_s = ft_strjoin(expanded_s, expansion);
 	if (!joined_s)
 		return (expanded_s);
 	free(expanded_s);
 	return (joined_s);
+}
+
+// TO-DO: Link this function to access latest program exit code.
+// This function will pull the exit status from the shell struct.
+// Since ft_itoa returns dynamically allocated
+char	*append_exit_status(char **s, char *expanded_s)
+{
+	(*s)++;
+	return (append_expansion(expanded_s, ft_itoa(0)));
 }
 
 // This function will append non-expanding sections of the input string
@@ -134,7 +147,8 @@ char	*append_str(char **s, char *expanded_s, char initial_quote)
 		return (expanded_s);
 	while (**s)
 	{
-		if ((initial_quote == '\0' && (**s == '\'' || **s == '\"' || **s == '$'))
+		if ((initial_quote == '\0'
+				&& (**s == '\'' || **s == '\"' || **s == '$'))
 			|| (initial_quote == '\'' && **s == '\'')
 			|| (initial_quote == '\"' && (**s == '\"' || **s == '$')))
 			break ;
