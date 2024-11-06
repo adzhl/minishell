@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 10:59:56 by etien             #+#    #+#             */
-/*   Updated: 2024/11/06 11:35:47 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/06 15:26:35 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,124 +43,41 @@ char	*expand_var(char *s)
 	in_quote_context = 0;
 	expanded_s = ft_strdup("");
 	if (!expanded_s)
-		return (s);
+		return (NULL);
 	while (*s)
 	{
-		if ((*s == '\'' || *s == '\"') && !in_quote_context)
-		{
-			initial_quote = *s;
-			in_quote_context = 1;
-		}
-		else if (*s == initial_quote && in_quote_context)
-		{
-			initial_quote = '\0';
-			in_quote_context = 0;
-		}
-		else if ((*s == '$') && ((in_quote_context && initial_quote == '\"')
-				|| (!in_quote_context && initial_quote == '\0')))
-		{
-			expanded_s = sub_in_var(&s, expanded_s);
-			s--;
-		}
-		else
-		{
-			expanded_s = append_str(&s, expanded_s, initial_quote);
-			s--;
-		}
-		s++;
+		expansion_control(&s, &initial_quote, &in_quote_context, &expanded_s);
+		if (!expanded_s)
+			return (NULL);
 	}
 	if (in_quote_context)
 		return (perror(UNCLOSED_QUOTES), free(expanded_s), NULL);
 	return (expanded_s);
 }
 
-// This function will advance past the $ sign then check for the variable
-// in ENV. If it exists, it will substitute in the variable by appending
-// it to the expanded string.
-// Note that getenv returns a pointer to static memory, so it does not
-// have to be freed. If the variable does not exist in ENV, getenv
-// simply returns a NULL pointer.
-char	*sub_in_var(char **s, char *expanded_s)
+// This function contains the main logic of expand_var.
+// It handles the toggling of the quote variables whenever a single
+// or double quote is encountered.
+// It also decides whether to substitute in expanded variables or
+// append strings to the input string.
+void	expansion_control(char **s, char *initial_quote,
+		int *in_quote_context, char **expanded_s)
 {
-	char	*start;
-	char	*var_name;
-	char	*var_value;
-
-	(*s)++;
-	if (**s == '?')
-		return (append_exit_status(s, expanded_s));
-	if (ft_isdigit(**s))
-		return ((*s)++, expanded_s);
-	if (!(ft_isalnum(**s) || **s == '_'))
-		return (append_expansion(expanded_s, "$"));
-	start = *s;
-	while (**s && (ft_isalnum(**s) || **s == '_'))
-		(*s)++;
-	var_name = ft_substr(start, 0, *s - start);
-	if (!var_name)
-		return (expanded_s);
-	var_value = getenv(var_name);
-	free(var_name);
-	if (!var_value)
-		return (expanded_s);
-	return (append_expansion(expanded_s, var_value));
-}
-
-// This is a helper function for appending the expansion to the
-// input string. It works for appending a static string to a
-// dynamically-allocated string.
-char	*append_expansion(char *expanded_s, char *expansion)
-{
-	char *joined_s;
-
-	joined_s = ft_strjoin(expanded_s, expansion);
-	if (!joined_s)
-		return (expanded_s);
-	free(expanded_s);
-	return (joined_s);
-}
-
-// TO-DO: Link this function to access latest program exit code.
-// This function will pull the exit status from the shell struct.
-// Since ft_itoa returns dynamically allocated
-char	*append_exit_status(char **s, char *expanded_s)
-{
-	(*s)++;
-	return (append_expansion(expanded_s, ft_itoa(0)));
-}
-
-// This function will append non-expanding sections of the input string
-// to the expanded string and update the pointer's position in the
-// expand_var function.
-// The length of string to be appended will depend on the quote context:
-// 1) No quotes: Until a quote or $ sign is encountered
-// 2) Single quotes: Until another single quote is encountered
-// 3) Double quotes: Until another double quote or $ sign is encountered
-char	*append_str(char **s, char *expanded_s, char initial_quote)
-{
-	char	*start;
-	char	*append_s;
-	char	*joined_s;
-
-	start = *s;
-	if (!**s)
-		return (expanded_s);
-	while (**s)
+	if ((**s == '\'' || **s == '\"') && !(*in_quote_context))
 	{
-		if ((initial_quote == '\0'
-				&& (**s == '\'' || **s == '\"' || **s == '$'))
-			|| (initial_quote == '\'' && **s == '\'')
-			|| (initial_quote == '\"' && (**s == '\"' || **s == '$')))
-			break ;
+		*initial_quote = **s;
+		*in_quote_context = 1;
 		(*s)++;
 	}
-	append_s = ft_substr(start, 0, *s - start);
-	if (!append_s)
-		return (expanded_s);
-	joined_s = ft_strjoin(expanded_s, append_s);
-	free(append_s);
-	if (!joined_s)
-		return (expanded_s);
-	free(expanded_s);
-	return (joined_s);
+	else if (**s == *initial_quote && *in_quote_context)
+	{
+		*initial_quote = '\0';
+		*in_quote_context = 0;
+		(*s)++;
+	}
+	else if ((**s == '$') && ((*in_quote_context && *initial_quote == '\"')
+			|| (!(*in_quote_context) && *initial_quote == '\0')))
+		*expanded_s = sub_in_var(s, *expanded_s);
+	else
+		*expanded_s = append_str(s, *expanded_s, *initial_quote);
 }
