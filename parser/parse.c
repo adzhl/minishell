@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 12:04:18 by etien             #+#    #+#             */
-/*   Updated: 2024/11/07 14:52:04 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/07 18:00:01 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ t_cmd	*parse_exec(char **ss, char *es)
 // operators in a row, e.g. command > file1 < file2 >> file3.
 // Since cmd is reused, if there are multiple redirections, the REDIR
 // constructor will incorporate the existing cmd tree and extend it.
-// Later redirections will become parent nodes of the previously built tree.
 // An EXEC node is usually passed in as a parameter.
 // Its pointer will be updated to the REDIR node and the original
 // EXEC node will be connected as a child node to the REDIR node.
