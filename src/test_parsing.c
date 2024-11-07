@@ -22,6 +22,7 @@ int	main(int ac, char **av, char **envp)
 			if (cmd_tree)
 			{
 				print_tree(cmd_tree, 0);
+				//run_cmd(cmd_tree);
 				//free_tree(cmd_tree); // Assuming free_tree is implemented
 			}
 			else
