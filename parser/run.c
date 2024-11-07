@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:51:24 by etien             #+#    #+#             */
-/*   Updated: 2024/10/31 16:14:51 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/07 11:37:54 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	run_cmd(t_cmd *cmd)
 {
 	t_exec_cmd	*ecmd;
 
+	ecmd = NULL;
 	if (!cmd)
 		exit(EXIT_FAILURE);
 	if (cmd->type == PIPE)
@@ -31,7 +32,8 @@ void	run_cmd(t_cmd *cmd)
 		ecmd = (t_exec_cmd *)ecmd;
 		if (ecmd->argv[0] == 0)
 			exit(1);
-		exec(ecmd->argv[0], ecmd->argv);
+		//exec(ecmd->argv[0], ecmd->argv);
+		printf("execution happens here\n");
 		ft_putstr_fd(EXEC_ERR, 2);
 		ft_putendl_fd(ecmd->argv[0], 2);
 	}

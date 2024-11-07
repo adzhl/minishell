@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:51:34 by etien             #+#    #+#             */
-/*   Updated: 2024/11/01 11:28:07 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/07 11:39:00 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,21 @@ int	get_token(char **ss, char *es, char **st, char **et)
 // non-symbol.
 void	detect_token(int *tok, char **s, char *es)
 {
+	char	quote;
+
 	if (**s == 0)
 		return ;
-	else if (**s == '|' || **s == '<')
+	else if (**s == '|')
 		(*s)++;
+	else if (**s == '<')
+	{
+		(*s)++;
+		if (**s == '<')
+		{
+			*tok = '-';
+			(*s)++;
+		}
+	}
 	else if (**s == '>')
 	{
 		(*s)++;
@@ -74,6 +85,20 @@ void	detect_token(int *tok, char **s, char *es)
 			*tok = '+';
 			(*s)++;
 		}
+	}
+	else if (**s == '\'' || **s == '\"')
+	{
+		quote = **s;
+		*tok = 'w';
+		(*s)++;
+		while (*s < es && **s != quote)
+			(*s)++;
+		if (*s == es)
+		{
+			perror(TOKEN_ERR);
+			return ;
+		}
+		(*s)++;
 	}
 	else
 	{
@@ -101,7 +126,7 @@ bool	check_for_token(char **ss, char *es, char *toks)
 	char	*s;
 
 	s = *ss;
-	while (*s < es && ft_strchr(WHITESPACE, *s))
+	while (s < es && ft_strchr(WHITESPACE, *s))
 		s++;
 	*ss = s;
 	return (*s && ft_strchr(toks, *s));

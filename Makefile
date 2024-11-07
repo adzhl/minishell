@@ -1,7 +1,10 @@
 NAME = minishell
 
 # SRC = $(addprefix src/, main.c e)
-SRC = src/main.c expansion/expansion.c
+SRC = src/main.c \
+$(addprefix parser/, constructors.c parse.c run.c token.c visualizer.c) \
+$(addprefix expansion/, expansion.c expansion_utils.c)
+
 
 OBJ = $(SRC:.c=.o)
 
