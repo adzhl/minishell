@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 12:12:16 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/07 16:28:52 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/07 16:31:21 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,35 @@
 
 /**
  * Handle the case for:
- * 
+ *
  * Single -n
  * Multiple -n
  * -nnnnnn
- * 
+ *
  * Exclude: -nWord
  */
-static int handle_n_option(char **args, int *newline)
+static int	handle_n_option(char **args, int *newline)
 {
-    int i;
-    int j;
+	int	i;
+	int	j;
 
-    i = 1;
-    *newline = 1;
-    while (args[i])
-    {
-        if (args[i][0] != '-')
-            break;
-        if (args[i][1] != 'n')
-            break;
-        j = 2;
-        while (args[i][j] == 'n')
-            j++;
-        if (args[i][j] != '\0')
-            break;
-        *newline = 0;
-        i++;
-    }
-    return (i);
+	i = 1;
+	*newline = 1;
+	while (args[i])
+	{
+		if (args[i][0] != '-')
+			break ;
+		if (args[i][1] != 'n')
+			break ;
+		j = 2;
+		while (args[i][j] == 'n')
+			j++;
+		if (args[i][j] != '\0')
+			break ;
+		*newline = 0;
+		i++;
+	}
+	return (i);
 }
 /**
  * Function prints out the string after echo is called
@@ -71,8 +71,8 @@ int	builtin_echo(char **args, char **env)
 
 /* int main(int argc, char **argv, char **env)
 {
-    (void)argc;
-    (void)env;
-    builtin_echo(argv, NULL);
-    return (0);
+	(void)argc;
+	(void)env;
+	builtin_echo(argv, NULL);
+	return (0);
 } */
