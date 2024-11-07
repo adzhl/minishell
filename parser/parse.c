@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 12:04:18 by etien             #+#    #+#             */
-/*   Updated: 2024/11/07 11:35:15 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/07 14:52:04 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ t_cmd	*parse_exec(char **ss, char *es)
 	cmd = (t_exec_cmd *)root;
 	root = parse_redir(root, ss, es);
 	i = 0;
-	while (!check_for_token(ss, es, "|\0"))
+	while (*ss < es && !check_for_token(ss, es, "|"))
 	{
 		get_token(ss, es, &st, &et);
 		cmd->argv[i] = st;

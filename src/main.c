@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:43:10 by etien             #+#    #+#             */
-/*   Updated: 2024/11/07 11:33:05 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/07 11:49:12 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	main(int ac, char **av, char **envp)
 	(void) av;
 	(void) envp;
 	char	*input;
+	t_cmd	*cmd_tree;
 
 	while (1)
 	{
@@ -32,7 +33,16 @@ int	main(int ac, char **av, char **envp)
 		if (*input)
 		{
 			add_history(input);
-			print_tree(parse_cmd(input), 0);
+			cmd_tree = parse_cmd(input);
+			if (cmd_tree)
+			{
+				print_tree(cmd_tree, 0);
+				//free_tree(cmd_tree); // Assuming free_tree is implemented
+			}
+			else
+			{
+				fprintf(stderr, "Error: Parsing failed.\n");
+			}
 		}
 		free(input);
 	}
