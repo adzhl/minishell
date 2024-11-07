@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 12:04:18 by etien             #+#    #+#             */
-/*   Updated: 2024/10/31 12:01:49 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/07 11:35:15 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ void	null_terminate(t_cmd *cmd)
 	int	i;
 
 	if (!cmd)
-		return (NULL);
+		return ;
 	if (cmd->type == EXEC)
 	{
 		i = -1;

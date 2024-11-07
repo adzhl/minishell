@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:19:09 by etien             #+#    #+#             */
-/*   Updated: 2024/11/01 16:23:35 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/07 10:51:35 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@
 # define FORK_ERR "A fork error occurred."
 # define FILE_OPEN_ERR "Error opening file: "
 # define EXEC_ERR "Error executing program: "
+# define TOKEN_ERR "Tokenizing error."
 
 // Struct declarations for parsing tree nodes
 // General cmd struct to allow typecasting between different types of nodes.
