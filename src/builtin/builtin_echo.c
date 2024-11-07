@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 12:12:16 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/07 16:31:21 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/07 16:34:22 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static int	handle_n_option(char **args, int *newline)
 	}
 	return (i);
 }
+
 /**
  * Function prints out the string after echo is called
  * adds '\n' at the end of the last argument by default
