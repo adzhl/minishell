@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:43:10 by etien             #+#    #+#             */
-/*   Updated: 2024/11/07 11:49:12 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/11 16:56:43 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,14 @@ int	main(int ac, char **av, char **envp)
 	}
 	return (0);
 }
+
+// TESTER MAIN FOR HEREDOC
+// int main(int ac, char **av)
+// {
+// 	(void) ac;
+// 	handle_heredoc(av[1]);
+// 	return (0);
+// }
 
 // TESTER MAIN FOR EXPANSION
 // int	main(int ac, char **av, char **envp)
