@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:48:51 by etien             #+#    #+#             */
-/*   Updated: 2024/11/11 17:01:21 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/11 17:43:00 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 // The child process will accumulate the input into the pipe's write end.
 // The parent process will wait for the child to terminate to read the input
 // from the pipe's read end.
-void	handle_heredoc(char *delimiter)
+char	*handle_heredoc(char *delimiter)
 {
 	int		pipefd[2];
 	pid_t	pid;
@@ -37,6 +37,8 @@ void	handle_heredoc(char *delimiter)
 		close(pipefd[READ]);
 		wait(NULL);
 	}
+	hd_content = expand_heredoc(hd_content, delimiter);
+	return (hd_content);
 }
 
 // The child process will extract lines from STDIN via the
@@ -101,6 +103,16 @@ void	read_hd_input(char **hd_content, int pipefd_read)
 		*hd_content = temp;
 		bytes_read = read(pipefd_read, buffer, sizeof(buffer));
 	}
+}
+
+char *expand_heredoc(char *hd_content, char *delimiter)
+{
+	char *expanded_hd;
+	(void) delimiter;
+
+	expanded_hd = expand_var(hd_content);
+	free(hd_content);
+	return (expanded_hd);
 }
 
 // This function will compare two strings.
