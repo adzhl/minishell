@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 20:01:18 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/11 08:28:23 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/11 08:29:52 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ int	update_env_value(char **env, const char *name, const char *value)
 		if (ft_strncmp(env[i], name, len) == 0 && env[i][len] == '=')
 		{
 			temp = ft_strjoin(name, "=");
-            if (!temp)
-                return (0);
+			if (!temp)
+				return (0);
 			new_var = ft_strjoin(temp, value);
 			free(temp);
 			if (!new_var)
