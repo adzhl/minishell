@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:57:06 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/11 09:14:32 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/11 09:21:52 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ static void	print_cd_error(char *arg, char *message)
 	ft_putendl_fd(message, STDERR_FILENO);
 }
 
+/**
+ * Handle cd without any arguments by redirecting to HOME
+ */
 static int	handle_no_args(char **env, char **path)
 {
 	*path = get_env_value(env, "HOME");
@@ -37,6 +40,9 @@ static int	handle_no_args(char **env, char **path)
 	return (0);
 }
 
+/**
+ * Update env value when changing directories
+ */
 static int	update_pwd(char **env, char *curr_dir, char *new_dir)
 {
 	if (!getcwd(new_dir, PATH_MAX))

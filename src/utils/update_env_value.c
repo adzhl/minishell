@@ -6,12 +6,15 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 20:01:18 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/11 08:29:52 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/11 09:25:36 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/utils.h"
 
+/**
+ * Update an environment variable by overwriting the value with a new one
+ */
 int	update_env_value(char **env, const char *name, const char *value)
 {
 	int		i;
