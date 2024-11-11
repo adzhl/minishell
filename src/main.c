@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:43:10 by etien             #+#    #+#             */
-/*   Updated: 2024/11/11 16:56:43 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/11 18:40:42 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,57 +14,28 @@
 
 // The string returned by readline is dynamically-allocated,
 // hence it needs to be freed.
-// TESTER MAIN FOR PARSER
-void print_tree(t_cmd *cmd, int depth);
 
-int	main(int ac, char **av, char **envp)
-{
-	(void) ac;
-	(void) av;
-	(void) envp;
-	char	*input;
-	t_cmd	*cmd_tree;
-
-	while (1)
-	{
-		input = readline("minishell$ ");
-		if (!input)
-			break ;
-		if (*input)
-		{
-			add_history(input);
-			cmd_tree = parse_cmd(input);
-			if (cmd_tree)
-			{
-				print_tree(cmd_tree, 0);
-				//free_tree(cmd_tree); // Assuming free_tree is implemented
-			}
-			else
-			{
-				fprintf(stderr, "Error: Parsing failed.\n");
-			}
-		}
-		free(input);
-	}
-	return (0);
-}
-
-// TESTER MAIN FOR HEREDOC
-// int main(int ac, char **av)
+// // TESTER MAIN FOR HEREDOC
+// int main()
 // {
-// 	(void) ac;
-// 	handle_heredoc(av[1]);
+// 	char *heredoc;
+
+// 	heredoc = handle_heredoc("$USER");
+// 	printf("Heredoc:\n%s", heredoc);
+// 	free(heredoc);
 // 	return (0);
 // }
 
-// TESTER MAIN FOR EXPANSION
+// // TESTER MAIN FOR PARSER
+// void print_tree(t_cmd *cmd, int depth);
+
 // int	main(int ac, char **av, char **envp)
 // {
 // 	(void) ac;
 // 	(void) av;
 // 	(void) envp;
 // 	char	*input;
-// 	char	*exp_input;
+// 	t_cmd	*cmd_tree;
 
 // 	while (1)
 // 	{
@@ -74,20 +45,53 @@ int	main(int ac, char **av, char **envp)
 // 		if (*input)
 // 		{
 // 			add_history(input);
-// 			printf("Original input: %s\n", input);
-// 			exp_input = expand_var(input);
-// 			if (exp_input)
+// 			cmd_tree = parse_cmd(input);
+// 			if (cmd_tree)
 // 			{
-// 				printf("Expanded input: %s\n", exp_input);
-// 				free(exp_input); // Free after using it
+// 				print_tree(cmd_tree, 0);
+// 				//free_tree(cmd_tree); // Assuming free_tree is implemented
 // 			}
 // 			else
-// 				printf("Error expanding variable\n");
+// 			{
+// 				fprintf(stderr, "Error: Parsing failed.\n");
+// 			}
 // 		}
 // 		free(input);
 // 	}
 // 	return (0);
 // }
+
+// TESTER MAIN FOR EXPANSION
+int	main(int ac, char **av, char **envp)
+{
+	(void) ac;
+	(void) av;
+	(void) envp;
+	char	*input;
+	char	*exp_input;
+
+	while (1)
+	{
+		input = readline("minishell$ ");
+		if (!input)
+			break ;
+		if (*input)
+		{
+			add_history(input);
+			printf("Original input: %s\n", input);
+			exp_input = expand_var(input);
+			if (exp_input)
+			{
+				printf("Expanded input: %s\n", exp_input);
+				free(exp_input); // Free after using it
+			}
+			else
+				printf("Error expanding variable\n");
+		}
+		free(input);
+	}
+	return (0);
+}
 
 // ORIGINAL MAIN IMPORTED FROM MY GIT REPO
 // // The string returned by readline is dynamically-allocated,
