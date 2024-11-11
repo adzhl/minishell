@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:47:31 by etien             #+#    #+#             */
-/*   Updated: 2024/11/01 16:24:07 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/11 16:39:27 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,19 @@
 # include <stdbool.h>
 
 // program header files
-# include "expansion.h"
 # include "parser.h"
+# include "heredoc.h"
+# include "expansion.h"
+
+// Error messages
+# define EXCEEDED_MAX_ARGS "Command arguments count has exceeded MAX_ARGS."
+# define EXEC_ERR "Error executing program: "
+# define FILE_OPEN_ERR "Error opening file: "
+# define FORK_ERR "Fork error."
+# define MALLOC_ERR "Memory allocation error."
+# define NO_FILE "No file specified for redirection."
+# define PIPE_ERR "Pipe error."
+# define TOKEN_ERR "Tokenizing error."
+# define UNCLOSED_QUOTES "Syntax error: Unclosed quotes."
 
 #endif
