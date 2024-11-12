@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:58:14 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/12 11:41:30 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/12 11:49:10 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,6 @@ static void	print_export_error(char *arg)
 	ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
 }
 
-/**
- * Function to add new var to env list
- * Allocate space according to current env list + new var + NULL
- */
 static int	add_to_env(char **env, const char *new_var)
 {
 	int	i;
@@ -35,12 +31,6 @@ static int	add_to_env(char **env, const char *new_var)
 	return (1);
 }
 
-/**
- * 1. Replace '=' with '\0' so that we can check variable name
- * 2. If valid, replace back the '='
- * 3. If variable already exists, find index of variable and replace value
- * 4. Else, call add_to_env to allocate a new space to add the new var
- */
 static int	handle_equal(char **env, char *arg, char *equal_sign)
 {
 	char	var_name[PATH_MAX];

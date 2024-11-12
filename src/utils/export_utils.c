@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:29:22 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/12 11:36:28 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/12 11:48:05 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int	print_sorted_env(char **env)
 {
 	char	**env_copy;
 	int		i;
+	char	*equal_sign;
 
 	env_copy = copy_and_sort_env(env);
 	if (!env_copy)
@@ -83,7 +84,15 @@ int	print_sorted_env(char **env)
 	i = 0;
 	while (env_copy[i])
 	{
-		printf("declare -x %s\n", env_copy[i]);
+		equal_sign = ft_strchr(env_copy[i], '=');
+		if (equal_sign)
+		{
+			*equal_sign = '\0';
+			printf("declare -x %s=\"%s\"\n", env_copy[i], equal_sign + 1);
+			*equal_sign = '=';
+		}
+		else
+			printf("declare -x %s\n", env_copy[i]);
 		i++;
 	}
 	free_array(env_copy);
