@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:26:13 by etien             #+#    #+#             */
-/*   Updated: 2024/11/06 15:26:42 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/12 10:27:21 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*append_exit_status(char **s, char *expanded_s)
 // 1) No quotes: Until a quote or $ sign is encountered
 // 2) Single quotes: Until another single quote is encountered
 // 3) Double quotes: Until another double quote or $ sign is encountered
-char	*append_str(char **s, char *expanded_s, char initial_quote)
+char	*append_str(char **s, char *expanded_s, int mode, char initial_quote)
 {
 	char	*start;
 	char	*append_s;
@@ -101,10 +101,11 @@ char	*append_str(char **s, char *expanded_s, char initial_quote)
 		return (free(expanded_s), NULL);
 	while (**s)
 	{
-		if ((initial_quote == '\0'
+		if ((mode == ARGUMENT && ((initial_quote == '\0'
 				&& (**s == '\'' || **s == '\"' || **s == '$'))
 			|| (initial_quote == '\'' && **s == '\'')
-			|| (initial_quote == '\"' && (**s == '\"' || **s == '$')))
+			|| (initial_quote == '\"' && (**s == '\"' || **s == '$'))))
+			|| (mode = HEREDOC && **s == '$' ))
 			break ;
 		(*s)++;
 	}

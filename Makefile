@@ -22,7 +22,7 @@ RM = rm -f
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT)
-	@$(CC) $(CFLAGS) $(LFLAG) $(OBJ) $(LIBFT) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME) $(LFLAG)
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@

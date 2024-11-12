@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:43:10 by etien             #+#    #+#             */
-/*   Updated: 2024/11/11 18:40:42 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/12 10:30:17 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 // The string returned by readline is dynamically-allocated,
 // hence it needs to be freed.
 
-// // TESTER MAIN FOR HEREDOC
-// int main()
-// {
-// 	char *heredoc;
+// TESTER MAIN FOR HEREDOC
+int main()
+{
+	char *heredoc;
 
-// 	heredoc = handle_heredoc("$USER");
-// 	printf("Heredoc:\n%s", heredoc);
-// 	free(heredoc);
-// 	return (0);
-// }
+	heredoc = handle_heredoc("$USER");
+	printf("Heredoc:\n%s", heredoc);
+	free(heredoc);
+	return (0);
+}
 
 // // TESTER MAIN FOR PARSER
 // void print_tree(t_cmd *cmd, int depth);
@@ -61,37 +61,37 @@
 // 	return (0);
 // }
 
-// TESTER MAIN FOR EXPANSION
-int	main(int ac, char **av, char **envp)
-{
-	(void) ac;
-	(void) av;
-	(void) envp;
-	char	*input;
-	char	*exp_input;
+// // TESTER MAIN FOR EXPANSION
+// int	main(int ac, char **av, char **envp)
+// {
+// 	(void) ac;
+// 	(void) av;
+// 	(void) envp;
+// 	char	*input;
+// 	char	*exp_input;
 
-	while (1)
-	{
-		input = readline("minishell$ ");
-		if (!input)
-			break ;
-		if (*input)
-		{
-			add_history(input);
-			printf("Original input: %s\n", input);
-			exp_input = expand_var(input);
-			if (exp_input)
-			{
-				printf("Expanded input: %s\n", exp_input);
-				free(exp_input); // Free after using it
-			}
-			else
-				printf("Error expanding variable\n");
-		}
-		free(input);
-	}
-	return (0);
-}
+// 	while (1)
+// 	{
+// 		input = readline("minishell$ ");
+// 		if (!input)
+// 			break ;
+// 		if (*input)
+// 		{
+// 			add_history(input);
+// 			printf("Original input: %s\n", input);
+// 			exp_input = expand_var(input);
+// 			if (exp_input)
+// 			{
+// 				printf("Expanded input: %s\n", exp_input);
+// 				free(exp_input); // Free after using it
+// 			}
+// 			else
+// 				printf("Error expanding variable\n");
+// 		}
+// 		free(input);
+// 	}
+// 	return (0);
+// }
 
 // ORIGINAL MAIN IMPORTED FROM MY GIT REPO
 // // The string returned by readline is dynamically-allocated,

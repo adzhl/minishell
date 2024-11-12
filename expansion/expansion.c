@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 10:59:56 by etien             #+#    #+#             */
-/*   Updated: 2024/11/06 15:26:35 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/12 10:25:49 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,5 @@ void	expansion_control(char **s, char *initial_quote,
 			|| (!(*in_quote_context) && *initial_quote == '\0')))
 		*expanded_s = sub_in_var(s, *expanded_s);
 	else
-		*expanded_s = append_str(s, *expanded_s, *initial_quote);
+		*expanded_s = append_str(s, *expanded_s, ARGUMENT, *initial_quote);
 }
