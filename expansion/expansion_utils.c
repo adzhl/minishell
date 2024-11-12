@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:26:13 by etien             #+#    #+#             */
-/*   Updated: 2024/11/12 10:27:21 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/12 13:28:21 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,8 @@ char	*append_str(char **s, char *expanded_s, int mode, char initial_quote)
 				&& (**s == '\'' || **s == '\"' || **s == '$'))
 			|| (initial_quote == '\'' && **s == '\'')
 			|| (initial_quote == '\"' && (**s == '\"' || **s == '$'))))
-			|| (mode = HEREDOC && **s == '$' ))
+			|| (mode == DELIMITER && **s == initial_quote)
+			|| (mode == HEREDOC && **s == '$' ))
 			break ;
 		(*s)++;
 	}

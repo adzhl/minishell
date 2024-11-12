@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 14:16:29 by etien             #+#    #+#             */
-/*   Updated: 2024/11/12 10:24:26 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/12 13:22:42 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 # define EXPANSION_H
 
 # define ARGUMENT 1
-# define HEREDOC 2
+# define DELIMITER 2
+# define HEREDOC 3
 
 char	*expand_var(char *s);
 void	expansion_control(char **s, char *initial_quote,

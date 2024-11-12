@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:48:51 by etien             #+#    #+#             */
-/*   Updated: 2024/11/12 11:12:22 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/12 13:52:57 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	read_hd_input(char **hd_content, int pipefd_read)
 
 // This function will expand the heredoc.
 // Heredoc expansion completely disregards quotes (treats them as any other character)
-// and only substitutes in variables.
+// and only performs variable expansion.
 // A local pointer is created so that we can retain the starting pointer
 // to the original heredoc to free it.
 char *expand_heredoc(char *heredoc)
@@ -130,16 +130,6 @@ char *expand_heredoc(char *heredoc)
 	}
 	free(heredoc);
 	return (expanded_heredoc);
-}
-
-// This function will check the delimiter for closed quotes.
-// If there are quotes, they will be removed and expand_hd will
-// be set to false to prevent heredoc expansion.
-void check_delimiter(char **delimiter, bool *expand_hd);
-{
-
-
-
 }
 
 // This function will compare two strings.

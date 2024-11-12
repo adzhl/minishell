@@ -3,7 +3,7 @@ NAME = minishell
 SRC = \
 $(addprefix src/, main.c) \
 $(addprefix parser/, constructors.c parse.c run.c token.c) \
-$(addprefix heredoc/, heredoc.c) \
+$(addprefix heredoc/, delimiter.c heredoc.c) \
 $(addprefix expansion/, expansion.c expansion_utils.c)
 # $(addprefix src/, test_parsing.c parser_visualizer.c)
 
