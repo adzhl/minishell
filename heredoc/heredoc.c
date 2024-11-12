@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:48:51 by etien             #+#    #+#             */
-/*   Updated: 2024/11/12 10:43:59 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/12 11:12:22 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,11 @@ char	*handle_heredoc(char *delimiter)
 	int		pipefd[2];
 	pid_t	pid;
 	char	*hd_content;
+	bool	expand_hd;
 
 	hd_content = NULL;
+	expand_hd = true;
+	check_delimiter(&delimiter, &expand_hd);
 	if (pipe(pipefd) < 0)
 		perror(PIPE_ERR);
 	pid = fork();
@@ -37,7 +40,8 @@ char	*handle_heredoc(char *delimiter)
 		close(pipefd[READ]);
 		wait(NULL);
 	}
-	hd_content = expand_heredoc(hd_content);
+	if (expand_hd)
+		hd_content = expand_heredoc(hd_content);
 	return (hd_content);
 }
 
@@ -105,6 +109,9 @@ void	read_hd_input(char **hd_content, int pipefd_read)
 	}
 }
 
+// This function will expand the heredoc.
+// Heredoc expansion completely disregards quotes (treats them as any other character)
+// and only substitutes in variables.
 // A local pointer is created so that we can retain the starting pointer
 // to the original heredoc to free it.
 char *expand_heredoc(char *heredoc)
@@ -117,16 +124,22 @@ char *expand_heredoc(char *heredoc)
 	while (*s)
 	{
 		if (*s == '$')
-		{
 			expanded_heredoc = sub_in_var(&s, expanded_heredoc);
-		}
 		else
-		{
 			expanded_heredoc = append_str(&s, expanded_heredoc, HEREDOC, '\0');
-		}
 	}
 	free(heredoc);
 	return (expanded_heredoc);
+}
+
+// This function will check the delimiter for closed quotes.
+// If there are quotes, they will be removed and expand_hd will
+// be set to false to prevent heredoc expansion.
+void check_delimiter(char **delimiter, bool *expand_hd);
+{
+
+
+
 }
 
 // This function will compare two strings.
