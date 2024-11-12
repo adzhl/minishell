@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:48:51 by etien             #+#    #+#             */
-/*   Updated: 2024/11/11 17:43:00 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/12 10:43:59 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*handle_heredoc(char *delimiter)
 		close(pipefd[READ]);
 		wait(NULL);
 	}
-	hd_content = expand_heredoc(hd_content, delimiter);
+	hd_content = expand_heredoc(hd_content);
 	return (hd_content);
 }
 
@@ -105,14 +105,28 @@ void	read_hd_input(char **hd_content, int pipefd_read)
 	}
 }
 
-char *expand_heredoc(char *hd_content, char *delimiter)
+// A local pointer is created so that we can retain the starting pointer
+// to the original heredoc to free it.
+char *expand_heredoc(char *heredoc)
 {
-	char *expanded_hd;
-	(void) delimiter;
+	char *expanded_heredoc;
+	char *s;
 
-	expanded_hd = expand_var(hd_content);
-	free(hd_content);
-	return (expanded_hd);
+	s = heredoc;
+	expanded_heredoc = ft_strdup("");
+	while (*s)
+	{
+		if (*s == '$')
+		{
+			expanded_heredoc = sub_in_var(&s, expanded_heredoc);
+		}
+		else
+		{
+			expanded_heredoc = append_str(&s, expanded_heredoc, HEREDOC, '\0');
+		}
+	}
+	free(heredoc);
+	return (expanded_heredoc);
 }
 
 // This function will compare two strings.
