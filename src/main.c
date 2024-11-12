@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:43:10 by etien             #+#    #+#             */
-/*   Updated: 2024/11/12 10:30:17 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/12 13:40:28 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,39 @@
 // The string returned by readline is dynamically-allocated,
 // hence it needs to be freed.
 
-// TESTER MAIN FOR HEREDOC
+
+// TESTER MAIN FOR DELIMITER EXPANSION
 int main()
 {
-	char *heredoc;
+	char *input;
+	char *delim;
 
-	heredoc = handle_heredoc("$USER");
-	printf("Heredoc:\n%s", heredoc);
-	free(heredoc);
+	while (1)
+	{
+		input = readline("minishell$ ");
+		if (!input)
+			break ;
+		if (*input)
+		{
+			delim = remove_quotes(input);
+			printf("%s\n", delim);
+			free(input);
+			free(delim);
+		}
+	}
 	return (0);
 }
+
+// // TESTER MAIN FOR HEREDOC
+// int main()
+// {
+// 	char *heredoc;
+
+// 	heredoc = handle_heredoc("$USER");
+// 	printf("Heredoc:\n%s", heredoc);
+// 	free(heredoc);
+// 	return (0);
+// }
 
 // // TESTER MAIN FOR PARSER
 // void print_tree(t_cmd *cmd, int depth);
