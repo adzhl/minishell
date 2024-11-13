@@ -6,16 +6,16 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 14:16:29 by etien             #+#    #+#             */
-/*   Updated: 2024/11/13 12:28:41 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/13 15:35:46 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXPANSION_H
 # define EXPANSION_H
 
-# define ARGUMENT 1
-# define DELIMITER 2
-# define HEREDOC 3
+# define EXP_ARGUMENT 1
+# define EXP_DELIMITER 2
+# define EXP_HEREDOC 3
 
 char	*expand_var(char *s);
 void	expansion_control(char **s, char *initial_quote,

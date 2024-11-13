@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:43:10 by etien             #+#    #+#             */
-/*   Updated: 2024/11/13 13:46:57 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/13 15:34:17 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,49 +16,11 @@
 // hence it needs to be freed.
 
 
-// TESTER MAIN FOR DELIMITER EXPANSION
-int main()
-{
-	char *input;
-	char *delim;
-
-	while (1)
-	{
-		input = readline("minishell$ ");
-		if (!input)
-			break ;
-		if (*input)
-		{
-			delim = remove_delimiter_quotes(input);
-			printf("%s\n", delim);
-			free(input);
-			free(delim);
-		}
-	}
-	return (0);
-}
-
-// // TESTER MAIN FOR HEREDOC
+// // TESTER MAIN FOR DELIMITER EXPANSION
 // int main()
 // {
-// 	char *heredoc;
-
-// 	heredoc = handle_heredoc("$USER");
-// 	printf("Heredoc:\n%s", heredoc);
-// 	free(heredoc);
-// 	return (0);
-// }
-
-// // TESTER MAIN FOR PARSER
-// void print_tree(t_cmd *cmd, int depth);
-
-// int	main(int ac, char **av, char **envp)
-// {
-// 	(void) ac;
-// 	(void) av;
-// 	(void) envp;
-// 	char	*input;
-// 	t_cmd	*cmd_tree;
+// 	char *input;
+// 	char *delim;
 
 // 	while (1)
 // 	{
@@ -67,22 +29,71 @@ int main()
 // 			break ;
 // 		if (*input)
 // 		{
-// 			add_history(input);
-// 			cmd_tree = parse_cmd(input);
-// 			if (cmd_tree)
-// 			{
-// 				print_tree(cmd_tree, 0);
-// 				//free_tree(cmd_tree); // Assuming free_tree is implemented
-// 			}
-// 			else
-// 			{
-// 				fprintf(stderr, "Error: Parsing failed.\n");
-// 			}
+// 			delim = remove_delimiter_quotes(input);
+// 			printf("%s\n", delim);
+// 			free(input);
+// 			free(delim);
 // 		}
-// 		free(input);
 // 	}
 // 	return (0);
 // }
+
+// // TESTER MAIN FOR HEREDOC
+// int main()
+// {
+// 	char	*input;
+// 	char	*heredoc;
+
+// 	while (1)
+// 	{
+// 		input = readline("minishell$ ");
+// 		if (!input)
+// 			break ;
+// 		if (*input)
+// 		{
+// 			heredoc = handle_heredoc(input);
+// 			printf("Heredoc:\n%s", heredoc);
+// 			free(input);
+// 			free(heredoc);
+// 		}
+// 	}
+// 	return (0);
+// }
+
+// TESTER MAIN FOR PARSER
+void print_tree(t_cmd *cmd, int depth);
+
+int	main(int ac, char **av, char **envp)
+{
+	(void) ac;
+	(void) av;
+	(void) envp;
+	char	*input;
+	t_cmd	*cmd_tree;
+
+	while (1)
+	{
+		input = readline("minishell$ ");
+		if (!input)
+			break ;
+		if (*input)
+		{
+			add_history(input);
+			cmd_tree = parse_cmd(input);
+			if (cmd_tree)
+			{
+				print_tree(cmd_tree, 0);
+				//free_tree(cmd_tree); // Assuming free_tree is implemented
+			}
+			else
+			{
+				fprintf(stderr, "Error: Parsing failed.\n");
+			}
+		}
+		free(input);
+	}
+	return (0);
+}
 
 // // TESTER MAIN FOR EXPANSION
 // int	main(int ac, char **av, char **envp)

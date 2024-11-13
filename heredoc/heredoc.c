@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:48:51 by etien             #+#    #+#             */
-/*   Updated: 2024/11/13 14:07:40 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/13 15:40:50 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	collect_heredoc_input(int pipefd[2], char *eof)
 // If the pipe's contents exceed the size of the buffer, the buffer
 // will be refreshed with the remaining pipe data and the memory for
 // hd_content will be reallocated.
-// The function will ensure that hd_content is null_terminated.
+// The function will ensure that hd_content is null-terminated.
 void	read_heredoc_input(char **hd_content, int pipefd_read)
 {
 	char	buffer[1024];
