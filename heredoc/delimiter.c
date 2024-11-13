@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:04:12 by etien             #+#    #+#             */
-/*   Updated: 2024/11/13 14:08:57 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/13 15:36:34 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*remove_delimiter_quotes(char *eof)
 			eof++;
 		}
 		else
-			new_eof = append_str(&eof, new_eof, DELIMITER, opening_quote);
+			new_eof = append_str(&eof, new_eof, EXP_DELIMITER, opening_quote);
 	}
 	return (new_eof);
 }

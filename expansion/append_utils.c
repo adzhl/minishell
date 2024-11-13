@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 12:49:49 by etien             #+#    #+#             */
-/*   Updated: 2024/11/13 13:10:32 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/13 15:36:19 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ char	*append_str(char **s, char *expanded_s, int mode, char initial_quote)
 	append_s = NULL;
 	if (!**s)
 		return (free(expanded_s), NULL);
-	if (mode == ARGUMENT)
+	if (mode == EXP_ARGUMENT)
 		append_s = append_for_argument(s, initial_quote);
-	else if (mode == DELIMITER)
+	else if (mode == EXP_DELIMITER)
 		append_s = append_for_delimiter(s, initial_quote);
-	else if (mode == HEREDOC)
+	else if (mode == EXP_HEREDOC)
 		append_s = append_for_heredoc(s);
 	if (!append_s)
 		return (free(expanded_s), NULL);

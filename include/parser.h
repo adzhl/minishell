@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:19:09 by etien             #+#    #+#             */
-/*   Updated: 2024/11/11 15:41:43 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/13 15:31:17 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@
 
 // Redirection modes
 # define INPUT 1
-# define OUTPUT 2
-# define APPEND 3
+# define HEREDOC 2
+# define OUTPUT 3
+# define APPEND 4
 
 // Pipe ends
 # define READ 0
@@ -54,31 +55,25 @@ typedef struct s_pipe_cmd
 
 // argv array will store pointers to the commands, command options and arguments
 // e.g. echo -n "Hello", argv = ["echo", "-n", "Hello"]
-// eargv array will store pointers to where the null terminator should go
-// after each string
-// e.g. "echo\0"
-//			  ^ pointer
 typedef struct s_exec_cmd
 {
 	int		type;
 	char	*argv[MAX_ARGS];
-	char	*eargv[MAX_ARGS];
 }			t_exec_cmd;
 
-// file and efile store pointers to the beginning and end of the filename.
-// efile is included as a convenient way to null terminate the string.
-// mode: O_WRONLY | O_RDONLY | O_CREATE | O_TRUNC | O_APPEND
-// fd (the old fd to be redirected from): STDOUT = 0; STDIN = 1
-// cmd stores the EXEC node that the redirection will be applied to.
+// - mode: O_WRONLY | O_RDONLY | O_CREATE | O_TRUNC | O_APPEND
+// - fd (the old fd to be redirected from): STDOUT = 0; STDIN = 1
+// - file will store pointers to the filename.
+// - cmd stores the EXEC node that the redirection will be applied to.
 // This implies that if there is redirection, it will always be the
 // parent node to an EXEC node.
 typedef struct s_redir_cmd
 {
 	int		type;
-	char	*file;
-	char	*efile;
 	int		mode;
 	int		fd;
+	char	*file;
+	char	*heredoc;
 	t_cmd	*cmd;
 }	t_redir_cmd;
 
@@ -97,7 +92,6 @@ t_cmd	*parse_cmd(char *s);
 t_cmd	*parse_pipe(char **ss, char *es);
 t_cmd	*parse_exec(char **ss, char *es);
 t_cmd	*parse_redir(t_cmd *cmd, char **ss, char *es);
-void	null_terminate(t_cmd *cmd);
 
 // Run command functions
 void	run_cmd(t_cmd *cmd);

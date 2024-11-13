@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:29:21 by etien             #+#    #+#             */
-/*   Updated: 2024/11/13 13:43:48 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/13 15:29:37 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ t_cmd	*redir_cmd(char *file, char *efile, int redir_mode, t_cmd *subcmd)
 	cmd = malloc(sizeof(*cmd));
 	ft_memset(cmd, 0, sizeof(*cmd));
 	cmd->type = REDIR;
-	cmd->file = file;
-	cmd->efile = efile;
 	if (redir_mode == INPUT)
 	{
 		cmd->mode = O_RDONLY;
@@ -81,6 +79,7 @@ t_cmd	*redir_cmd(char *file, char *efile, int redir_mode, t_cmd *subcmd)
 		cmd->mode = O_WRONLY | O_CREAT | O_APPEND;
 		cmd->fd = 1;
 	}
+	cmd->file = ft_substr(file, 0, efile - file);
 	if (subcmd->type == REDIR)
 	{
 		last_redir = (t_redir_cmd *)subcmd;
