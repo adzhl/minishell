@@ -6,26 +6,25 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:26:13 by etien             #+#    #+#             */
-/*   Updated: 2024/11/13 12:49:42 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/13 13:17:09 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// This function will advance past the $ sign then first check for
-// three exceptions to variable expansion:
+// This function will first advance past the $ sign then check for
+// three special cases of variable expansion:
 // 1) $? is not an ENV but should expand to the exit status of the last
 //    executed process.
 // 2) $(digit) should expand to nothing.
-// 3) $(non-$VAR format) should be replaced by '$' only
-//    (treated as a string literal).
+// 3) $ on its own should be treated as a string literal.
 // If the three checks are passed, the variable complies with the
 // VAR format. We then check for its existence in ENV.
 // If the variables exists, it will be appended to the expanded string.
 // Otherwise, nothing is appended.
-// Note that getenv returns a pointer to static memory, so it does not
-// have to be freed. If the variable does not exist in ENV, getenv
-// simply returns a NULL pointer.
+// Note: getenv returns a pointer to static memory, so it does not
+//       have to be freed. If the variable does not exist in ENV, getenv
+//       simply returns a NULL pointer.
 char	*sub_in_var(char **s, char *expanded_s)
 {
 	char	*start;
@@ -53,7 +52,7 @@ char	*sub_in_var(char **s, char *expanded_s)
 }
 
 // This is a helper function for appending the expansion to the
-// input string. It works for appending a static string to a
+// expanded string. It works for appending a static string to a
 // dynamically-allocated string.
 char	*append_expansion(char *expanded_s, char *expansion)
 {
@@ -67,7 +66,8 @@ char	*append_expansion(char *expanded_s, char *expansion)
 }
 
 // TO-DO: Link this function to access latest process exit code.
-// This function will pull the exit status from the shell struct.
+// This function will pull the exit status from the shell struct
+// and append it to the expanded string.
 // Since ft_itoa returns dynamically-allocated memory, we have
 // to free it after appending the string.
 char	*append_exit_status(char **s, char *expanded_s)

@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 10:59:56 by etien             #+#    #+#             */
-/*   Updated: 2024/11/12 10:25:49 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/13 13:25:52 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,15 @@
 // last command exit status, environment variables, current working
 // directory, etc.
 
-// This function expands variables in the input string based on quote contexts.
-// By default, the quote context (`initial_quote`) is null, meaning no
-// quotes are active. When the first quote is detected, it opens a quote context
-// (setting `initial_quote`). The context only closes when an identical closing
+// This function is responsible for expanding arguments and will involve both:
+// - Literal expansion: removal of outside quotes
+// - Variable expansion: substitution of variables
+// The function expands variables in the input string based on quote contexts.
+// By default, the quote context ('initial_quote') is null, meaning no quotes
+// are active. When the first quote is detected, it opens a quote context
+// (setting 'initial_quote'). The context only closes when an identical closing
 // quote is found. Non-matching quotes within an active context are ignored
-// (do not change `initial_quote`).
+// (do not change 'initial_quote').
 // Behavior within each context:
 // - In a single-quote context: everything is treated literally (no expansions).
 // - In a double-quote context: variable expansions are allowed.
@@ -57,9 +60,8 @@ char	*expand_var(char *s)
 
 // This function contains the main logic of expand_var.
 // It handles the toggling of the quote variables whenever a single
-// or double quote is encountered.
-// It also decides whether to substitute in expanded variables or
-// append strings to the input string.
+// or double quote is encountered and decides whether to substitute
+// in expanded variables or append strings to the expanded string.
 void	expansion_control(char **s, char *initial_quote,
 		int *in_quote_context, char **expanded_s)
 {
