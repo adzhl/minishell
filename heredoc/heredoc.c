@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:48:51 by etien             #+#    #+#             */
-/*   Updated: 2024/11/13 15:40:50 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/13 17:01:11 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,29 +107,6 @@ void	read_heredoc_input(char **hd_content, int pipefd_read)
 		*hd_content = temp;
 		bytes_read = read(pipefd_read, buffer, sizeof(buffer));
 	}
-}
-
-// This function will expand the heredoc.
-// Heredoc expansion ignores quotes (treats them as any other character)
-// and only performs variable expansion.
-// A local pointer is created to retain the starting pointer to the original
-// heredoc in order to free it.
-char	*expand_heredoc(char *heredoc)
-{
-	char	*expanded_heredoc;
-	char	*s;
-
-	s = heredoc;
-	expanded_heredoc = ft_strdup("");
-	while (*s)
-	{
-		if (*s == '$')
-			expanded_heredoc = sub_in_var(&s, expanded_heredoc);
-		else
-			expanded_heredoc = append_str(&s, expanded_heredoc, HEREDOC, '\0');
-	}
-	free(heredoc);
-	return (expanded_heredoc);
 }
 
 // This function will compare two strings.

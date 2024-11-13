@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:04:12 by etien             #+#    #+#             */
-/*   Updated: 2024/11/13 15:36:34 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/13 16:54:39 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 // standardize the cleaning-up process later on.
 void	check_delimiter(char **eof, bool *expand_hd)
 {
-	if (!ft_strchr(*eof, '\'') && !ft_strchr(*eof, '\"'))
+	if (!ft_strchr(*eof, SQ) && !ft_strchr(*eof, DQ))
 	{
 		*eof = ft_strdup(*eof);
 		return ;
@@ -40,11 +40,11 @@ char	*remove_delimiter_quotes(char *eof)
 	int		in_quote;
 
 	new_eof = ft_strdup("");
-	opening_quote = '\0';
+	opening_quote = 0;
 	in_quote = 0;
 	while (*eof)
 	{
-		if (!in_quote && (*eof == '\'' || *eof == '\"'))
+		if (!in_quote && (*eof == SQ || *eof == DQ))
 		{
 			opening_quote = *eof;
 			in_quote = 1;
@@ -52,7 +52,7 @@ char	*remove_delimiter_quotes(char *eof)
 		}
 		else if (in_quote && (*eof == opening_quote))
 		{
-			opening_quote = '\0';
+			opening_quote = 0;
 			in_quote = 0;
 			eof++;
 		}
