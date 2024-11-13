@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:19:09 by etien             #+#    #+#             */
-/*   Updated: 2024/11/13 15:31:17 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/13 16:11:43 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,9 @@ typedef struct s_redir_cmd
 // Constructor functions for parsing tree nodes
 t_cmd	*pipe_cmd(t_cmd *left, t_cmd *right);
 t_cmd	*exec_cmd(void);
-t_cmd	*redir_cmd(char *file, char *efile, int redir_mode, t_cmd *subcmd);
+t_cmd	*redir_cmd(char *st, char *et, int redir_mode, t_cmd *subcmd);
+void	init_redir(int redir_mode, t_redir_cmd *cmd);
+void	insert_redir(t_cmd *subcmd, t_redir_cmd *cmd);
 
 // Token functions
 int		get_token(char **ss, char *es, char **st, char **et);

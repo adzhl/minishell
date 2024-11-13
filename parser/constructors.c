@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:29:21 by etien             #+#    #+#             */
-/*   Updated: 2024/11/13 15:29:37 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/13 16:25:10 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,22 +48,39 @@ t_cmd	*exec_cmd(void)
 }
 
 // Constructor for REDIR node
-// Other than type, all other node fields are extracted from
+// Other than type, all other node fields are extracted/inferred from
 // function parameters.
-// cmd parameter renamed to subcmd to prevent naming confusion.
-// When the function is called, a REDIR node is created.
-// If the subcmd root node is also a REDIR node, we will traverse
-// down the existing REDIR chain to slot the new REDIR node right
-// above the EXEC node. This ensures that later redirections from
-// the input overwrite previous ones.
-t_cmd	*redir_cmd(char *file, char *efile, int redir_mode, t_cmd *subcmd)
+// File and heredoc fields are mutually exclusive, so file remains NULL for
+// heredocs, and heredoc remains NULL for file-based redirections.
+// Heredoc fd and mode are set to -1 to avoid confusion with valid values.
+t_cmd	*redir_cmd(char *st, char *et, int redir_mode, t_cmd *subcmd)
 {
 	t_redir_cmd	*cmd;
-	t_redir_cmd	*last_redir;
+	char		*eof;
 
 	cmd = malloc(sizeof(*cmd));
 	ft_memset(cmd, 0, sizeof(*cmd));
 	cmd->type = REDIR;
+	init_redir(redir_mode, cmd);
+	if (redir_mode != HEREDOC)
+		cmd->file = ft_substr(st, 0, et - st);
+	else
+	{
+		cmd->mode = -1;
+		cmd->fd = -1;
+		eof = ft_substr(st, 0, et - st);
+		cmd->heredoc = handle_heredoc(eof);
+	}
+	if (subcmd->type == REDIR)
+		return (insert_redir(subcmd, cmd), subcmd);
+	cmd->cmd = subcmd;
+	return ((t_cmd *)cmd);
+}
+
+// This function initializes the file descriptors and file
+// opening mode for redirections that involve files.
+void	init_redir(int redir_mode, t_redir_cmd *cmd)
+{
 	if (redir_mode == INPUT)
 	{
 		cmd->mode = O_RDONLY;
@@ -79,16 +96,19 @@ t_cmd	*redir_cmd(char *file, char *efile, int redir_mode, t_cmd *subcmd)
 		cmd->mode = O_WRONLY | O_CREAT | O_APPEND;
 		cmd->fd = 1;
 	}
-	cmd->file = ft_substr(file, 0, efile - file);
-	if (subcmd->type == REDIR)
-	{
-		last_redir = (t_redir_cmd *)subcmd;
-		while (last_redir->cmd->type == REDIR)
-			last_redir = (t_redir_cmd *)last_redir->cmd;
-		cmd->cmd = last_redir->cmd;
-		last_redir->cmd = (t_cmd *)cmd;
-		return (subcmd);
-	}
-	cmd->cmd = subcmd;
-	return ((t_cmd *)cmd);
 }
+
+// This function traverses down any existing REDIR chain to insert
+// the new REDIR node above the EXEC node. This ensures that later
+// redirections in the input always overwrite previous ones.
+void insert_redir(t_cmd *subcmd, t_redir_cmd *cmd)
+{
+	t_redir_cmd	*last_redir;
+
+	last_redir = (t_redir_cmd *)subcmd;
+	while (last_redir->cmd->type == REDIR)
+		last_redir = (t_redir_cmd *)last_redir->cmd;
+	cmd->cmd = last_redir->cmd;
+	last_redir->cmd = (t_cmd *)cmd;
+}
+
