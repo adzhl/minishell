@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:29:21 by etien             #+#    #+#             */
-/*   Updated: 2024/11/07 18:04:34 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/13 13:43:48 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ t_cmd	*redir_cmd(char *file, char *efile, int redir_mode, t_cmd *subcmd)
 			last_redir = (t_redir_cmd *)last_redir->cmd;
 		cmd->cmd = last_redir->cmd;
 		last_redir->cmd = (t_cmd *)cmd;
-		return(subcmd);
+		return (subcmd);
 	}
 	cmd->cmd = subcmd;
 	return ((t_cmd *)cmd);

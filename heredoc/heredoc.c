@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:48:51 by etien             #+#    #+#             */
-/*   Updated: 2024/11/12 13:52:57 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/13 14:07:40 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 // This function will fork a child process to handle the heredoc.
 // The child process will accumulate the input into the pipe's write end.
-// The parent process will wait for the child to terminate to read the input
+// The parent process will wait for its child to terminate to read the input
 // from the pipe's read end.
-char	*handle_heredoc(char *delimiter)
+char	*handle_heredoc(char *eof)
 {
 	int		pipefd[2];
 	pid_t	pid;
@@ -25,18 +25,18 @@ char	*handle_heredoc(char *delimiter)
 
 	hd_content = NULL;
 	expand_hd = true;
-	check_delimiter(&delimiter, &expand_hd);
+	check_delimiter(&eof, &expand_hd);
 	if (pipe(pipefd) < 0)
 		perror(PIPE_ERR);
 	pid = fork();
 	if (pid < 0)
 		perror(FORK_ERR);
 	else if (pid == 0)
-		collect_hd_input(pipefd, delimiter);
+		collect_heredoc_input(pipefd, eof);
 	else
 	{
 		close(pipefd[WRITE]);
-		read_hd_input(&hd_content, pipefd[0]);
+		read_heredoc_input(&hd_content, pipefd[0]);
 		close(pipefd[READ]);
 		wait(NULL);
 	}
@@ -50,7 +50,7 @@ char	*handle_heredoc(char *delimiter)
 // delimiter is encountered.
 // Readline does not explicitly include the newline in the
 // returned buffer, so we have to manually add it in the pipe.
-void	collect_hd_input(int pipefd[2], char *delimiter)
+void	collect_heredoc_input(int pipefd[2], char *eof)
 {
 	char	*hd_line;
 
@@ -58,7 +58,7 @@ void	collect_hd_input(int pipefd[2], char *delimiter)
 	while (1)
 	{
 		hd_line = readline("> ");
-		if (!hd_line || (ft_strcmp(hd_line, delimiter) == 0))
+		if (!hd_line || (ft_strcmp(hd_line, eof) == 0))
 		{
 			if (hd_line)
 				free(hd_line);
@@ -82,7 +82,7 @@ void	collect_hd_input(int pipefd[2], char *delimiter)
 // will be refreshed with the remaining pipe data and the memory for
 // hd_content will be reallocated.
 // The function will ensure that hd_content is null_terminated.
-void	read_hd_input(char **hd_content, int pipefd_read)
+void	read_heredoc_input(char **hd_content, int pipefd_read)
 {
 	char	buffer[1024];
 	char	*temp;
@@ -110,14 +110,14 @@ void	read_hd_input(char **hd_content, int pipefd_read)
 }
 
 // This function will expand the heredoc.
-// Heredoc expansion completely disregards quotes (treats them as any other character)
+// Heredoc expansion ignores quotes (treats them as any other character)
 // and only performs variable expansion.
-// A local pointer is created so that we can retain the starting pointer
-// to the original heredoc to free it.
-char *expand_heredoc(char *heredoc)
+// A local pointer is created to retain the starting pointer to the original
+// heredoc in order to free it.
+char	*expand_heredoc(char *heredoc)
 {
-	char *expanded_heredoc;
-	char *s;
+	char	*expanded_heredoc;
+	char	*s;
 
 	s = heredoc;
 	expanded_heredoc = ft_strdup("");

@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 12:49:49 by etien             #+#    #+#             */
-/*   Updated: 2024/11/13 13:06:39 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/13 13:10:32 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*append_for_argument(char **s, char initial_quote)
 }
 
 // 1) No quotes: Until a quote is encountered.
-// 2) Single/double quote: Until the matching quote is encountered.
+// 2) Single/double quotes: Until the matching quote is encountered.
 char	*append_for_delimiter(char **s, char initial_quote)
 {
 	char	*start;

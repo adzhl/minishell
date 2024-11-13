@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:43:10 by etien             #+#    #+#             */
-/*   Updated: 2024/11/13 10:24:44 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/13 13:46:57 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int main()
 			break ;
 		if (*input)
 		{
-			delim = remove_quotes(input);
+			delim = remove_delimiter_quotes(input);
 			printf("%s\n", delim);
 			free(input);
 			free(delim);

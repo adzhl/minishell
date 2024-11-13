@@ -6,58 +6,58 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:04:12 by etien             #+#    #+#             */
-/*   Updated: 2024/11/13 12:47:13 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/13 14:08:57 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// This function will check the delimiter for closed quotes.
+// This function will check if the delimiter contains quotes.
 // If there are quotes, they will be removed and expand_hd will
 // be set to false to prevent heredoc expansion.
-// Irregardless of quotes, the function will assign a dynamically-allocated
-// string to the delimiter.
-void check_delimiter(char **delimiter, bool *expand_hd)
+// Regardless whether there are quotes, the function will always
+// turn the delimiter into a dynamically-allocated string to
+// standardize the cleaning-up process later on.
+void	check_delimiter(char **eof, bool *expand_hd)
 {
-	// if (!has_quotes(delimiter))
-	// {
-	// 	*delimiter = ft_strdup(*delimiter);
-	// 	return ;
-	// }
-	*delimiter = remove_quotes(*delimiter);
+	if (!ft_strchr(*eof, '\'') && !ft_strchr(*eof, '\"'))
+	{
+		*eof = ft_strdup(*eof);
+		return ;
+	}
+	*eof = remove_delimiter_quotes(*eof);
 	*expand_hd = false;
 }
 
-// bool has_quotes
-
 // This function will remove the quotes from the delimiter so that the
-// EOF will be correctly detected by the collect_hd_input function.
+// EOF will be correctly detected by the collect_heredoc_input function.
 // The delimiter is modified by literal expansion only.
-char	*remove_quotes(char *delimiter)
+// The function returns a dynamically-allocated string.
+char	*remove_delimiter_quotes(char *eof)
 {
-	char	*new_delimiter;
+	char	*new_eof;
 	char	opening_quote;
 	int		in_quote;
 
-	new_delimiter = ft_strdup("");
+	new_eof = ft_strdup("");
 	opening_quote = '\0';
 	in_quote = 0;
-	while (*delimiter)
+	while (*eof)
 	{
-		if (!in_quote && (*delimiter == '\'' || *delimiter == '\"'))
+		if (!in_quote && (*eof == '\'' || *eof == '\"'))
 		{
-			opening_quote = *delimiter;
+			opening_quote = *eof;
 			in_quote = 1;
-			delimiter++;
+			eof++;
 		}
-		else if (in_quote && (*delimiter == opening_quote))
+		else if (in_quote && (*eof == opening_quote))
 		{
 			opening_quote = '\0';
 			in_quote = 0;
-			delimiter++;
+			eof++;
 		}
 		else
-			new_delimiter = append_str(&delimiter, new_delimiter, DELIMITER, opening_quote);
+			new_eof = append_str(&eof, new_eof, DELIMITER, opening_quote);
 	}
-	return (new_delimiter);
+	return (new_eof);
 }
