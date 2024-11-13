@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:26:13 by etien             #+#    #+#             */
-/*   Updated: 2024/11/13 13:17:09 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/13 17:47:10 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,26 @@ char	*append_exit_status(char **s, char *expanded_s)
 	expanded_s = append_expansion(expanded_s, exit_status);
 	free(exit_status);
 	return (expanded_s);
+}
+
+// This function will check that the input string has closed quotes.
+// The bash shell checks for closed quotes on the entire input string
+// rather than individual tokens.
+// e.g. try running "cat "hello' | cat " hello".
+bool	quotes_are_closed(char *s)
+{
+	char	opening_quote;
+
+	opening_quote = 0;
+	while (*s)
+	{
+		if (!opening_quote && (*s == SQ || *s == DQ))
+			opening_quote = *s;
+		else if (opening_quote && *s == opening_quote)
+			opening_quote = 0;
+		s++;
+	}
+	if (opening_quote)
+		return (false);
+	return (true);
 }

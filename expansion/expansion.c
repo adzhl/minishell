@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 10:59:56 by etien             #+#    #+#             */
-/*   Updated: 2024/11/13 15:36:49 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/13 17:03:23 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,62 +24,85 @@
 // - Literal expansion: removal of outside quotes
 // - Variable expansion: substitution of variables
 // The function expands variables in the input string based on quote contexts.
-// By default, the quote context ('initial_quote') is null, meaning no quotes
+// By default, the quote context ('opening_quote') is null, meaning no quotes
 // are active. When the first quote is detected, it opens a quote context
-// (setting 'initial_quote'). The context only closes when an identical closing
+// (setting 'opening_quote'). The context only closes when an identical closing
 // quote is found. Non-matching quotes within an active context are ignored
-// (do not change 'initial_quote').
+// (do not change 'opening_quote').
 // Behavior within each context:
 // - In a single-quote context: everything is treated literally (no expansions).
 // - In a double-quote context: variable expansions are allowed.
-// Using the various states of `initial_quote` and `in_quote_context`,
+// Using the various states of `opening_quote` and `in_quote`,
 // the function correctly processes nested and mixed quotes, performing
 // expansions as required. The function returns a new string with
 // variables expanded as specified by the quotes.
-char	*expand_var(char *s)
+char	*expand_argument(char *s)
 {
-	char	initial_quote;
-	int		in_quote_context;
+	char	opening_quote;
+	int		in_quote;
 	char	*expanded_s;
 
-	initial_quote = '\0';
-	in_quote_context = 0;
+	opening_quote = 0;
+	in_quote = 0;
 	expanded_s = ft_strdup("");
 	if (!expanded_s)
 		return (NULL);
 	while (*s)
 	{
-		expansion_control(&s, &initial_quote, &in_quote_context, &expanded_s);
+		expansion_control(&s, &opening_quote, &in_quote, &expanded_s);
 		if (!expanded_s)
 			return (NULL);
 	}
-	if (in_quote_context)
+	if (in_quote)
 		return (perror(UNCLOSED_QUOTES), free(expanded_s), NULL);
 	return (expanded_s);
 }
 
-// This function contains the main logic of expand_var.
+// This function contains the main logic of expand_argument.
 // It handles the toggling of the quote variables whenever a single
 // or double quote is encountered and decides whether to substitute
 // in expanded variables or append strings to the expanded string.
-void	expansion_control(char **s, char *initial_quote,
-		int *in_quote_context, char **expanded_s)
+void	expansion_control(char **s, char *opening_quote,
+		int *in_quote, char **expanded_s)
 {
-	if ((**s == '\'' || **s == '\"') && !(*in_quote_context))
+	if ((**s == SQ || **s == DQ) && !(*in_quote))
 	{
-		*initial_quote = **s;
-		*in_quote_context = 1;
+		*opening_quote = **s;
+		*in_quote = 1;
 		(*s)++;
 	}
-	else if (**s == *initial_quote && *in_quote_context)
+	else if (**s == *opening_quote && *in_quote)
 	{
-		*initial_quote = '\0';
-		*in_quote_context = 0;
+		*opening_quote = 0;
+		*in_quote = 0;
 		(*s)++;
 	}
-	else if ((**s == '$') && ((*in_quote_context && *initial_quote == '\"')
-			|| (!(*in_quote_context) && *initial_quote == '\0')))
+	else if ((**s == '$') && ((*in_quote && *opening_quote == DQ)
+			|| (!(*in_quote) && !(*opening_quote))))
 		*expanded_s = sub_in_var(s, *expanded_s);
 	else
-		*expanded_s = append_str(s, *expanded_s, EXP_ARGUMENT, *initial_quote);
+		*expanded_s = append_str(s, *expanded_s, EXP_ARGUMENT, *opening_quote);
+}
+
+// This function will expand the heredoc.
+// Heredoc expansion ignores quotes (treats them as any other character)
+// and only performs variable expansion.
+// A local pointer is created to retain the starting pointer to the original
+// heredoc in order to free it.
+char	*expand_heredoc(char *hd)
+{
+	char	*expanded_hd;
+	char	*s;
+
+	s = hd;
+	expanded_hd = ft_strdup("");
+	while (*s)
+	{
+		if (*s == '$')
+			expanded_hd = sub_in_var(&s, expanded_hd);
+		else
+			expanded_hd = append_str(&s, expanded_hd, HEREDOC, 0);
+	}
+	free(hd);
+	return (expanded_hd);
 }

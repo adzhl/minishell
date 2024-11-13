@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 12:04:18 by etien             #+#    #+#             */
-/*   Updated: 2024/11/13 15:33:19 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/13 16:39:35 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_cmd	*parse_pipe(char **ss, char *es)
 
 // parse_exec -> parse_redir
 // GRAMMAR: [REDIR] EXEC [REDIR]
-// This function will set up the EXEC node and sandwich it between parse_redir calls.
+// This function will construct the EXEC node in between parse_redir calls.
 // The function will have two pointers, root and cmd.
 // cmd is used to populate the EXEC node while root node keeps track of
 // the root of the constructed tree even when multiple parse_redir calls wrap

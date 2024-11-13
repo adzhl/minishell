@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:29:21 by etien             #+#    #+#             */
-/*   Updated: 2024/11/13 16:25:10 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/13 16:38:57 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	init_redir(int redir_mode, t_redir_cmd *cmd)
 // This function traverses down any existing REDIR chain to insert
 // the new REDIR node above the EXEC node. This ensures that later
 // redirections in the input always overwrite previous ones.
-void insert_redir(t_cmd *subcmd, t_redir_cmd *cmd)
+void	insert_redir(t_cmd *subcmd, t_redir_cmd *cmd)
 {
 	t_redir_cmd	*last_redir;
 
@@ -111,4 +111,3 @@ void insert_redir(t_cmd *subcmd, t_redir_cmd *cmd)
 	cmd->cmd = last_redir->cmd;
 	last_redir->cmd = (t_cmd *)cmd;
 }
-
