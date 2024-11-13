@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:04:12 by etien             #+#    #+#             */
-/*   Updated: 2024/11/12 13:47:14 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/13 12:47:13 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void check_delimiter(char **delimiter, bool *expand_hd)
 	*expand_hd = false;
 }
 
+// bool has_quotes
+
 // This function will remove the quotes from the delimiter so that the
 // EOF will be correctly detected by the collect_hd_input function.
 // The delimiter is modified by literal expansion only.
@@ -48,10 +50,10 @@ char	*remove_quotes(char *delimiter)
 			in_quote = 1;
 			delimiter++;
 		}
-		else if (in_quote && (*delimiter == '\'' || *delimiter == '\"'))
+		else if (in_quote && (*delimiter == opening_quote))
 		{
-			opening_quote = *delimiter;
-			in_quote = 1;
+			opening_quote = '\0';
+			in_quote = 0;
 			delimiter++;
 		}
 		else
