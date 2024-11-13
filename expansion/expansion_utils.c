@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:26:13 by etien             #+#    #+#             */
-/*   Updated: 2024/11/12 13:28:21 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/13 12:49:42 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,42 +81,4 @@ char	*append_exit_status(char **s, char *expanded_s)
 	expanded_s = append_expansion(expanded_s, exit_status);
 	free(exit_status);
 	return (expanded_s);
-}
-
-// This function will append non-expanding sections of the input string
-// to the expanded string and update the pointer's position in the
-// expand_var function.
-// The length of string to be appended will depend on the quote context:
-// 1) No quotes: Until a quote or $ sign is encountered
-// 2) Single quotes: Until another single quote is encountered
-// 3) Double quotes: Until another double quote or $ sign is encountered
-char	*append_str(char **s, char *expanded_s, int mode, char initial_quote)
-{
-	char	*start;
-	char	*append_s;
-	char	*joined_s;
-
-	start = *s;
-	if (!**s)
-		return (free(expanded_s), NULL);
-	while (**s)
-	{
-		if ((mode == ARGUMENT && ((initial_quote == '\0'
-				&& (**s == '\'' || **s == '\"' || **s == '$'))
-			|| (initial_quote == '\'' && **s == '\'')
-			|| (initial_quote == '\"' && (**s == '\"' || **s == '$'))))
-			|| (mode == DELIMITER && **s == initial_quote)
-			|| (mode == HEREDOC && **s == '$' ))
-			break ;
-		(*s)++;
-	}
-	append_s = ft_substr(start, 0, *s - start);
-	if (!append_s)
-		return (free(expanded_s), NULL);
-	joined_s = ft_strjoin(expanded_s, append_s);
-	free(append_s);
-	if (!joined_s)
-		return (free(expanded_s), NULL);
-	free(expanded_s);
-	return (joined_s);
 }

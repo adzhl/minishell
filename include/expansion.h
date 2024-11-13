@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 14:16:29 by etien             #+#    #+#             */
-/*   Updated: 2024/11/12 13:22:42 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/13 12:28:41 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,8 @@ char	*sub_in_var(char **s, char *expanded_s);
 char	*append_expansion(char *expanded_s, char *expansion);
 char	*append_exit_status(char **s, char *expanded_s);
 char	*append_str(char **s, char *expanded_s, int mode, char initial_quote);
+char	*append_for_argument(char **s, char initial_quote);
+char	*append_for_delimiter(char **s, char initial_quote);
+char	*append_for_heredoc(char **s);
 
 #endif
