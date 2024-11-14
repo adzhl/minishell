@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:19:09 by etien             #+#    #+#             */
-/*   Updated: 2024/11/14 11:21:53 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/14 13:59:05 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@
 # define SYMBOLS "|<>"
 
 // Redirection modes
-# define INPUT 1
-# define HEREDOC 2
-# define OUTPUT 3
-# define APPEND 4
+# define R_INPUT 1
+# define R_HEREDOC 2
+# define R_OUTPUT 3
+# define R_APPEND 4
 
 // Pipe ends
 # define READ 0

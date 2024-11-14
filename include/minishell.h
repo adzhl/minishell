@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:47:31 by etien             #+#    #+#             */
-/*   Updated: 2024/11/13 17:47:25 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/14 13:56:54 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@
 # define MALLOC_ERR "Memory allocation error."
 # define NO_FILE "No file specified for redirection."
 # define PIPE_ERR "Pipe error."
-# define TOKEN_ERR "Tokenizing error."
 # define UNCLOSED_QUOTES "Syntax error: Unclosed quotes."
 
 #endif
