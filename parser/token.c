@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:51:34 by etien             #+#    #+#             */
-/*   Updated: 2024/11/13 17:44:47 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/14 11:31:26 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,49 +57,18 @@ int	get_token(char **ss, char *es, char **st, char **et)
 
 // Outsourced get_token control structure to fit line count.
 // This function advances the s pointer beyond the token and
-// updates tok when the token is ">>" (+) or a word (w).
+// updates tok when the token is "<<" (-), ">>" (+) or a word (w).
 // A word is defined as anything that is non-whitespace and
-// non-symbol.
+// non-symbol, that means that if the word is in quotes, the
+// function will capture the word together withs its quotes.
 void	detect_token(int *tok, char **s, char *es)
 {
-	char	quote;
-
 	if (**s == 0)
 		return ;
 	else if (**s == '|')
 		(*s)++;
-	else if (**s == '<')
-	{
-		(*s)++;
-		if (**s == '<')
-		{
-			*tok = '-';
-			(*s)++;
-		}
-	}
-	else if (**s == '>')
-	{
-		(*s)++;
-		if (**s == '>')
-		{
-			*tok = '+';
-			(*s)++;
-		}
-	}
-	else if (**s == SQ || **s == DQ)
-	{
-		quote = **s;
-		*tok = 'w';
-		(*s)++;
-		while (*s < es && **s != quote)
-			(*s)++;
-		if (*s == es)
-		{
-			perror(TOKEN_ERR);
-			return ;
-		}
-		(*s)++;
-	}
+	else if (**s == '<' || **s == '>')
+		redirection_token(tok, s);
 	else
 	{
 		*tok = 'w';
@@ -109,8 +78,24 @@ void	detect_token(int *tok, char **s, char *es)
 	}
 }
 
-// Originally named peek().
-// This function works as a lookahead.
+// This function assigns the token for heredoc and appending redirections.
+void	redirection_token(int *tok, char **s)
+{
+	char	symbol;
+
+	symbol = **s;
+	(*s)++;
+	if (**s == symbol)
+	{
+		if (**s == '<')
+			*tok = '-';
+		else
+			*tok = '+';
+		(*s)++;
+	}
+}
+
+// Originally named peek(), this function works as a lookahead.
 // It advances past leading whitespace and returns a boolean for whether
 // the token matches the string of tokens given in the parameter.
 // *s check in the boolean evaluation is necessary just in case s is advanced
