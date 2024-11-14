@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:29:21 by etien             #+#    #+#             */
-/*   Updated: 2024/11/13 16:38:57 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/14 13:59:53 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_cmd	*redir_cmd(char *st, char *et, int redir_mode, t_cmd *subcmd)
 	ft_memset(cmd, 0, sizeof(*cmd));
 	cmd->type = REDIR;
 	init_redir(redir_mode, cmd);
-	if (redir_mode != HEREDOC)
+	if (redir_mode != R_HEREDOC)
 		cmd->file = ft_substr(st, 0, et - st);
 	else
 	{
@@ -81,17 +81,17 @@ t_cmd	*redir_cmd(char *st, char *et, int redir_mode, t_cmd *subcmd)
 // opening mode for redirections that involve files.
 void	init_redir(int redir_mode, t_redir_cmd *cmd)
 {
-	if (redir_mode == INPUT)
+	if (redir_mode == R_INPUT)
 	{
 		cmd->mode = O_RDONLY;
 		cmd->fd = 0;
 	}
-	else if (redir_mode == OUTPUT)
+	else if (redir_mode == R_OUTPUT)
 	{
 		cmd->mode = O_WRONLY | O_CREAT | O_TRUNC;
 		cmd->fd = 1;
 	}
-	else if (redir_mode == APPEND)
+	else if (redir_mode == R_APPEND)
 	{
 		cmd->mode = O_WRONLY | O_CREAT | O_APPEND;
 		cmd->fd = 1;

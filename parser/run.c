@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:51:24 by etien             #+#    #+#             */
-/*   Updated: 2024/11/14 13:05:58 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/14 15:05:21 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ void	run_cmd(t_cmd *cmd)
 	}
 	else if (cmd->type == EXEC)
 	{
-		ecmd = (t_exec_cmd *)ecmd;
+		ecmd = (t_exec_cmd *)cmd;
 		if (ecmd->argv[0] == 0)
 			exit(1);
-		execve(ecmd->argv[0], ecmd->argv, environ);
 		printf("execution happens here\n");
+		execve(ecmd->argv[0], ecmd->argv, environ);
 		ft_putstr_fd(EXEC_ERR, 2);
 		ft_putendl_fd(ecmd->argv[0], 2);
 	}
@@ -61,7 +61,10 @@ void	set_pipes(t_pipe_cmd	*pcmd)
 	int	pipefd[2];
 
 	if (pipe(pipefd) < 0)
+	{
 		perror(PIPE_ERR);
+		exit(EXIT_FAILURE);
+	}
 	if (fork_and_check() == 0)
 	{
 		dup2(pipefd[WRITE], STDOUT_FILENO);
@@ -102,19 +105,21 @@ int	fork_and_check(void)
 // This function handles opening file descriptors for the REDIR nodes.
 // If the third parameter in open() is omitted, file permissions default to
 // the shell's umask (typically 022, which results in 0644 permissions).
+// To be able to open the newly-created file, we set the file permissions
+// to the more generous 0666.
 // In a sequence of REDIR nodes, later redirections overwrite earlier ones
 // because dup2 continuously reconfigures STDIN or STDOUT as we traverse
 // down the chain.
 void	open_fd(t_redir_cmd *rcmd)
 {
-	int	fd;
+	int	redir_fd;
 
-	fd = open(rcmd->file, rcmd->mode);
-	if (fd < 0)
+	redir_fd = open(rcmd->file, rcmd->mode, 0666);
+	if (redir_fd < 0)
 	{
 		ft_putstr_fd(FILE_OPEN_ERR, 2);
 		ft_putendl_fd(rcmd->file, 2);
 		exit(1);
 	}
-	dup2(fd, rcmd->fd);
+	dup2(redir_fd, rcmd->fd);
 }
