@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:19:09 by etien             #+#    #+#             */
-/*   Updated: 2024/11/14 13:59:05 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/14 17:02:57 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@
 
 // Space, tab, carriage return, newline, verical tab
 # define WHITESPACE " \t\r\n\v"
-// Symbol tokens that have to be detected by the parser
-# define SYMBOLS "|<>"
 
 // Redirection modes
 # define R_INPUT 1
@@ -88,6 +86,7 @@ void	insert_redir(t_cmd *subcmd, t_redir_cmd *cmd);
 int		get_token(char **ss, char *es, char **st, char **et);
 void	detect_token(int *tok, char **s, char *es);
 void	redirection_token(int *tok, char **s);
+void	word_token(int *tok, char **s, char *es);
 bool	check_for_token(char **ss, char *es, char *toks);
 
 // Parsing functions
@@ -98,9 +97,13 @@ t_cmd	*parse_redir(t_cmd *cmd, char **ss, char *es);
 
 // Run command functions
 void	run_cmd(t_cmd *cmd);
-void	set_pipes(t_pipe_cmd *pcmd);
-void	close_pipes(int *pipefd);
-int		fork_and_check(void);
+void	set_pipe(t_pipe_cmd *pcmd);
+void	set_redirection(t_redir_cmd *rcmd);
 void	open_fd(t_redir_cmd *rcmd);
+void	pipe_heredoc(t_redir_cmd *rcmd);
+
+// Run command util functions
+int		fork_and_check(void);
+void	close_pipes(int *pipefd);
 
 #endif

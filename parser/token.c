@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:51:34 by etien             #+#    #+#             */
-/*   Updated: 2024/11/14 11:31:26 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/14 18:16:35 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,6 @@ int	get_token(char **ss, char *es, char **st, char **et)
 // Outsourced get_token control structure to fit line count.
 // This function advances the s pointer beyond the token and
 // updates tok when the token is "<<" (-), ">>" (+) or a word (w).
-// A word is defined as anything that is non-whitespace and
-// non-symbol, that means that if the word is in quotes, the
-// function will capture the word together withs its quotes.
 void	detect_token(int *tok, char **s, char *es)
 {
 	if (**s == 0)
@@ -70,15 +67,11 @@ void	detect_token(int *tok, char **s, char *es)
 	else if (**s == '<' || **s == '>')
 		redirection_token(tok, s);
 	else
-	{
-		*tok = 'w';
-		while (*s < es && !ft_strchr(WHITESPACE, **s)
-			&& !ft_strchr(SYMBOLS, **s))
-			(*s)++;
-	}
+		word_token(tok, s, es);
 }
 
-// This function assigns the token for heredoc and appending redirections.
+// This function assigns the token for heredoc (<<) and
+// append (>>) redirections.
 void	redirection_token(int *tok, char **s)
 {
 	char	symbol;
@@ -91,6 +84,37 @@ void	redirection_token(int *tok, char **s)
 			*tok = '-';
 		else
 			*tok = '+';
+		(*s)++;
+	}
+}
+
+// This function assigns the token for words.
+// A word is defined as anything that is non-whitespace and
+// non-symbol. Quoted strings break the non-whitespace rule and
+// will have their quotes and all the words between them preserved
+// together as a single token.
+void	word_token(int *tok, char **s, char *es)
+{
+	char	opening_quote;
+	int		in_quote;
+
+	opening_quote = 0;
+	in_quote = 0;
+	*tok = 'w';
+	while (*s < es)
+	{
+		if (!in_quote && (**s == SQ || **s == DQ))
+		{
+			opening_quote = **s;
+			in_quote = 1;
+		}
+		else if (in_quote && **s == opening_quote)
+		{
+			opening_quote = 0;
+			in_quote = 0;
+		}
+		else if (!in_quote && (ft_strchr(WHITESPACE, **s) || ft_strchr("|<>", **s)))
+			break;
 		(*s)++;
 	}
 }
