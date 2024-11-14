@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 10:59:56 by etien             #+#    #+#             */
-/*   Updated: 2024/11/13 17:03:23 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/14 13:44:59 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ char	*expand_heredoc(char *hd)
 		if (*s == '$')
 			expanded_hd = sub_in_var(&s, expanded_hd);
 		else
-			expanded_hd = append_str(&s, expanded_hd, HEREDOC, 0);
+			expanded_hd = append_str(&s, expanded_hd, EXP_HEREDOC, 0);
 	}
 	free(hd);
 	return (expanded_hd);

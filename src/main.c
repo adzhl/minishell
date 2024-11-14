@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:43:10 by etien             #+#    #+#             */
-/*   Updated: 2024/11/13 17:18:51 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/14 13:07:59 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,27 @@
 // The string returned by readline is dynamically-allocated,
 // hence it needs to be freed.
 
-// TESTER MAIN FOR CLOSED QUOTES
-int main()
-{
-	char *input;
+// // TESTER MAIN FOR CLOSED QUOTES
+// int main()
+// {
+// 	char *input;
 
-	while (1)
-	{
-		input = readline("minishell$ ");
-		if (!input)
-			break ;
-		if (*input)
-		{
-			if (quotes_are_closed(input))
-				printf("Quotes are closed.\n");
-			else
-				printf("Quotes are unclosed.\n");
-			free(input);
-		}
-	}
-	return (0);
-}
+// 	while (1)
+// 	{
+// 		input = readline("minishell$ ");
+// 		if (!input)
+// 			break ;
+// 		if (*input)
+// 		{
+// 			if (quotes_are_closed(input))
+// 				printf("Quotes are closed.\n");
+// 			else
+// 				printf("Quotes are unclosed.\n");
+// 			free(input);
+// 		}
+// 	}
+// 	return (0);
+// }
 
 // // TESTER MAIN FOR DELIMITER EXPANSION
 // int main()
@@ -81,40 +81,29 @@ int main()
 // 	return (0);
 // }
 
-// // TESTER MAIN FOR PARSER
-// void print_tree(t_cmd *cmd, int depth);
+// TESTER MAIN FOR PARSER
+void print_tree(t_cmd *cmd, int depth);
 
-// int	main(int ac, char **av, char **envp)
-// {
-// 	(void) ac;
-// 	(void) av;
-// 	(void) envp;
-// 	char	*input;
-// 	t_cmd	*cmd_tree;
+int	main()
+{
+	char	*input;
+	t_cmd	*cmd_tree;
 
-// 	while (1)
-// 	{
-// 		input = readline("minishell$ ");
-// 		if (!input)
-// 			break ;
-// 		if (*input)
-// 		{
-// 			add_history(input);
-// 			cmd_tree = parse_cmd(input);
-// 			if (cmd_tree)
-// 			{
-// 				print_tree(cmd_tree, 0);
-// 				//free_tree(cmd_tree); // Assuming free_tree is implemented
-// 			}
-// 			else
-// 			{
-// 				fprintf(stderr, "Error: Parsing failed.\n");
-// 			}
-// 		}
-// 		free(input);
-// 	}
-// 	return (0);
-// }
+	while (1)
+	{
+		input = readline("minishell$ ");
+		if (!input)
+			break ;
+		if (*input)
+		{
+			add_history(input);
+			cmd_tree = parse_cmd(input);
+			run_cmd(cmd_tree);
+		}
+		free(input);
+	}
+	return (0);
+}
 
 // // TESTER MAIN FOR EXPANSION
 // int	main(int ac, char **av, char **envp)

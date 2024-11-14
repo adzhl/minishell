@@ -30,9 +30,13 @@ void print_tree(t_cmd *cmd, int depth) {
         t_redir_cmd *redir_cmd = (t_redir_cmd *)cmd;
         printf("Redir (fd=%d, mode=%d)\n", redir_cmd->fd, redir_cmd->mode);
 
-        // Print file information for redirection
+		// Check for heredoc first, otherwise use file
         for (int i = 0; i < depth + 1; i++) printf("  ");
-        printf("File: %s\n", redir_cmd->file);
+        if (redir_cmd->heredoc) {
+            printf("Heredoc: %s\n", redir_cmd->heredoc);
+        } else if (redir_cmd->file) {
+            printf("File: %s\n", redir_cmd->file);
+        }
 
         // Print nested command in redirection
         print_tree(redir_cmd->cmd, depth + 1);
