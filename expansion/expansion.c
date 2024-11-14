@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 10:59:56 by etien             #+#    #+#             */
-/*   Updated: 2024/11/14 13:44:59 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/14 18:47:41 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ char	*expand_argument(char *s)
 		if (!expanded_s)
 			return (NULL);
 	}
-	if (in_quote)
-		return (perror(UNCLOSED_QUOTES), free(expanded_s), NULL);
 	return (expanded_s);
 }
 

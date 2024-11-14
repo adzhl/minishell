@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:51:34 by etien             #+#    #+#             */
-/*   Updated: 2024/11/14 18:16:35 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/14 18:48:38 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,9 @@ void	word_token(int *tok, char **s, char *es)
 			opening_quote = 0;
 			in_quote = 0;
 		}
-		else if (!in_quote && (ft_strchr(WHITESPACE, **s) || ft_strchr("|<>", **s)))
-			break;
+		else if (!in_quote && (ft_strchr(WHITESPACE, **s)
+				|| ft_strchr("|<>", **s)))
+			break ;
 		(*s)++;
 	}
 }
