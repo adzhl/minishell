@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:51:24 by etien             #+#    #+#             */
-/*   Updated: 2024/11/07 16:05:44 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/14 13:05:58 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,14 @@
 void	run_cmd(t_cmd *cmd)
 {
 	t_exec_cmd	*ecmd;
+	extern char	**environ;
 
 	ecmd = NULL;
 	if (!cmd)
 		exit(EXIT_FAILURE);
 	if (cmd->type == PIPE)
 	{
-		//set_pipes((t_pipe_cmd *)cmd);
+		set_pipes((t_pipe_cmd *)cmd);
 		printf("pipes set\n");
 	}
 	else if (cmd->type == EXEC)
@@ -35,14 +36,14 @@ void	run_cmd(t_cmd *cmd)
 		ecmd = (t_exec_cmd *)ecmd;
 		if (ecmd->argv[0] == 0)
 			exit(1);
-		//exec(ecmd->argv[0], ecmd->argv);
+		execve(ecmd->argv[0], ecmd->argv, environ);
 		printf("execution happens here\n");
 		ft_putstr_fd(EXEC_ERR, 2);
 		ft_putendl_fd(ecmd->argv[0], 2);
 	}
 	else if (cmd->type == REDIR)
 	{
-		//open_fd((t_redir_cmd *)cmd);
+		open_fd((t_redir_cmd *)cmd);
 		printf("redir of %s\n", ((t_redir_cmd *)cmd)->file);
 		run_cmd(((t_redir_cmd *)cmd)->cmd);
 	}
