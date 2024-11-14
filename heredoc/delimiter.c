@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:04:12 by etien             #+#    #+#             */
-/*   Updated: 2024/11/13 16:54:39 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/14 10:39:37 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@
 void	check_delimiter(char **eof, bool *expand_hd)
 {
 	if (!ft_strchr(*eof, SQ) && !ft_strchr(*eof, DQ))
-	{
-		*eof = ft_strdup(*eof);
 		return ;
-	}
 	*eof = remove_delimiter_quotes(*eof);
 	*expand_hd = false;
 }

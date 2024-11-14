@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:19:09 by etien             #+#    #+#             */
-/*   Updated: 2024/11/13 17:13:09 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/14 11:21:53 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ void	insert_redir(t_cmd *subcmd, t_redir_cmd *cmd);
 // Token functions
 int		get_token(char **ss, char *es, char **st, char **et);
 void	detect_token(int *tok, char **s, char *es);
+void	redirection_token(int *tok, char **s);
 bool	check_for_token(char **ss, char *es, char *toks);
-bool	quotes_are_closed(char *token);
 
 // Parsing functions
 t_cmd	*parse_cmd(char *s);
