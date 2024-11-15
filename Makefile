@@ -1,12 +1,12 @@
 NAME = minishell
 
 SRC = \
-$(addprefix src/, test_parsing.c parser_visualizer.c) \
+$(addprefix src/, main.c) \
 $(addprefix parser/, clean_up.c constructors.c parse.c run_utils.c run.c token.c) \
 $(addprefix heredoc/, delimiter.c heredoc.c) \
 $(addprefix expansion/, append_utils.c expansion_utils.c expansion.c)
 
-# $(addprefix src/, main.c) \
+# $(addprefix testing/, tester.c parser_visualizer.c) \
 
 OBJ = $(SRC:.c=.o)
 

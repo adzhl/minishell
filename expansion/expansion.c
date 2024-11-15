@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 10:59:56 by etien             #+#    #+#             */
-/*   Updated: 2024/11/14 18:47:41 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/15 13:55:37 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ void	expansion_control(char **s, char *opening_quote,
 // This function will expand the heredoc.
 // Heredoc expansion ignores quotes (treats them as any other character)
 // and only performs variable expansion.
-// A local pointer is created to retain the starting pointer to the original
-// heredoc in order to free it.
+// A local pointer will preserve the starting pointer to the original heredoc.
+// The function will return the expanded heredoc and free the original heredoc.
 char	*expand_heredoc(char *hd)
 {
 	char	*expanded_hd;
@@ -101,6 +101,5 @@ char	*expand_heredoc(char *hd)
 		else
 			expanded_hd = append_str(&s, expanded_hd, EXP_HEREDOC, 0);
 	}
-	free(hd);
-	return (expanded_hd);
+	return (free(hd), expanded_hd);
 }

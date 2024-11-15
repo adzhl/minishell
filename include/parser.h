@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:19:09 by etien             #+#    #+#             */
-/*   Updated: 2024/11/15 11:37:37 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/15 13:21:48 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,10 @@ int		fork_and_check(void);
 void	close_pipes(int *pipefd);
 void	cmd_typecasting(t_cmd *cmd,
 			t_pipe_cmd **pcmd, t_redir_cmd **rcmd, t_exec_cmd **ecmd);
+
+// Clean up functions
+void	free_ast(t_cmd *cmd);
+void	free_redir_data(t_redir_cmd *rcmd);
+void	free_exec_data(t_exec_cmd *ecmd);
 
 #endif
