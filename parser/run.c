@@ -6,13 +6,11 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:51:24 by etien             #+#    #+#             */
-/*   Updated: 2024/11/15 11:36:26 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/15 16:23:16 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-// TO-DO: CREATE EXEC FUNCTION!!!
 
 // This function will walk the parsing tree and execute the commands.
 // If the current node is an EXEC node, it will execute, otherwise
@@ -34,13 +32,14 @@ void	run_cmd(t_cmd *cmd)
 	{
 		if (ecmd->argv[0] == 0)
 			exit(1);
-		execve(ecmd->argv[0], ecmd->argv, environ);
-		ft_putstr_fd(EXEC_ERR, 2);
-		ft_putendl_fd(ecmd->argv[0], 2);
+		if (execve(ecmd->argv[0], ecmd->argv, environ) == -1)
+		{
+			ft_putstr_fd(EXEC_ERR, 2);
+			ft_putendl_fd(ecmd->argv[0], 2);
+		}
 	}
 	else if (cmd->type == REDIR)
 		set_redirection(rcmd);
-	exit(EXIT_SUCCESS);
 }
 
 // This function will set up the pipes, fork two child processes and
@@ -63,12 +62,14 @@ void	set_pipe(t_pipe_cmd	*pcmd)
 		dup2(pipefd[WRITE], STDOUT_FILENO);
 		close_pipes(pipefd);
 		run_cmd(pcmd->left);
+		exit(EXIT_SUCCESS);
 	}
 	if (fork_and_check() == 0)
 	{
 		dup2(pipefd[READ], STDIN_FILENO);
 		close_pipes(pipefd);
 		run_cmd(pcmd->right);
+		exit(EXIT_SUCCESS);
 	}
 	close_pipes(pipefd);
 	wait(NULL);
