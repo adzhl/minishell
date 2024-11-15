@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:51:24 by etien             #+#    #+#             */
-/*   Updated: 2024/11/15 16:23:16 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/15 18:09:01 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void	run_cmd(t_cmd *cmd)
 			exit(1);
 		if (execve(ecmd->argv[0], ecmd->argv, environ) == -1)
 		{
-			ft_putstr_fd(EXEC_ERR, 2);
-			ft_putendl_fd(ecmd->argv[0], 2);
+			ft_putstr_fd(EXEC_ERR, STDERR_FILENO);
+			ft_putendl_fd(ecmd->argv[0], STDERR_FILENO);
 		}
 	}
 	else if (cmd->type == REDIR)
@@ -102,8 +102,8 @@ void	open_fd(t_redir_cmd *rcmd)
 	redir_fd = open(rcmd->file, rcmd->mode, 0666);
 	if (redir_fd < 0)
 	{
-		ft_putstr_fd(FILE_OPEN_ERR, 2);
-		ft_putendl_fd(rcmd->file, 2);
+		ft_putstr_fd(FILE_OPEN_ERR, STDERR_FILENO);
+		ft_putendl_fd(rcmd->file, STDERR_FILENO);
 		exit(1);
 	}
 	dup2(redir_fd, rcmd->fd);
