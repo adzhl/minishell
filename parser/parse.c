@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 12:04:18 by etien             #+#    #+#             */
-/*   Updated: 2024/11/14 14:00:17 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/15 17:58:02 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ t_cmd	*parse_pipe(char **ss, char *es)
 	cmd = parse_exec(ss, es);
 	if (check_for_token(ss, es, "|"))
 	{
+		if (!cmd)
+			ft_putendl_fd(NO_LEFT_CMD, 2);
 		get_token(ss, es, 0, 0);
 		cmd = pipe_cmd(cmd, parse_pipe(ss, es));
 	}
