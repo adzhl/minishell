@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:47:31 by etien             #+#    #+#             */
-/*   Updated: 2024/11/14 13:56:54 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/15 17:54:09 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@
 # define FORK_ERR "Fork error."
 # define MALLOC_ERR "Memory allocation error."
 # define NO_FILE "No file specified for redirection."
+# define NO_LEFT_CMD "minishell: syntax error near unexpected token `|'"
 # define PIPE_ERR "Pipe error."
 # define UNCLOSED_QUOTES "Syntax error: Unclosed quotes."
 
