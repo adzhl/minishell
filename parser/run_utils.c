@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 16:10:16 by etien             #+#    #+#             */
-/*   Updated: 2024/11/14 16:11:31 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/15 11:37:20 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,18 @@ int	fork_and_check(void)
 	return (pid);
 }
 
-// This is a simple helper function to close both ends of a pipe.
+// This is a helper function to close both ends of a pipe.
 void	close_pipes(int *pipefd)
 {
 	close(pipefd[READ]);
 	close(pipefd[WRITE]);
+}
+
+// This is a helper function for parsing tree node typecasting.
+void	cmd_typecasting(t_cmd *cmd,
+	t_pipe_cmd **pcmd, t_redir_cmd **rcmd, t_exec_cmd **ecmd)
+{
+	*pcmd = (t_pipe_cmd *)cmd;
+	*rcmd = (t_redir_cmd *)cmd;
+	*ecmd = (t_exec_cmd *)cmd;
 }
