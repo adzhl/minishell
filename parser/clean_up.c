@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 14:01:00 by etien             #+#    #+#             */
-/*   Updated: 2024/11/15 12:02:46 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/15 13:25:46 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	free_ast(t_cmd *cmd)
 	}
 }
 
-// A helper function to free the redir fields.
+// A helper function to free the REDIR fields.
 void	free_redir_data(t_redir_cmd *rcmd)
 {
 	if (rcmd->file)
@@ -52,13 +52,12 @@ void	free_redir_data(t_redir_cmd *rcmd)
 		free(rcmd->heredoc);
 }
 
-// A helper function to free the
+// A helper function to free the EXEC fields.
 void	free_exec_data(t_exec_cmd *ecmd)
 {
 	int	i;
 
 	i = -1;
-	if (ecmd->argv)
-		while (ecmd->argv[++i])
-			free(ecmd->argv[i]);
+	while (ecmd->argv[++i])
+		free(ecmd->argv[i]);
 }

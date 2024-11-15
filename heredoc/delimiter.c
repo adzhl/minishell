@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:04:12 by etien             #+#    #+#             */
-/*   Updated: 2024/11/14 10:39:37 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/15 13:55:23 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	check_delimiter(char **eof, bool *expand_hd)
 // This function will remove the quotes from the delimiter so that the
 // EOF will be correctly detected by the collect_heredoc_input function.
 // The delimiter is modified by literal expansion only.
-// The function returns a dynamically-allocated string.
+// The function will free the original EOF and return the new EOF as a
+// dynamically-allocated string.
 char	*remove_delimiter_quotes(char *eof)
 {
 	char	*new_eof;
@@ -56,5 +57,5 @@ char	*remove_delimiter_quotes(char *eof)
 		else
 			new_eof = append_str(&eof, new_eof, EXP_DELIMITER, opening_quote);
 	}
-	return (new_eof);
+	return (free(eof), new_eof);
 }
