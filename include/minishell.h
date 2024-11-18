@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:47:31 by etien             #+#    #+#             */
-/*   Updated: 2024/11/18 11:13:10 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/18 17:27:11 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,14 @@
 # define FORK_ERR "Fork error."
 # define MALLOC_ERR "Memory allocation error."
 # define NO_FILE "No file specified for redirection."
-# define NO_LEFT_CMD "minishell: syntax error near unexpected token `|'"
+# define SYNTAX_REDIR "minishell: syntax error near unexpected token `<' or '>' "
+# define SYNTAX_PIPE "minishell: syntax error near unexpected token `|'"
+# define SYNTAX_QUOTES "minishell: syntax error: unclosed quotes"
 # define PIPE_ERR "Pipe error."
-# define UNCLOSED_QUOTES "Syntax error: Unclosed quotes."
 
 void	run_single_cmd(t_cmd *ast);
-void	error_and_exit(char *err_msg);
+
+bool	syntax_error(char *input);
+void	print_error(char *err_msg, char *input, char *s);
 
 #endif
