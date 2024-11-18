@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:47:31 by etien             #+#    #+#             */
-/*   Updated: 2024/11/15 17:54:09 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/18 11:13:10 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,8 @@
 # define NO_LEFT_CMD "minishell: syntax error near unexpected token `|'"
 # define PIPE_ERR "Pipe error."
 # define UNCLOSED_QUOTES "Syntax error: Unclosed quotes."
+
+void	run_single_cmd(t_cmd *ast);
+void	error_and_exit(char *err_msg);
 
 #endif

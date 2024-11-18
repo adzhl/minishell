@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 13:37:56 by etien             #+#    #+#             */
-/*   Updated: 2024/11/15 16:44:22 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/18 10:58:06 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	main()
 		input = readline("minishell$ ");
 		if (!input)
 			break ;
+		if (!quotes_are_closed(input))
+			error_and_exit(UNCLOSED_QUOTES);
 		add_history(input);
 		ast = parse_cmd(input);
 		has_pipe = ft_strchr(input, '|');
@@ -41,15 +43,19 @@ int	main()
 		if (has_pipe)
 			run_cmd(ast);
 		else
-		{
-			if (fork_and_check() == 0)
-			{
-				run_cmd(ast);
-				exit(EXIT_SUCCESS);
-			}
-			wait(NULL);
-		}
+			run_single_cmd(ast);
 		free_ast(ast);
 	}
-	return (0);
+	return (EXIT_SUCCESS);
+}
+
+// This function will fork a child process to run single commands.
+void	run_single_cmd(t_cmd *ast)
+{
+	if (fork_and_check() == 0)
+	{
+		run_cmd(ast);
+		exit(EXIT_SUCCESS);
+	}
+	wait(NULL);
 }
