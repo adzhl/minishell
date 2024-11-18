@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 13:37:56 by etien             #+#    #+#             */
-/*   Updated: 2024/11/18 10:58:06 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/18 17:27:08 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ int	main()
 		input = readline("minishell$ ");
 		if (!input)
 			break ;
-		if (!quotes_are_closed(input))
-			error_and_exit(UNCLOSED_QUOTES);
 		add_history(input);
+		if (syntax_error(input))
+			continue ;
 		ast = parse_cmd(input);
 		has_pipe = ft_strchr(input, '|');
 		free(input);
