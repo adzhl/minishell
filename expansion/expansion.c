@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 10:59:56 by etien             #+#    #+#             */
-/*   Updated: 2024/11/15 13:55:37 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/18 13:18:07 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,10 @@ char	*expand_heredoc(char *hd)
 	char	*expanded_hd;
 	char	*s;
 
-	s = hd;
 	expanded_hd = ft_strdup("");
+	if (!hd)
+		return (expanded_hd);
+	s = hd;
 	while (*s)
 	{
 		if (*s == '$')

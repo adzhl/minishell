@@ -13,7 +13,7 @@ OBJ = $(SRC:.c=.o)
 LIBFT_DIR = libft/
 LIBFT = $(LIBFT_DIR)libft.a
 
-CC = cc
+CC = cc -g
 # compilation flags
 CFLAGS = -Wall -Wextra -Werror -Iinclude
 # linking flag
