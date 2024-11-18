@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 12:49:49 by etien             #+#    #+#             */
-/*   Updated: 2024/11/13 16:56:56 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/18 15:09:57 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,8 @@ char	*append_str(char **s, char *expanded_s, int mode, char opening_quote)
 		append_s = append_for_delimiter(s, opening_quote);
 	else if (mode == EXP_HEREDOC)
 		append_s = append_for_heredoc(s);
-	if (!append_s)
-		return (free(expanded_s), NULL);
 	joined_s = ft_strjoin(expanded_s, append_s);
 	free(append_s);
-	if (!joined_s)
-		return (free(expanded_s), NULL);
 	free(expanded_s);
 	return (joined_s);
 }

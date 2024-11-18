@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 10:59:56 by etien             #+#    #+#             */
-/*   Updated: 2024/11/18 13:18:07 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/18 15:07:29 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 // the function correctly processes nested and mixed quotes, performing
 // expansions as required. The function returns a new string with
 // variables expanded as specified by the quotes.
+// The function will return the dynamically-allocated expanded string and free
+// the original string.
 char	*expand_argument(char *s)
 {
 	char	opening_quote;
@@ -45,15 +47,9 @@ char	*expand_argument(char *s)
 	opening_quote = 0;
 	in_quote = 0;
 	expanded_s = ft_strdup("");
-	if (!expanded_s)
-		return (NULL);
 	while (*s)
-	{
 		expansion_control(&s, &opening_quote, &in_quote, &expanded_s);
-		if (!expanded_s)
-			return (NULL);
-	}
-	return (expanded_s);
+	return (free(s), expanded_s);
 }
 
 // This function contains the main logic of expand_argument.
