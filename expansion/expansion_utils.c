@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:26:13 by etien             #+#    #+#             */
-/*   Updated: 2024/11/13 17:47:10 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/18 15:00:51 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ char	*sub_in_var(char **s, char *expanded_s)
 	while (**s && (ft_isalnum(**s) || **s == '_'))
 		(*s)++;
 	var_name = ft_substr(start, 0, *s - start);
-	if (!var_name)
-		return (free(expanded_s), NULL);
 	var_value = getenv(var_name);
 	free(var_name);
 	if (!var_value)
@@ -59,8 +57,6 @@ char	*append_expansion(char *expanded_s, char *expansion)
 	char	*joined_s;
 
 	joined_s = ft_strjoin(expanded_s, expansion);
-	if (!joined_s)
-		return (free(expanded_s), NULL);
 	free(expanded_s);
 	return (joined_s);
 }
@@ -76,8 +72,6 @@ char	*append_exit_status(char **s, char *expanded_s)
 
 	(*s)++;
 	exit_status = ft_itoa(0);
-	if (!exit_status)
-		return (free(expanded_s), NULL);
 	expanded_s = append_expansion(expanded_s, exit_status);
 	free(exit_status);
 	return (expanded_s);
