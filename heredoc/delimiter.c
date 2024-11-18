@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:04:12 by etien             #+#    #+#             */
-/*   Updated: 2024/11/15 13:55:23 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/18 14:07:44 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,24 @@
 // This function will check if the delimiter contains quotes.
 // If there are quotes, they will be removed and expand_hd will
 // be set to false to prevent heredoc expansion.
-// Regardless whether there are quotes, the function will always
-// turn the delimiter into a dynamically-allocated string to
-// standardize the cleaning-up process later on.
+// Before the new EOF is assigned to the eof variable, the old EOF
+// will be freed.
 void	check_delimiter(char **eof, bool *expand_hd)
 {
+	char	*new_eof;
+
 	if (!ft_strchr(*eof, SQ) && !ft_strchr(*eof, DQ))
 		return ;
-	*eof = remove_delimiter_quotes(*eof);
+	new_eof = remove_delimiter_quotes(*eof);
+	free(*eof);
+	*eof = new_eof;
 	*expand_hd = false;
 }
 
 // This function will remove the quotes from the delimiter so that the
 // EOF will be correctly detected by the collect_heredoc_input function.
 // The delimiter is modified by literal expansion only.
-// The function will free the original EOF and return the new EOF as a
-// dynamically-allocated string.
+// The function will return the new EOF as a dynamically-allocated string.
 char	*remove_delimiter_quotes(char *eof)
 {
 	char	*new_eof;
@@ -57,5 +59,5 @@ char	*remove_delimiter_quotes(char *eof)
 		else
 			new_eof = append_str(&eof, new_eof, EXP_DELIMITER, opening_quote);
 	}
-	return (free(eof), new_eof);
+	return (new_eof);
 }

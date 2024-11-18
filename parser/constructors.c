@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:29:21 by etien             #+#    #+#             */
-/*   Updated: 2024/11/15 13:44:31 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/18 14:00:06 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ t_cmd	*redir_cmd(char *st, char *et, int redir_mode, t_cmd *subcmd)
 		cmd->mode = -1;
 		cmd->fd = -1;
 		eof = ft_substr(st, 0, et - st);
-		cmd->heredoc = handle_heredoc(eof);
+		cmd->heredoc = handle_heredoc(&eof);
 		free(eof);
 	}
 	if (subcmd->type == REDIR)
