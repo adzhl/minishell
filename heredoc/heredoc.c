@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:48:51 by etien             #+#    #+#             */
-/*   Updated: 2024/11/13 17:01:11 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/18 14:01:17 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 // The child process will accumulate the input into the pipe's write end.
 // The parent process will wait for its child to terminate to read the input
 // from the pipe's read end.
-char	*handle_heredoc(char *eof)
+char	*handle_heredoc(char **eof)
 {
 	int		pipefd[2];
 	pid_t	pid;
@@ -25,14 +25,14 @@ char	*handle_heredoc(char *eof)
 
 	hd_content = NULL;
 	expand_hd = true;
-	check_delimiter(&eof, &expand_hd);
+	check_delimiter(eof, &expand_hd);
 	if (pipe(pipefd) < 0)
 		perror(PIPE_ERR);
 	pid = fork();
 	if (pid < 0)
 		perror(FORK_ERR);
 	else if (pid == 0)
-		collect_heredoc_input(pipefd, eof);
+		collect_heredoc_input(pipefd, *eof);
 	else
 	{
 		close(pipefd[WRITE]);
