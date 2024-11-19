@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:19:09 by etien             #+#    #+#             */
-/*   Updated: 2024/11/19 11:37:37 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/19 13:46:56 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void	open_fd(t_redir_cmd *rcmd);
 void	pipe_heredoc(t_redir_cmd *rcmd);
 
 // Run command util functions
+void	run_cmd_control(char *input, t_cmd *ast);
 void	close_pipes(int *pipefd);
 void	cmd_typecasting(t_cmd *cmd,
 			t_pipe_cmd **pcmd, t_redir_cmd **rcmd, t_exec_cmd **ecmd);

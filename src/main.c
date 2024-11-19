@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 13:37:56 by etien             #+#    #+#             */
-/*   Updated: 2024/11/19 11:35:46 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/19 13:46:18 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,30 +37,4 @@ int	main(void)
 		free_ast(ast);
 	}
 	return (EXIT_SUCCESS);
-}
-
-// This function will detect for pipe symbols in the input and either
-// call run_cmd directly (if there are pipes) or fork a child process
-// to run simple commands. run_cmd will fork child processes for PIPE
-// nodes, but we will have to fork them manually if the input does not
-// contain pipes. This is necessary so that control will be returned to
-// the parent process after the child executes the command and terminates.
-// It will prevent the program from exiting immediately.
-void	run_cmd_control(char *input, t_cmd *ast)
-{
-	bool	has_pipe;
-
-	has_pipe = ft_strchr(input, '|');
-	free(input);
-	if (has_pipe)
-		run_cmd(ast);
-	else
-	{
-		if (fork() == 0)
-		{
-			run_cmd(ast);
-			exit(EXIT_SUCCESS);
-		}
-		wait(NULL);
-	}
 }
