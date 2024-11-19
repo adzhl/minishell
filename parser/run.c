@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:51:24 by etien             #+#    #+#             */
-/*   Updated: 2024/11/15 18:09:01 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/19 11:36:36 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void	run_cmd(t_cmd *cmd)
 			exit(1);
 		if (execve(ecmd->argv[0], ecmd->argv, environ) == -1)
 		{
-			ft_putstr_fd(EXEC_ERR, STDERR_FILENO);
-			ft_putendl_fd(ecmd->argv[0], STDERR_FILENO);
+			ft_putstr_fd(ecmd->argv[0], STDERR_FILENO);
+			ft_putendl_fd(EXEC_ERR, STDERR_FILENO);
 		}
 	}
 	else if (cmd->type == REDIR)
@@ -52,19 +52,15 @@ void	set_pipe(t_pipe_cmd	*pcmd)
 {
 	int	pipefd[2];
 
-	if (pipe(pipefd) < 0)
-	{
-		perror(PIPE_ERR);
-		exit(EXIT_FAILURE);
-	}
-	if (fork_and_check() == 0)
+	pipe(pipefd);
+	if (fork() == 0)
 	{
 		dup2(pipefd[WRITE], STDOUT_FILENO);
 		close_pipes(pipefd);
 		run_cmd(pcmd->left);
 		exit(EXIT_SUCCESS);
 	}
-	if (fork_and_check() == 0)
+	if (fork() == 0)
 	{
 		dup2(pipefd[READ], STDIN_FILENO);
 		close_pipes(pipefd);
@@ -118,11 +114,7 @@ void	pipe_heredoc(t_redir_cmd *rcmd)
 {
 	int	pipefd[2];
 
-	if (pipe(pipefd) < 0)
-	{
-		perror(PIPE_ERR);
-		exit(EXIT_FAILURE);
-	}
+	pipe(pipefd);
 	write(pipefd[WRITE], rcmd->heredoc, ft_strlen(rcmd->heredoc));
 	close(pipefd[WRITE]);
 	dup2(pipefd[READ], STDIN_FILENO);
