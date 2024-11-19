@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 12:04:18 by etien             #+#    #+#             */
-/*   Updated: 2024/11/18 15:37:34 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/19 11:29:47 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,7 @@ t_cmd	*parse_redir(t_cmd *cmd, char **ss, char *es)
 	while (check_for_token(ss, es, "<>"))
 	{
 		tok = get_token(ss, es, 0, 0);
-		if (get_token(ss, es, &st, &et) != 'w')
-			perror(NO_FILE);
+		get_token(ss, es, &st, &et);
 		if (tok == '<')
 			cmd = redir_cmd(st, et, R_INPUT, cmd);
 		else if (tok == '-')

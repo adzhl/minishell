@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:48:51 by etien             #+#    #+#             */
-/*   Updated: 2024/11/18 14:01:17 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/19 11:32:42 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,11 @@ char	*handle_heredoc(char **eof)
 	hd_content = NULL;
 	expand_hd = true;
 	check_delimiter(eof, &expand_hd);
-	if (pipe(pipefd) < 0)
-		perror(PIPE_ERR);
+	pipe(pipefd);
 	pid = fork();
-	if (pid < 0)
-		perror(FORK_ERR);
-	else if (pid == 0)
+	if (pid == 0)
 		collect_heredoc_input(pipefd, *eof);
-	else
+	else if (pid > 0)
 	{
 		close(pipefd[WRITE]);
 		read_heredoc_input(&hd_content, pipefd[0]);
@@ -94,8 +91,6 @@ void	read_heredoc_input(char **hd_content, int pipefd_read)
 	while (bytes_read > 0)
 	{
 		temp = malloc(total_bytes + bytes_read + 1);
-		if (!temp)
-			perror(MALLOC_ERR);
 		if (*hd_content)
 		{
 			ft_memcpy(temp, *hd_content, total_bytes);

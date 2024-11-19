@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:47:31 by etien             #+#    #+#             */
-/*   Updated: 2024/11/19 10:47:59 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/19 11:40:48 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,16 @@
 
 // Error messages
 # define EXCEEDED_MAX_ARGS "Command arguments count has exceeded MAX_ARGS."
-# define EXEC_ERR "Error executing program: "
 # define FILE_OPEN_ERR "Error opening file: "
-# define FORK_ERR "Fork error."
-# define MALLOC_ERR "Memory allocation error."
-# define NO_FILE "No file specified for redirection."
-# define SYNTAX_REDIR "minishell: syntax error near unexpected token \
-`<' or '>' "
+
+# define EXEC_ERR ": command not found"
 # define SYNTAX_PIPE "minishell: syntax error near unexpected token `|'"
 # define SYNTAX_QUOTES "minishell: syntax error: unclosed quotes"
-# define PIPE_ERR "Pipe error."
+# define SYNTAX_REDIR "minishell: syntax error near unexpected token \
+`<' or '>' "
 
 // Main util functions
-void	run_single_cmd(t_cmd *ast);
+void	run_cmd_control(char *input, t_cmd *ast);
 
 // Error functions
 bool	syntax_error(char *input);

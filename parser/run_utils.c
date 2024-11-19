@@ -6,24 +6,11 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 16:10:16 by etien             #+#    #+#             */
-/*   Updated: 2024/11/15 16:24:39 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/19 11:37:07 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-// This is a wrapper for the fork function.
-// It will throw an error if the fork fails. Otherwise, it will
-// return the child process pid.
-int	fork_and_check(void)
-{
-	int	pid;
-
-	pid = fork();
-	if (pid < 0)
-		perror(FORK_ERR);
-	return (pid);
-}
 
 // This is a helper function to close both ends of a pipe.
 void	close_pipes(int *pipefd)
