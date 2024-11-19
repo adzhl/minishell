@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 13:37:56 by etien             #+#    #+#             */
-/*   Updated: 2024/11/18 17:27:08 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/19 10:40:11 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 // terminates and the program will not exit immediately.
 // After the command is executed, the AST will be freed and the user will
 // be prompted for a new command.
-int	main()
+int	main(void)
 {
 	char	*input;
 	t_cmd	*ast;
