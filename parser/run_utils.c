@@ -6,11 +6,37 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 16:10:16 by etien             #+#    #+#             */
-/*   Updated: 2024/11/19 11:37:07 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/19 13:46:36 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+// This function will detect for pipe symbols in the input and either
+// call run_cmd directly (if there are pipes) or fork a child process
+// to run simple commands. run_cmd will fork child processes for PIPE
+// nodes, but we will have to fork them manually if the input does not
+// contain pipes. This is necessary so that control will be returned to
+// the parent process after the child executes the command and terminates.
+// It will prevent the program from exiting immediately.
+void	run_cmd_control(char *input, t_cmd *ast)
+{
+	bool	has_pipe;
+
+	has_pipe = ft_strchr(input, '|');
+	free(input);
+	if (has_pipe)
+		run_cmd(ast);
+	else
+	{
+		if (fork() == 0)
+		{
+			run_cmd(ast);
+			exit(EXIT_SUCCESS);
+		}
+		wait(NULL);
+	}
+}
 
 // This is a helper function to close both ends of a pipe.
 void	close_pipes(int *pipefd)
