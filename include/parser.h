@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:19:09 by etien             #+#    #+#             */
-/*   Updated: 2024/11/19 13:46:56 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/20 10:48:38 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct s_pipe_cmd
 typedef struct s_exec_cmd
 {
 	int		type;
-	char	*argv[MAX_ARGS];
+	char	*argv[MAX_ARGS + 1];
 }			t_exec_cmd;
 
 // - mode: O_WRONLY | O_RDONLY | O_CREATE | O_TRUNC | O_APPEND
