@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 12:04:18 by etien             #+#    #+#             */
-/*   Updated: 2024/11/19 11:29:47 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/20 10:56:59 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,15 @@ t_cmd	*parse_exec(char **ss, char *es)
 	while (*ss < es && !check_for_token(ss, es, "|"))
 	{
 		get_token(ss, es, &st, &et);
-		cmd->argv[i] = ft_substr(st, 0, et - st);
+		if (i < MAX_ARGS)
+			cmd->argv[i] = ft_substr(st, 0, et - st);
 		i++;
-		if (i >= MAX_ARGS)
-			perror(EXCEEDED_MAX_ARGS);
 		root = parse_redir(root, ss, es);
+	}
+	if (i > MAX_ARGS)
+	{
+		i = MAX_ARGS;
+		ft_putendl_fd(TOO_MANY_ARGS, 2);
 	}
 	cmd->argv[i] = 0;
 	return (root);
