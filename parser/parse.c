@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 12:04:18 by etien             #+#    #+#             */
-/*   Updated: 2024/11/20 10:56:59 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/21 09:48:27 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_cmd	*parse_pipe(char **ss, char *es)
 // The call to parse_redir at the end of each while loop run allows redirections
 // to be interspersed between command arguments,
 // e.g. command arg1 > output.txt arg2 < input.txt
-// argv is allocated on the stack but argv[i] are dynamically-allocated.
+// Both argv and argv[i] are dynamically-allocated.
 t_cmd	*parse_exec(char **ss, char *es)
 {
 	t_cmd		*root;
@@ -83,22 +83,48 @@ t_cmd	*parse_exec(char **ss, char *es)
 	root = exec_cmd();
 	cmd = (t_exec_cmd *)root;
 	root = parse_redir(root, ss, es);
+	malloc_argv(*ss, cmd);
 	i = 0;
 	while (*ss < es && !check_for_token(ss, es, "|"))
 	{
 		get_token(ss, es, &st, &et);
-		if (i < MAX_ARGS)
-			cmd->argv[i] = ft_substr(st, 0, et - st);
+		cmd->argv[i] = ft_substr(st, 0, et - st);
 		i++;
 		root = parse_redir(root, ss, es);
 	}
-	if (i > MAX_ARGS)
-	{
-		i = MAX_ARGS;
-		ft_putendl_fd(TOO_MANY_ARGS, 2);
-	}
 	cmd->argv[i] = 0;
 	return (root);
+}
+
+// This function will dynamically allocate the argv array size in
+// EXEC nodes. A local pointer is created to walk the string until
+// either the string terminates or a pipe symbol is encountered, and
+// the number of word and redirection tokens are counted. Since every
+// redirection token will be accompanied by a word token, the array size
+// must discount the word tokens that belong to redirections.
+// An additional one space is allocated for the null terminator.
+void	malloc_argv(char *s, t_exec_cmd *cmd)
+{
+	char	*s_local;
+	int		tok;
+	int		word_count;
+	int		redir_count;
+
+	s_local = s;
+	tok = 0;
+	word_count = 0;
+	redir_count = 0;
+	while (*s_local)
+	{
+		tok = get_token(&s_local, s_local + ft_strlen(s_local), NULL, NULL);
+		if (tok == '|')
+			break ;
+		else if (tok == 'w')
+			word_count++;
+		else if (ft_strchr("<>+-", tok))
+			redir_count++;
+	}
+	cmd->argv = malloc((word_count - redir_count + 1) * sizeof(char *));
 }
 
 // independent function - no recursion or function calls
