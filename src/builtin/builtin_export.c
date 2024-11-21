@@ -6,13 +6,11 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:58:14 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/21 09:35:21 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/21 10:58:27 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/builtin.h"
-
-// TO-DO: when argument doesn't contain '=' it appears on env
 
 /**
  * Print error message for export
