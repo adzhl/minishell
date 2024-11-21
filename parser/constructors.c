@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:29:21 by etien             #+#    #+#             */
-/*   Updated: 2024/11/18 14:00:06 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/21 09:22:40 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ t_cmd	*pipe_cmd(t_cmd *left, t_cmd *right)
 }
 
 // Constructor for EXEC node
-// Only type is set as arrays will be filled up in the parse_exec function.
 t_cmd	*exec_cmd(void)
 {
 	t_exec_cmd	*cmd;
@@ -44,6 +43,7 @@ t_cmd	*exec_cmd(void)
 	cmd = malloc(sizeof(*cmd));
 	ft_memset(cmd, 0, sizeof(*cmd));
 	cmd->type = EXEC;
+	cmd->argv = NULL;
 	return ((t_cmd *)cmd);
 }
 

@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 14:01:00 by etien             #+#    #+#             */
-/*   Updated: 2024/11/15 13:25:46 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/21 09:20:17 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,5 @@ void	free_exec_data(t_exec_cmd *ecmd)
 	i = -1;
 	while (ecmd->argv[++i])
 		free(ecmd->argv[i]);
+	free(ecmd->argv);
 }

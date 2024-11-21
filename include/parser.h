@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:19:09 by etien             #+#    #+#             */
-/*   Updated: 2024/11/20 10:48:38 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/21 09:33:27 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct s_pipe_cmd
 typedef struct s_exec_cmd
 {
 	int		type;
-	char	*argv[MAX_ARGS + 1];
+	char	**argv;
 }			t_exec_cmd;
 
 // - mode: O_WRONLY | O_RDONLY | O_CREATE | O_TRUNC | O_APPEND
@@ -93,6 +93,7 @@ bool	check_for_token(char **ss, char *es, char *toks);
 t_cmd	*parse_cmd(char *s);
 t_cmd	*parse_pipe(char **ss, char *es);
 t_cmd	*parse_exec(char **ss, char *es);
+void	malloc_argv(char *s, t_exec_cmd *cmd);
 t_cmd	*parse_redir(t_cmd *cmd, char **ss, char *es);
 
 // Run command functions

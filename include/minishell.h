@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:47:31 by etien             #+#    #+#             */
-/*   Updated: 2024/11/20 11:05:06 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/21 09:23:43 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@
 # define SYNTAX_QUOTES "minishell: syntax error: unclosed quotes"
 # define SYNTAX_REDIR "minishell: syntax error near unexpected token \
 `<' or '>' "
-# define TOO_MANY_ARGS "Too many arguments. \
-Arguments have been truncated to MAX_ARGS: 10."
 
 // Error functions
 bool	syntax_error(char *input);
