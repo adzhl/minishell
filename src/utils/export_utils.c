@@ -6,12 +6,15 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:29:22 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/12 11:48:05 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/21 09:40:40 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/utils.h"
 
+/**
+ * Function to get the size of env
+ */
 int	get_env_size(char **env)
 {
 	int	i;
@@ -22,6 +25,9 @@ int	get_env_size(char **env)
 	return (i);
 }
 
+/**
+ * Function that sorts env lexicographically
+ */
 static void	sort_env(char **env_copy, int size)
 {
 	int		i;
@@ -46,6 +52,9 @@ static void	sort_env(char **env_copy, int size)
 	}
 }
 
+/**
+ * Function copies the env and sort the copied env using sort_env
+ */
 static char	**copy_and_sort_env(char **env)
 {
 	int		i;
@@ -72,6 +81,9 @@ static char	**copy_and_sort_env(char **env)
 	return (env_copy);
 }
 
+/**
+ * Function prints sorted env according to specified format
+ */
 int	print_sorted_env(char **env)
 {
 	char	**env_copy;

@@ -6,12 +6,17 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:58:14 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/12 11:49:10 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/21 09:35:21 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/builtin.h"
 
+// TO-DO: when argument doesn't contain '=' it appears on env
+
+/**
+ * Print error message for export
+ */
 static void	print_export_error(char *arg)
 {
 	ft_putstr_fd("minishell: export: '", STDERR_FILENO);
@@ -19,6 +24,13 @@ static void	print_export_error(char *arg)
 	ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
 }
 
+/**
+ * Function to add a new variable to env
+ *
+ * 1. Get the number of variables in env
+ * 2. Duplicate the new variable to env along with its value
+ * 3. Add NULL terminator at the end
+ */
 static int	add_to_env(char **env, const char *new_var)
 {
 	int	i;
@@ -31,6 +43,15 @@ static int	add_to_env(char **env, const char *new_var)
 	return (1);
 }
 
+/**
+ * Function to update/add value of a variable
+ *
+ * 1. Get variable name length
+ * 2. Copy variable name to var_name
+ * 3. Check for if the variable name is valid
+ * 4. Update value for variable if it already exists
+ * 5. If variable is new, add variable to env
+ */
 static int	handle_equal(char **env, char *arg, char *equal_sign)
 {
 	char	var_name[PATH_MAX];
@@ -48,6 +69,16 @@ static int	handle_equal(char **env, char *arg, char *equal_sign)
 	return (0);
 }
 
+/**
+ * Main builtin_export function
+ *
+ * 1. Check for arguments
+ * 2. If no arguments, print env in alphabetical order
+ * 3. If theres arguments, loop through the arguments.
+ * 4. Check for '=' in the argument. If exists, call handle_equal
+ * 5. If theres no '=', check for valid variable name
+ * 6. Add valid variable to env
+ */
 int	builtin_export(char **args, char **env)
 {
 	int		i;
@@ -55,17 +86,23 @@ int	builtin_export(char **args, char **env)
 
 	if (!args[1])
 		return (print_sorted_env(env));
-	i = 0;
-	while (args[++i])
+	i = 1;
+	while (args[i])
 	{
 		equal_sign = ft_strchr(args[i], '=');
 		if (equal_sign && handle_equal(env, args[i], equal_sign))
 			return (1);
-		else if (!equal_sign && !valid_var_name(args[i]))
+		else
 		{
-			print_export_error(args[i]);
-			return (1);
+			if (!valid_var_name(args[i]))
+			{
+				print_export_error(args[i]);
+				return (1);
+			}
+			if (!add_to_env(env, args[i]))
+				return (1);
 		}
+		i++;
 	}
 	return (0);
 }
