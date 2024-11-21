@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:58:14 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/21 10:58:27 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/21 14:04:23 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,16 @@ static void	print_export_error(char *arg)
  * 2. Duplicate the new variable to env along with its value
  * 3. Add NULL terminator at the end
  */
-static int	add_to_env(char **env, const char *new_var)
+int	add_to_env(char **env, const char *new_var)
 {
 	int	i;
 
 	i = get_env_size(env);
 	env[i] = ft_strdup(new_var);
 	if (!env[i])
-		return (0);
+		return (1);
 	env[i + 1] = NULL;
-	return (1);
+	return (0);
 }
 
 /**
@@ -90,7 +90,7 @@ int	builtin_export(char **args, char **env)
 		equal_sign = ft_strchr(args[i], '=');
 		if (equal_sign && handle_equal(env, args[i], equal_sign))
 			return (1);
-		else
+		else if (!equal_sign)
 		{
 			if (!valid_var_name(args[i]))
 			{
