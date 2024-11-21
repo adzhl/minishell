@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 09:09:39 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/04 09:28:23 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/21 12:26:40 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int					builtin_export(char **args, char **env);
 int					builtin_unset(char **args, char **env);
 int					builtin_env(char **args, char **env);
 int					builtin_exit(char **args, char **env);
+int					builtin_clear(char **args, char **env);
 
 // Built-in utils
 t_builtin			*init_builtins(void);
