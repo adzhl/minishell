@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 09:43:12 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/21 10:59:18 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/22 10:02:42 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	builtin_env(char **args, char **env)
 	{
 		equal_sign = ft_strchr(env[i], '=');
 		if (equal_sign)
-			ft_printf("%s\n", env[i]);
+			printf("%s\n", env[i]);
 		i++;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:58:14 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/21 14:04:23 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/25 17:45:36 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,23 @@ static void	print_export_error(char *arg)
 /**
  * Function to add a new variable to env
  *
- * 1. Get the number of variables in env
- * 2. Duplicate the new variable to env along with its value
- * 3. Add NULL terminator at the end
+ * 1. Allocate space to add new var to env
+ * 2. Get the number of variables in existing env
+ * 3. Duplicate the new variable to end of env
+ * 4. Add NULL terminator at the end
+ * 5. Update env list to point to new env
  */
 int	add_to_env(char **env, const char *new_var)
 {
-	int	i;
+	int		size;
+	char	*new_str;
 
-	i = get_env_size(env);
-	env[i] = ft_strdup(new_var);
-	if (!env[i])
+	size = get_env_size(env);
+	new_str = ft_strdup(new_var);
+	if (!new_str)
 		return (1);
-	env[i + 1] = NULL;
+	env[size] = new_str;
+	env[size + 1] = NULL;
 	return (0);
 }
 
@@ -97,10 +101,54 @@ int	builtin_export(char **args, char **env)
 				print_export_error(args[i]);
 				return (1);
 			}
-			if (!add_to_env(env, args[i]))
+			if (add_to_env(env, args[i]))
 				return (1);
 		}
 		i++;
 	}
 	return (0);
 }
+
+// int main(int argc, char **argv, char **envp)
+// {
+//     (void)argc;
+//     (void)argv;
+
+//     char **env = create_env_copy(envp);
+// 	printf("Initial env");
+// 	builtin_env(NULL, env);
+// 	printf("\n");
+
+//     printf("Test: Add new variable\n");
+//     char *args1[] = {"export", "NEW_VAR=value", NULL};
+//     builtin_export(args1, env);
+// 	builtin_env(NULL, env);
+// 	printf("\n");
+
+//     printf("Test: Update existing variable\n");
+//     char *args2[] = {"export", "NEW_VAR=updated_value", NULL};
+//     builtin_export(args2, env);
+// 	builtin_env(NULL, env);
+// 	printf("\n");
+
+//     printf("Test: Invalid variable\n");
+//     char *args3[] = {"export", "2INVALID=value", NULL};
+//     builtin_export(args3, env);
+// 	builtin_env(NULL, env);
+// 	printf("\n");
+
+// 	printf("Test: variable without value\n");
+// 	char *args4[] = {"export", "No_value==", NULL};
+// 	builtin_export(args4, env);
+// 	printf("\n");
+// 	builtin_env(NULL, env);
+// 	printf("\n");
+
+//     printf("Final Environment:\n");
+//     char *args5[] = {"export", NULL};
+//     builtin_export(args5, env);
+
+//     free_array(env);
+
+//     return (0);
+// }

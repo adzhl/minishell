@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 14:54:05 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/11 08:14:57 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/25 17:27:16 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**create_env_copy(char **envp)
 	i = 0;
 	while (envp[i])
 		i++;
-	env_copy = malloc(sizeof(char *) * (i + 1));
+	env_copy = malloc(sizeof(char *) * (i + 100));
 	if (!env_copy)
 		return (NULL);
 	i = 0;
