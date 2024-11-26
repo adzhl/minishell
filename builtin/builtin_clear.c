@@ -6,11 +6,11 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 12:24:46 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/21 12:38:29 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/27 07:55:10 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/builtin.h"
+#include "../include/builtin.h"
 
 /**
  * Function to clear the screen using ANSI escape sequence

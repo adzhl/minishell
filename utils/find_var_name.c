@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_array.c                                       :+:      :+:    :+:   */
+/*   find_var_name.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/12 11:19:35 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/25 16:07:27 by abinti-a         ###   ########.fr       */
+/*   Created: 2024/11/11 10:42:04 by abinti-a          #+#    #+#             */
+/*   Updated: 2024/11/27 07:56:33 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/utils.h"
+#include "../include/utils.h"
 
-void	free_array(char **array)
+/**
+ * Find the index of the environment variable needed to be removed
+ */
+int	find_var_name(char **env, const char *name)
 {
 	int	i;
+	int	name_len;
 
-	if (!array)
-		return ;
+	name_len = (int)ft_strlen(name);
 	i = 0;
-	while (array[i])
+	while (env[i])
 	{
-		free(array[i]);
+		if (ft_strncmp(env[i], name, name_len) == 0 && env[i][name_len] == '=')
+			return (i);
 		i++;
 	}
-	free(array);
+	return (-1);
 }

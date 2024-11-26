@@ -1,32 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   find_var_name.c                                    :+:      :+:    :+:   */
+/*   copy_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/11 10:42:04 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/11 10:42:37 by abinti-a         ###   ########.fr       */
+/*   Created: 2024/11/07 14:54:05 by abinti-a          #+#    #+#             */
+/*   Updated: 2024/11/27 07:56:19 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/utils.h"
+#include "../include/utils.h"
 
-/**
- * Find the index of the environment variable needed to be removed
- */
-int	find_var_name(char **env, const char *name)
+char	**create_env_copy(char **envp)
 {
-	int	i;
-	int	name_len;
+	int		i;
+	char	**env_copy;
 
-	name_len = (int)ft_strlen(name);
 	i = 0;
-	while (env[i])
+	while (envp[i])
+		i++;
+	env_copy = malloc(sizeof(char *) * (i + 100));
+	if (!env_copy)
+		return (NULL);
+	i = 0;
+	while (envp[i])
 	{
-		if (ft_strncmp(env[i], name, name_len) == 0 && env[i][name_len] == '=')
-			return (i);
+		env_copy[i] = ft_strdup(envp[i]);
+		if (!env_copy[i])
+		{
+			while (--i >= 0)
+				free(env_copy[i]);
+			free(env_copy);
+			return (NULL);
+		}
 		i++;
 	}
-	return (-1);
+	env_copy[i] = NULL;
+	return (env_copy);
 }

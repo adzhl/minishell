@@ -6,11 +6,11 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 09:43:12 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/22 10:02:42 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/27 07:55:20 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/builtin.h"
+#include "../include/builtin.h"
 
 /**
  * Function to loop over the environment variables to print to output

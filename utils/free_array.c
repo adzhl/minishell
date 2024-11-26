@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_exit_error.c                                 :+:      :+:    :+:   */
+/*   free_array.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/04 09:29:19 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/05 13:35:41 by abinti-a         ###   ########.fr       */
+/*   Created: 2024/11/12 11:19:35 by abinti-a          #+#    #+#             */
+/*   Updated: 2024/11/27 07:56:37 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/utils.h"
+#include "../include/utils.h"
 
-void	print_exit_error(char *arg, char *message)
+void	free_array(char **array)
 {
-	ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
-	if (arg)
+	int	i;
+
+	if (!array)
+		return ;
+	i = 0;
+	while (array[i])
 	{
-		ft_putstr_fd(arg, STDERR_FILENO);
-		ft_putstr_fd(": ", STDERR_FILENO);
+		free(array[i]);
+		i++;
 	}
-	ft_putendl_fd(message, STDERR_FILENO);
+	free(array);
 }

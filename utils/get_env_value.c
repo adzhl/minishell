@@ -1,41 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   copy_env.c                                         :+:      :+:    :+:   */
+/*   get_env_value.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/07 14:54:05 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/25 17:27:16 by abinti-a         ###   ########.fr       */
+/*   Created: 2024/11/07 14:53:40 by abinti-a          #+#    #+#             */
+/*   Updated: 2024/11/27 07:56:41 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/utils.h"
+#include "../include/utils.h"
 
-char	**create_env_copy(char **envp)
+char	*get_env_value(char **env, const char *name)
 {
-	int		i;
-	char	**env_copy;
+	int	i;
+	int	len;
 
-	i = 0;
-	while (envp[i])
-		i++;
-	env_copy = malloc(sizeof(char *) * (i + 100));
-	if (!env_copy)
+	if (!name || !env)
 		return (NULL);
+	len = 0;
+	while (name[len])
+		len++;
 	i = 0;
-	while (envp[i])
+	while (env[i])
 	{
-		env_copy[i] = ft_strdup(envp[i]);
-		if (!env_copy[i])
-		{
-			while (--i >= 0)
-				free(env_copy[i]);
-			free(env_copy);
-			return (NULL);
-		}
+		if (ft_strncmp(env[i], name, len) == 0 && env[i][len] == '=')
+			return (env[i] + len + 1);
 		i++;
 	}
-	env_copy[i] = NULL;
-	return (env_copy);
+	return (NULL);
 }

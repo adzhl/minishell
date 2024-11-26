@@ -6,11 +6,11 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:58:14 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/25 17:45:36 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/27 07:55:32 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/builtin.h"
+#include "../include/builtin.h"
 
 /**
  * Print error message for export
@@ -25,11 +25,9 @@ static void	print_export_error(char *arg)
 /**
  * Function to add a new variable to env
  *
- * 1. Allocate space to add new var to env
- * 2. Get the number of variables in existing env
- * 3. Duplicate the new variable to end of env
- * 4. Add NULL terminator at the end
- * 5. Update env list to point to new env
+ * 1. Get the number of variables in existing env
+ * 2. Duplicate the new variable to end of env
+ * 3. Add NULL terminator at the end
  */
 int	add_to_env(char **env, const char *new_var)
 {
