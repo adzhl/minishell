@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
+/*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 13:37:56 by etien             #+#    #+#             */
-/*   Updated: 2024/11/19 13:46:18 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/27 13:44:35 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,18 @@
 // If the input passes the syntax check, it will be parsed to construct
 // the abstract syntax tree (AST). The commands will then be executed.
 // Finally, the AST will be freed and the loop restarts.
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
 	char	*input;
 	t_cmd	*ast;
+	t_mshell shell;
 
+	(void)argc;
+	(void)argv;
 	while (1)
 	{
+		shell.env = create_env_copy(envp);
+		shell.last_exit_status = 0;
 		input = readline("minishell$ ");
 		if (!input)
 			break ;
@@ -33,7 +38,7 @@ int	main(void)
 		if (syntax_error(input))
 			continue ;
 		ast = parse_cmd(input);
-		run_cmd_control(input, ast);
+		run_cmd_control(input, ast, &shell);
 		free_ast(ast);
 	}
 	return (EXIT_SUCCESS);

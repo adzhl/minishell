@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:47:31 by etien             #+#    #+#             */
-/*   Updated: 2024/11/27 10:37:18 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/27 13:11:34 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,21 +43,29 @@
 # include <stdbool.h>
 
 // program header files
-# include "parser.h"
-# include "heredoc.h"
-# include "expansion.h"
 # include "builtin.h"
+# include "expansion.h"
+# include "heredoc.h"
+# include "parser.h"
 # include "utils.h"
 
 // Error messages
 # define EXEC_ERR ": command not found"
 # define SYNTAX_PIPE "minishell: syntax error near unexpected token `|'"
 # define SYNTAX_QUOTES "minishell: syntax error: unclosed quotes"
-# define SYNTAX_REDIR "minishell: syntax error near unexpected token \
+# define SYNTAX_REDIR \
+	"minishell: syntax error near unexpected token \
 `<' or '>' "
 
+// Struct to store env and exit status
+typedef struct s_mshell
+{
+	char	**env;
+	int		last_exit_status;
+}			t_mshell;
+
 // Error functions
-bool	syntax_error(char *input);
-void	print_error(char *err_msg, char *input, char *s);
+bool		syntax_error(char *input);
+void		print_error(char *err_msg, char *input, char *s);
 
 #endif

@@ -6,13 +6,14 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 09:27:54 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/27 10:35:50 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/27 13:20:29 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_H
 # define UTILS_H
 
+typedef struct s_mshell t_mshell;
 # include "minishell.h"
 
 char	**create_env_copy(char **envp);
@@ -23,5 +24,7 @@ int		valid_var_name(const char *name);
 void	free_array(char **array);
 int		print_sorted_env(char **env);
 int		get_env_size(char **env);
+int		set_exit_status(t_mshell *shell, int status);
+int		get_exit_status(t_mshell *shell);
 
 #endif

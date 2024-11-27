@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:06:37 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/27 10:38:24 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/27 13:04:42 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
  * Function to print current working directory using getcwd from <unistd.h>
  * PATH_MAX <limits.h> : maximum allowable length for a path in the system
  */
-int	builtin_pwd(char **args, char **env)
+int	builtin_pwd(char **args, t_mshell *shell)
 {
 	char	cwd[PATH_MAX];
 
 	(void)args;
-	(void)env;
+	(void)shell;
 	if (!getcwd(cwd, sizeof(cwd)))
 	{
 		perror("pwd");

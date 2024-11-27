@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:28:56 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/27 10:38:40 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/27 13:31:35 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	is_builtin(char *cmd)
 /**
  * Execute built-in commands
  */
-int	execute_builtin(char *cmd, char **args, char **env)
+int	execute_builtin(char *cmd, char **args, t_mshell *shell)
 {
 	t_builtin	*builtins;
 	int			i;
@@ -58,7 +58,7 @@ int	execute_builtin(char *cmd, char **args, char **env)
 	while (builtins[i].name)
 	{
 		if (!ft_strcmp(cmd, builtins[i].name))
-			return (builtins[i].func(args, env));
+			return (builtins[i].func(args, shell));
 		i++;
 	}
 	return (1);
