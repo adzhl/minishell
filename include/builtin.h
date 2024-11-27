@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 09:09:39 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/27 08:55:52 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/27 09:06:46 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # include <linux/limits.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include "../libft/libft/libft.h"
+# include "utils.h"
+# include <stdio.h>
 
 /**
  * Built-in command function pointer type
