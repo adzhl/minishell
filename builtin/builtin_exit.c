@@ -6,11 +6,22 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 13:24:23 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/27 07:55:26 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/27 08:52:09 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/builtin.h"
+
+void	print_exit_error(char *arg, char *message)
+{
+	ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
+	if (arg)
+	{
+		ft_putstr_fd(arg, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+	}
+	ft_putendl_fd(message, STDERR_FILENO);
+}
 
 /**
  * Skip over '-' and '+' if any
