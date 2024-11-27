@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
+/*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:51:24 by etien             #+#    #+#             */
-/*   Updated: 2024/11/19 13:44:22 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/27 12:22:26 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ void	run_cmd(t_cmd *cmd)
 	{
 		if (ecmd->argv[0] == 0)
 			exit(EXIT_FAILURE);
+		if (is_builtin(ecmd->argv[0]))
+		{
+			if (execute_builtin(ecmd->argv[0], ecmd->argv, environ) != 0)
+				exit(EXIT_FAILURE);
+			exit(EXIT_SUCCESS);
+		}
 		if (execve(ecmd->argv[0], ecmd->argv, environ) == -1)
 		{
 			ft_putstr_fd(ecmd->argv[0], STDERR_FILENO);
