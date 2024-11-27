@@ -6,11 +6,11 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:42:04 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/27 07:56:33 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/27 10:39:29 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/utils.h"
+#include "../include/minishell.h"
 
 /**
  * Find the index of the environment variable needed to be removed

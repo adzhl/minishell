@@ -6,11 +6,11 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:29:22 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/27 07:56:28 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/27 10:39:20 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/utils.h"
+#include "../include/minishell.h"
 
 /**
  * Function to get the size of env

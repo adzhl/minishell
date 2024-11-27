@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:47:31 by etien             #+#    #+#             */
-/*   Updated: 2024/11/27 08:55:22 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/27 10:37:18 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 # include <signal.h>
 // open, close
 # include <fcntl.h>
+// PATH_MAX
+# include <linux/limits.h>
 
 // boolean data type
 # include <stdbool.h>

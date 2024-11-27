@@ -6,15 +6,14 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 09:27:54 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/27 09:07:17 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/27 10:35:50 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_H
 # define UTILS_H
 
-# include "../libft/libft/libft.h"
-# include <stdio.h>
+# include "minishell.h"
 
 char	**create_env_copy(char **envp);
 char	*get_env_value(char **env, const char *name);
