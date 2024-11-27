@@ -6,17 +6,13 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 09:09:39 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/25 15:49:53 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/27 08:55:52 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTIN_H
 # define BUILTIN_H
 
-# include "../libft/ft_printf/includes/ft_printf.h"
-# include "../libft/get_next_line.h"
-# include "../libft/libft.h"
-# include "utils.h"
 # include <linux/limits.h>
 # include <stdlib.h>
 # include <unistd.h>
