@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:57:06 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/27 10:36:33 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/27 13:30:49 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,14 @@ static int	update_pwd(char **env, char *curr_dir, char *new_dir)
  * 3. If there is an argument, use chdir to change to the specified path
  * 4. If path does not exist, return an error.
  */
-int	builtin_cd(char **args, char **env)
+int	builtin_cd(char **args, t_mshell *shell)
 {
 	char	*path;
 	char	curr_dir[PATH_MAX];
 	char	new_dir[PATH_MAX];
 
 	(void)args;
-	if (!args[1] && handle_no_args(env, &path))
+	if (!args[1] && handle_no_args(shell->env, &path))
 		return (1);
 	else if (args[1])
 		path = args[1];
@@ -82,5 +82,5 @@ int	builtin_cd(char **args, char **env)
 		print_cd_error(args[1], "No such file or directory");
 		return (1);
 	}
-	return (update_pwd(env, curr_dir, new_dir));
+	return (update_pwd(shell->env, curr_dir, new_dir));
 }

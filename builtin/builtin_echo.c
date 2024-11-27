@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 12:12:16 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/27 10:37:46 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/27 13:03:09 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ static int	handle_n_option(char **args, int *newline)
  * if -n is present, no '\n' will be added
  * if argument is empty then only print out '\n'
  */
-int	builtin_echo(char **args, char **env)
+int	builtin_echo(char **args, t_mshell *shell)
 {
 	int	i;
 	int	newline;
 
-	(void)env;
+	(void)shell;
 	i = handle_n_option(args, &newline);
 	while (args[i])
 	{

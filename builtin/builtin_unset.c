@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:04:01 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/27 10:38:31 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/27 13:05:32 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	print_unset_error(char *arg)
  * 4. If found, remove variable from env
  * 5. Return (0) if successful
  */
-int	builtin_unset(char **args, char **env)
+int	builtin_unset(char **args, t_mshell *shell)
 {
 	int	i;
 	int	exit_status;
@@ -60,9 +60,9 @@ int	builtin_unset(char **args, char **env)
 		}
 		else
 		{
-			var_index = find_var_name(env, args[i]);
+			var_index = find_var_name(shell->env, args[i]);
 			if (var_index != -1)
-				remove_var(env, var_index);
+				remove_var(shell->env, var_index);
 		}
 		i++;
 	}

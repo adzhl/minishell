@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:51:24 by etien             #+#    #+#             */
-/*   Updated: 2024/11/27 12:22:26 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/27 13:30:04 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,36 +16,35 @@
 // If the current node is an EXEC node, it will execute, otherwise
 // the function will recursively call itself to continue descending
 // down the parsing tree.
-void	run_cmd(t_cmd *cmd)
+void	run_cmd(t_cmd *cmd, t_mshell *shell)
 {
 	t_pipe_cmd	*pcmd;
 	t_redir_cmd	*rcmd;
 	t_exec_cmd	*ecmd;
-	extern char	**environ;
 
 	cmd_typecasting(cmd, &pcmd, &rcmd, &ecmd);
 	if (!cmd)
 		exit(EXIT_FAILURE);
 	if (cmd->type == PIPE)
-		set_pipe(pcmd);
+		set_pipe(pcmd, shell);
 	else if (cmd->type == EXEC)
 	{
 		if (ecmd->argv[0] == 0)
 			exit(EXIT_FAILURE);
 		if (is_builtin(ecmd->argv[0]))
 		{
-			if (execute_builtin(ecmd->argv[0], ecmd->argv, environ) != 0)
+			if (execute_builtin(ecmd->argv[0], ecmd->argv, shell) != 0)
 				exit(EXIT_FAILURE);
 			exit(EXIT_SUCCESS);
 		}
-		if (execve(ecmd->argv[0], ecmd->argv, environ) == -1)
+		if (execve(ecmd->argv[0], ecmd->argv, shell->env) == -1)
 		{
 			ft_putstr_fd(ecmd->argv[0], STDERR_FILENO);
 			ft_putendl_fd(EXEC_ERR, STDERR_FILENO);
 		}
 	}
 	else if (cmd->type == REDIR)
-		set_redirection(rcmd);
+		set_redirection(rcmd, shell);
 }
 
 // This function will set up the pipes, fork two child processes and
@@ -54,7 +53,7 @@ void	run_cmd(t_cmd *cmd)
 // The parent process will wait for both children to terminate.
 // Even though fork is called twice, only two child processes are created
 // because each child will exit when run_cmd is called.
-void	set_pipe(t_pipe_cmd	*pcmd)
+void	set_pipe(t_pipe_cmd	*pcmd, t_mshell *shell)
 {
 	int	pipefd[2];
 
@@ -63,14 +62,14 @@ void	set_pipe(t_pipe_cmd	*pcmd)
 	{
 		dup2(pipefd[WRITE], STDOUT_FILENO);
 		close_pipes(pipefd);
-		run_cmd(pcmd->left);
+		run_cmd(pcmd->left, shell);
 		exit(EXIT_SUCCESS);
 	}
 	if (fork() == 0)
 	{
 		dup2(pipefd[READ], STDIN_FILENO);
 		close_pipes(pipefd);
-		run_cmd(pcmd->right);
+		run_cmd(pcmd->right,shell);
 		exit(EXIT_SUCCESS);
 	}
 	close_pipes(pipefd);
@@ -81,13 +80,13 @@ void	set_pipe(t_pipe_cmd	*pcmd)
 // This function will set up the correct redirection depending
 // on whether it is a file or a heredoc. In both cases, it will
 // call run_cmd to continue descending down the parsing tree.
-void	set_redirection(t_redir_cmd *rcmd)
+void	set_redirection(t_redir_cmd *rcmd, t_mshell *shell)
 {
 	if (rcmd->file)
 		open_fd(rcmd);
 	else if (rcmd->heredoc)
 		pipe_heredoc(rcmd);
-	run_cmd(rcmd->cmd);
+	run_cmd(rcmd->cmd, shell);
 }
 
 // This function handles opening file descriptors for the REDIR nodes.

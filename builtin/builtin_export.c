@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:58:14 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/27 10:38:09 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/27 13:06:20 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,18 +79,18 @@ static int	handle_equal(char **env, char *arg, char *equal_sign)
  * 5. If theres no '=', check for valid variable name
  * 6. Add valid variable to env
  */
-int	builtin_export(char **args, char **env)
+int	builtin_export(char **args, t_mshell *shell)
 {
 	int		i;
 	char	*equal_sign;
 
 	if (!args[1])
-		return (print_sorted_env(env));
+		return (print_sorted_env(shell->env));
 	i = 1;
 	while (args[i])
 	{
 		equal_sign = ft_strchr(args[i], '=');
-		if (equal_sign && handle_equal(env, args[i], equal_sign))
+		if (equal_sign && handle_equal(shell->env, args[i], equal_sign))
 			return (1);
 		else if (!equal_sign)
 		{
@@ -99,7 +99,7 @@ int	builtin_export(char **args, char **env)
 				print_export_error(args[i]);
 				return (1);
 			}
-			if (add_to_env(env, args[i]))
+			if (add_to_env(shell->env, args[i]))
 				return (1);
 		}
 		i++;

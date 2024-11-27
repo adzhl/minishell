@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 13:24:23 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/27 10:38:02 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/27 12:52:48 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,21 @@ static int	is_numeric(const char *str)
  * 5. Exit the program with the exit code from the argument
  * 6. Exit code range is 0 - 255 so other values will wrap around
  */
-int	builtin_exit(char **args, char **env)
+int	builtin_exit(char **args, t_mshell *shell)
 {
 	int	exit_code;
+	int	exit_return;
 
-	(void)env;
 	ft_putendl_fd("exit", STDOUT_FILENO);
 	if (!args[1])
+	{
+		set_exit_status(shell, 0);
 		exit(0);
+	}
 	if (!is_numeric(args[1]))
 	{
 		print_exit_error(args[1], "numeric argument required");
+		set_exit_status(shell, 255);
 		exit(255);
 	}
 	if (args[2])
@@ -70,7 +74,9 @@ int	builtin_exit(char **args, char **env)
 		return (1);
 	}
 	exit_code = ft_atoi(args[1]);
-	return ((unsigned char)(exit_code % 256));
+	exit_return = (unsigned char)(exit_code % 256);
+	set_exit_status(shell, exit_return);
+	return (exit_return);
 }
 
 /* #include <stdio.h>

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
+/*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 16:10:16 by etien             #+#    #+#             */
-/*   Updated: 2024/11/19 13:46:36 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/27 13:38:38 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,19 @@
 // contain pipes. This is necessary so that control will be returned to
 // the parent process after the child executes the command and terminates.
 // It will prevent the program from exiting immediately.
-void	run_cmd_control(char *input, t_cmd *ast)
+void	run_cmd_control(char *input, t_cmd *ast, t_mshell *shell)
 {
 	bool	has_pipe;
 
 	has_pipe = ft_strchr(input, '|');
 	free(input);
 	if (has_pipe)
-		run_cmd(ast);
+		run_cmd(ast, shell);
 	else
 	{
 		if (fork() == 0)
 		{
-			run_cmd(ast);
+			run_cmd(ast, shell);
 			exit(EXIT_SUCCESS);
 		}
 		wait(NULL);
