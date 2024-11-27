@@ -6,11 +6,11 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 12:24:20 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/27 07:56:24 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/27 10:39:09 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/builtin.h"
+#include "../include/minishell.h"
 
 int set_exit_status(char **env, int status)
 {

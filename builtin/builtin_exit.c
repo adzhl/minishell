@@ -6,11 +6,11 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 13:24:23 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/27 08:52:09 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/27 10:38:02 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/builtin.h"
+#include "../include/minishell.h"
 
 void	print_exit_error(char *arg, char *message)
 {
