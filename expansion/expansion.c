@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
+/*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 10:59:56 by etien             #+#    #+#             */
-/*   Updated: 2024/11/18 15:07:29 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/28 15:23:02 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*expand_argument(char *s)
 	expanded_s = ft_strdup("");
 	while (*s)
 		expansion_control(&s, &opening_quote, &in_quote, &expanded_s);
-	return (free(s), expanded_s);
+	return (expanded_s);
 }
 
 // This function contains the main logic of expand_argument.

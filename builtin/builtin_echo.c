@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 12:12:16 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/27 13:03:09 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/28 15:22:41 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,17 @@ int	builtin_echo(char **args, t_mshell *shell)
 {
 	int	i;
 	int	newline;
+	char *expanded;
 
 	(void)shell;
 	i = handle_n_option(args, &newline);
 	while (args[i])
 	{
-		printf("%s", args[i]);
+		expanded = expand_argument(args[i]);
+		if (!expanded)
+			return (1);
+		printf("%s", expanded);
+		free(expanded);
 		if (args[i + 1])
 			printf(" ");
 		i++;
