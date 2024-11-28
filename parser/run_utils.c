@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 16:10:16 by etien             #+#    #+#             */
-/*   Updated: 2024/11/28 17:31:58 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/28 18:53:15 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ void	run_cmd_control(char *input, t_cmd *ast, t_mshell *shell)
 		wait(NULL);
 	}
 	else if (!has_pipe && is_builtin(get_standalone_cmd(ast)))
-		run_built_in(ast, shell);
+		run_builtin(ast, shell);
 	else
 		run_cmd(ast, shell);
 }
 
 // This function is similar to the run_cmd function, except it
 // is only run when there is a standalone built-in command.
-void	run_built_in(t_cmd *cmd, t_mshell *shell)
+void	run_builtin(t_cmd *cmd, t_mshell *shell)
 {
 	t_redir_cmd	*rcmd;
 	t_exec_cmd	*ecmd;
