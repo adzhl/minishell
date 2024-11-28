@@ -6,29 +6,29 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 16:10:16 by etien             #+#    #+#             */
-/*   Updated: 2024/11/28 18:53:15 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/28 21:43:26 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// This function checks for pipe symbols in the input to differentiate
-// between standalone commands and piped commands. For piped commands,
-// the run_cmd function can be called directly, as it handles child process
-// creation in its PIPE nodes. However, for standalone commands, built-in
-// functions must be executed in the parent process to ensure that changes
-// to the environment variables (ENV) persist across subsequent commands.
-// If the standalone command is not a built-in, a child process must be forked
-// manually to execute it. This prevents the execve call from terminating
-// the parent process. The goal is to ensure that control returns to the
-// shell prompt after execution, avoiding an immediate program exit.
+// This function checks for pipe symbols in the input to identify
+// standalone built-in commands. Standalone built-in commands must be
+// executed in the parent process to ensure that changes to the environment
+// variables (ENV) persist across subsequent commands. For all other types
+// of commands, a child process must be forked manually before run_cmd is
+// called. This prevents the execve call from terminating the parent process.
+// The goal is to ensure that control returns to the shell prompt after
+// execution, avoiding an immediate program exit.
 void	run_cmd_control(char *input, t_cmd *ast, t_mshell *shell)
 {
 	bool	has_pipe;
 
 	has_pipe = ft_strchr(input, '|');
 	free(input);
-	if (!has_pipe && !is_builtin(get_standalone_cmd(ast)))
+	if (!has_pipe && is_builtin(get_standalone_cmd(ast)))
+		run_builtin(ast, shell);
+	else
 	{
 		if (fork() == 0)
 		{
@@ -37,10 +37,6 @@ void	run_cmd_control(char *input, t_cmd *ast, t_mshell *shell)
 		}
 		wait(NULL);
 	}
-	else if (!has_pipe && is_builtin(get_standalone_cmd(ast)))
-		run_builtin(ast, shell);
-	else
-		run_cmd(ast, shell);
 }
 
 // This function is similar to the run_cmd function, except it

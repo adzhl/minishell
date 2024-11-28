@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:19:09 by etien             #+#    #+#             */
-/*   Updated: 2024/11/28 18:53:08 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/28 21:37:47 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@
 # define EXEC 1
 # define REDIR 2
 # define PIPE 3
-
-// Array size for the EXEC node.
-# define MAX_ARGS 10
 
 // Space, tab, carriage return, newline, verical tab
 # define WHITESPACE " \t\r\n\v"
