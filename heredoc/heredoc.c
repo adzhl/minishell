@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:48:51 by etien             #+#    #+#             */
-/*   Updated: 2024/11/19 11:32:42 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/28 22:33:20 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,19 +102,4 @@ void	read_heredoc_input(char **hd_content, int pipefd_read)
 		*hd_content = temp;
 		bytes_read = read(pipefd_read, buffer, sizeof(buffer));
 	}
-}
-
-// This function will compare two strings.
-// If they are identical, it will return 0. Otherwise, it will return
-// the ASCII value difference of the last compared characters.
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	while (*s1 || *s2)
-	{
-		if (*s1 != *s2)
-			return ((unsigned char)*s1 - (unsigned char)*s2);
-		s1++;
-		s2++;
-	}
-	return (0);
 }
