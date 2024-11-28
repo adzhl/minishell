@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:51:24 by etien             #+#    #+#             */
-/*   Updated: 2024/11/27 13:30:04 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/28 08:51:56 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	run_cmd(t_cmd *cmd, t_mshell *shell)
 	t_pipe_cmd	*pcmd;
 	t_redir_cmd	*rcmd;
 	t_exec_cmd	*ecmd;
+	char *cmd_path;
 
 	cmd_typecasting(cmd, &pcmd, &rcmd, &ecmd);
 	if (!cmd)
@@ -37,10 +38,16 @@ void	run_cmd(t_cmd *cmd, t_mshell *shell)
 				exit(EXIT_FAILURE);
 			exit(EXIT_SUCCESS);
 		}
-		if (execve(ecmd->argv[0], ecmd->argv, shell->env) == -1)
+		cmd_path = find_path(ecmd->argv[0], shell);
+		if (cmd_path)
 		{
-			ft_putstr_fd(ecmd->argv[0], STDERR_FILENO);
-			ft_putendl_fd(EXEC_ERR, STDERR_FILENO);
+			if (execve(cmd_path, ecmd->argv, shell->env) == -1)
+			{
+				free(cmd_path);
+				ft_putstr_fd(ecmd->argv[0], STDERR_FILENO);
+				ft_putendl_fd(EXEC_ERR, STDERR_FILENO);
+			}
+			free(cmd_path);
 		}
 	}
 	else if (cmd->type == REDIR)

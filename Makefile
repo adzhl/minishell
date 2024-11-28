@@ -6,7 +6,7 @@ $(addprefix parser/, clean_up.c constructors.c parse.c run_utils.c run.c token.c
 $(addprefix heredoc/, delimiter.c heredoc.c) \
 $(addprefix expansion/, append_utils.c expansion_utils.c expansion.c) \
 $(addprefix builtin/, builtin_cd.c builtin_clear.c builtin_echo.c builtin_env.c builtin_exit.c builtin_export.c builtin_pwd.c builtin_unset.c builtin.c) \
-$(addprefix utils/, copy_env.c export_utils.c find_var_name.c free_array.c get_env_value.c update_env_value.c valid_var_name.c exit_status.c)
+$(addprefix utils/, copy_env.c export_utils.c find_var_name.c free_array.c get_env_value.c update_env_value.c valid_var_name.c exit_status.c find_path.c)
 
 # $(addprefix testing/, parser_visualizer.c tester.c) \
 
