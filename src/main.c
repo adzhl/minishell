@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 13:37:56 by etien             #+#    #+#             */
-/*   Updated: 2024/11/27 13:44:35 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/28 08:18:46 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	main(int argc, char **argv, char **envp)
 		ast = parse_cmd(input);
 		run_cmd_control(input, ast, &shell);
 		free_ast(ast);
+		free_array(shell.env);
 	}
 	return (EXIT_SUCCESS);
 }
