@@ -6,30 +6,36 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:19:09 by etien             #+#    #+#             */
-/*   Updated: 2024/11/28 21:37:47 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/28 22:13:13 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-// The type of parsing tree node is given an integer representation.
-# define EXEC 1
-# define REDIR 2
-# define PIPE 3
-
 // Space, tab, carriage return, newline, verical tab
 # define WHITESPACE " \t\r\n\v"
-
-// Redirection modes
-# define R_INPUT 1
-# define R_HEREDOC 2
-# define R_OUTPUT 3
-# define R_APPEND 4
 
 // Pipe ends
 # define READ 0
 # define WRITE 1
+
+// Parsing tree node types
+typedef enum node_type
+{
+	EXEC,
+	REDIR,
+	PIPE
+}	t_node_type;
+
+// Redirection modes for redir_cmd constructor function
+typedef enum redir_mode
+{
+	REDIR_INPUT,
+	REDIR_HEREDOC,
+	REDIR_OUTPUT,
+	REDIR_APPEND
+}	t_redir_mode;
 
 // Struct declarations for parsing tree nodes
 // General cmd struct to allow typecasting between different types of nodes.

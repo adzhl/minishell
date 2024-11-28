@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 16:10:16 by etien             #+#    #+#             */
-/*   Updated: 2024/11/28 21:43:26 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/28 22:14:54 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void	run_cmd_control(char *input, t_cmd *ast, t_mshell *shell)
 
 // This function is similar to the run_cmd function, except it
 // is only run when there is a standalone built-in command.
+// Standalone commands do not have pipes so PIPE nodes are
+// omitted in the if-else checks.
 void	run_builtin(t_cmd *cmd, t_mshell *shell)
 {
 	t_redir_cmd	*rcmd;

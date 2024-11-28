@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 14:16:29 by etien             #+#    #+#             */
-/*   Updated: 2024/11/13 17:48:12 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/28 21:55:36 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,13 @@
 // Double quotes
 # define DQ '\"'
 
-// Macros for expansion modes
-# define EXP_ARGUMENT 1
-# define EXP_DELIMITER 2
-# define EXP_HEREDOC 3
+// Expansion modes for append_str function
+typedef enum expansion_mode
+{
+	EXP_ARGUMENT,
+	EXP_DELIMITER,
+	EXP_HEREDOC
+}	t_expansion_mode;
 
 // Expansion functions
 char	*expand_argument(char *s);

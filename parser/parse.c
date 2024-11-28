@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 12:04:18 by etien             #+#    #+#             */
-/*   Updated: 2024/11/21 09:48:27 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/28 22:02:46 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,13 +150,13 @@ t_cmd	*parse_redir(t_cmd *cmd, char **ss, char *es)
 		tok = get_token(ss, es, 0, 0);
 		get_token(ss, es, &st, &et);
 		if (tok == '<')
-			cmd = redir_cmd(st, et, R_INPUT, cmd);
+			cmd = redir_cmd(st, et, REDIR_INPUT, cmd);
 		else if (tok == '-')
-			cmd = redir_cmd(st, et, R_HEREDOC, cmd);
+			cmd = redir_cmd(st, et, REDIR_HEREDOC, cmd);
 		else if (tok == '>')
-			cmd = redir_cmd(st, et, R_OUTPUT, cmd);
+			cmd = redir_cmd(st, et, REDIR_OUTPUT, cmd);
 		else if (tok == '+')
-			cmd = redir_cmd(st, et, R_APPEND, cmd);
+			cmd = redir_cmd(st, et, REDIR_APPEND, cmd);
 	}
 	return (cmd);
 }
