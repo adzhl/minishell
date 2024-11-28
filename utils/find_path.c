@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 08:30:00 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/28 08:46:45 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/28 09:22:36 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char *find_path(char *cmd, t_mshell *shell)
     char *path_var;
     char **paths;
     char *full_path;
-    char *join_slash;
+    char *append_cmd;
     int i;
 
     path_var = get_env_value(shell->env, "PATH");
@@ -27,10 +27,11 @@ char *find_path(char *cmd, t_mshell *shell)
     i = 0;
     while (paths[i])
     {
-        join_slash = ft_strjoin(paths[i], "/");
-        if (!join_slash)
-            return (NULL);
-        full_path = ft_strjoin(join_slash, cmd);
+        append_cmd = ft_strjoin(paths[i], "/");
+        if (!append_cmd)
+            return (free_array(paths), NULL);
+        full_path = ft_strjoin(append_cmd, cmd);
+        free(append_cmd);
         if (access(full_path, F_OK | X_OK) == 0)
             return(free_array(paths), full_path);
         free(full_path);
