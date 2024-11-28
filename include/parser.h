@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:19:09 by etien             #+#    #+#             */
-/*   Updated: 2024/11/27 13:39:04 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/28 17:32:07 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ void	pipe_heredoc(t_redir_cmd *rcmd);
 
 // Run command util functions
 void	run_cmd_control(char *input, t_cmd *ast, t_mshell *shell);
+void	run_built_in(t_cmd *cmd, t_mshell *shell);
+char	*get_standalone_cmd(t_cmd *ast);
 void	close_pipes(int *pipefd);
 void	cmd_typecasting(t_cmd *cmd,
 			t_pipe_cmd **pcmd, t_redir_cmd **rcmd, t_exec_cmd **ecmd);
