@@ -21,7 +21,7 @@ void print_tree(t_cmd *cmd, int depth) {
         printf("Exec\n");
 
         // Print each argument in exec command
-        for (int i = 0; exec_cmd->argv[i] && i < MAX_ARGS; i++) {
+        for (int i = 0; exec_cmd->argv[i]; i++) {
             for (int j = 0; j < depth + 1; j++) printf("  "); // Indent args
             printf("Arg[%d]: %s\n", i, exec_cmd->argv[i]);
         }
