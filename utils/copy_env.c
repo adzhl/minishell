@@ -6,13 +6,13 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 14:54:05 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/27 10:39:01 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/28 09:57:58 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	**create_env_copy(char **envp)
+char	**copy_env(char **envp)
 {
 	int		i;
 	char	**env_copy;
@@ -20,7 +20,7 @@ char	**create_env_copy(char **envp)
 	i = 0;
 	while (envp[i])
 		i++;
-	env_copy = malloc(sizeof(char *) * (i + 100));
+	env_copy = malloc(sizeof(char *) * (i + 1));
 	if (!env_copy)
 		return (NULL);
 	i = 0;

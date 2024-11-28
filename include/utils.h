@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 09:27:54 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/28 09:13:41 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/28 09:58:26 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 typedef struct s_mshell	t_mshell;
 
-char					**create_env_copy(char **envp);
+char					**copy_env(char **envp);
 char					*get_env_value(char **env, const char *name);
 int						update_env_value(char **env, const char *name,
 							const char *value);

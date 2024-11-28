@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 13:37:56 by etien             #+#    #+#             */
-/*   Updated: 2024/11/28 08:18:46 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/28 09:28:06 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 // Finally, the AST will be freed and the loop restarts.
 int	main(int argc, char **argv, char **envp)
 {
-	char	*input;
-	t_cmd	*ast;
-	t_mshell shell;
+	char		*input;
+	t_cmd		*ast;
+	t_mshell	shell;
 
 	(void)argc;
 	(void)argv;
