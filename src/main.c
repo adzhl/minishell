@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 13:37:56 by etien             #+#    #+#             */
-/*   Updated: 2024/11/28 09:28:06 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/28 10:04:55 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	while (1)
 	{
-		shell.env = create_env_copy(envp);
+		shell.env = copy_env(envp);
 		shell.last_exit_status = 0;
 		input = readline("minishell$ ");
 		if (!input)
