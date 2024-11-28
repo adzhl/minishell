@@ -6,14 +6,11 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 16:10:16 by etien             #+#    #+#             */
-/*   Updated: 2024/11/28 17:21:29 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/28 17:31:58 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-char	*get_standalone_cmd(t_cmd *ast);
-void	run_built_in(t_cmd *cmd, t_mshell *shell);
 
 // This function checks for pipe symbols in the input to differentiate
 // between standalone commands and piped commands. For piped commands,
