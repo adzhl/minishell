@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 12:04:18 by etien             #+#    #+#             */
-/*   Updated: 2024/11/29 12:26:41 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/29 12:48:19 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,8 @@ t_cmd	*parse_redir(t_cmd *cmd, char **ss, char *es, t_mshell *shell)
 	int			tok;
 	t_tok_pos	*tok_pos;
 
-	tok_pos = NULL;
+	tok_pos = malloc(sizeof(*tok_pos));
+	ft_memset(tok_pos, 0, sizeof(*tok_pos));
 	while (check_for_token(ss, es, "<>"))
 	{
 		tok = get_token(ss, es, 0, 0);
@@ -158,5 +159,6 @@ t_cmd	*parse_redir(t_cmd *cmd, char **ss, char *es, t_mshell *shell)
 		else if (tok == '+')
 			cmd = redir_cmd(tok_pos, REDIR_APPEND, cmd, shell);
 	}
+	free(tok_pos);
 	return (cmd);
 }
