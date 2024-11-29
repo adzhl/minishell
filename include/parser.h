@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:19:09 by etien             #+#    #+#             */
-/*   Updated: 2024/11/29 11:58:34 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/29 12:29:43 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,18 @@ typedef struct s_redir_cmd
 	t_cmd	*cmd;
 }	t_redir_cmd;
 
+// Token position struct used in redir_cmd to fit parameter count limit.
+typedef struct s_tok_pos
+{
+	char	*st;
+	char	*et;
+}	t_tok_pos;
+
 // Constructor functions for parsing tree nodes
 t_cmd	*pipe_cmd(t_cmd *left, t_cmd *right);
 t_cmd	*exec_cmd(void);
-t_cmd	*redir_cmd(char *st, char *et, int redir_mode, t_cmd *subcmd);
+t_cmd	*redir_cmd(t_tok_pos *tok_pos,
+			int redir_mode, t_cmd *subcmd, t_mshell *shell);
 void	init_redir(int redir_mode, t_redir_cmd *cmd);
 void	insert_redir(t_cmd *subcmd, t_redir_cmd *cmd);
 
