@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 10:59:56 by etien             #+#    #+#             */
-/*   Updated: 2024/11/28 15:23:02 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/29 11:21:52 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,34 +48,36 @@ char	*expand_argument(char *s)
 	in_quote = 0;
 	expanded_s = ft_strdup("");
 	while (*s)
-		expansion_control(&s, &opening_quote, &in_quote, &expanded_s);
+	{
+		if ((*s == SQ || *s == DQ) && !in_quote)
+			toggle_quotes(&s, &opening_quote, &in_quote, OPENING_QUOTE);
+		else if (*s == opening_quote && in_quote)
+			toggle_quotes(&s, &opening_quote, &in_quote, CLOSING_QUOTE);
+		else if (*s == '$' && ((in_quote && opening_quote == DQ)
+				|| (!in_quote && !opening_quote)))
+			expanded_s = sub_in_var(&s, expanded_s);
+		else
+			expanded_s = append_str(&s, expanded_s, EXP_ARGUMENT, opening_quote);
+	}
 	return (expanded_s);
 }
 
-// This function contains the main logic of expand_argument.
-// It handles the toggling of the quote variables whenever a single
-// or double quote is encountered and decides whether to substitute
-// in expanded variables or append strings to the expanded string.
-void	expansion_control(char **s, char *opening_quote,
-		int *in_quote, char **expanded_s)
+// This function handles the toggling of the quote variables whenever
+// a single or double quote is encountered.
+void	toggle_quotes(char **s, char *opening_quote, int *in_quote, int quote)
 {
-	if ((**s == SQ || **s == DQ) && !(*in_quote))
+	if (quote == OPENING_QUOTE)
 	{
 		*opening_quote = **s;
 		*in_quote = 1;
 		(*s)++;
 	}
-	else if (**s == *opening_quote && *in_quote)
+	else if (quote == CLOSING_QUOTE)
 	{
 		*opening_quote = 0;
 		*in_quote = 0;
 		(*s)++;
 	}
-	else if ((**s == '$') && ((*in_quote && *opening_quote == DQ)
-			|| (!(*in_quote) && !(*opening_quote))))
-		*expanded_s = sub_in_var(s, *expanded_s);
-	else
-		*expanded_s = append_str(s, *expanded_s, EXP_ARGUMENT, *opening_quote);
 }
 
 // This function will expand the heredoc.

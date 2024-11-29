@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 14:16:29 by etien             #+#    #+#             */
-/*   Updated: 2024/11/28 21:55:36 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/29 11:19:47 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@
 // Double quotes
 # define DQ '\"'
 
+// Quote type for toggle_quotes function
+# define OPENING_QUOTE 1
+# define CLOSING_QUOTE 2
+
 // Expansion modes for append_str function
 typedef enum expansion_mode
 {
@@ -28,8 +32,7 @@ typedef enum expansion_mode
 
 // Expansion functions
 char	*expand_argument(char *s);
-void	expansion_control(char **s, char *opening_quote,
-			int *in_quote, char **expanded_s);
+void	toggle_quotes(char **s, char *opening_quote, int *in_quote, int quote);
 char	*expand_heredoc(char *heredoc);
 
 // Expansion util functions

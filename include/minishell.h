@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:47:31 by etien             #+#    #+#             */
-/*   Updated: 2024/11/27 13:11:34 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/29 11:20:48 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,7 @@
 # define EXEC_ERR ": command not found"
 # define SYNTAX_PIPE "minishell: syntax error near unexpected token `|'"
 # define SYNTAX_QUOTES "minishell: syntax error: unclosed quotes"
-# define SYNTAX_REDIR \
-	"minishell: syntax error near unexpected token \
+# define SYNTAX_REDIR "minishell: syntax error near unexpected token \
 `<' or '>' "
 
 // Struct to store env and exit status
