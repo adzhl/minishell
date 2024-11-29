@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:48:51 by etien             #+#    #+#             */
-/*   Updated: 2024/11/28 22:33:20 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/29 11:49:21 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 // The child process will accumulate the input into the pipe's write end.
 // The parent process will wait for its child to terminate to read the input
 // from the pipe's read end.
-char	*handle_heredoc(char **eof)
+char	*handle_heredoc(char **eof, t_mshell *shell)
 {
 	int		pipefd[2];
 	pid_t	pid;
@@ -38,7 +38,7 @@ char	*handle_heredoc(char **eof)
 		wait(NULL);
 	}
 	if (expand_hd)
-		hd_content = expand_heredoc(hd_content);
+		hd_content = expand_heredoc(hd_content, shell);
 	return (hd_content);
 }
 

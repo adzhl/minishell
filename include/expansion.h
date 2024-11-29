@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 14:16:29 by etien             #+#    #+#             */
-/*   Updated: 2024/11/29 11:19:47 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/29 11:36:48 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ typedef enum expansion_mode
 }	t_expansion_mode;
 
 // Expansion functions
-char	*expand_argument(char *s);
+char	*expand_argument(char *s, t_mshell *shell);
 void	toggle_quotes(char **s, char *opening_quote, int *in_quote, int quote);
-char	*expand_heredoc(char *heredoc);
+char	*expand_heredoc(char *heredoc, t_mshell *shell);
 
 // Expansion util functions
-char	*sub_in_var(char **s, char *expanded_s);
+char	*sub_in_var(char **s, char *expanded_s, t_mshell *shell);
 char	*append_expansion(char *expanded_s, char *expansion);
-char	*append_exit_status(char **s, char *expanded_s);
+char	*append_exit_status(char **s, char *expanded_s, t_mshell *shell);
 bool	quotes_are_closed(char *s);
 
 // Append util functions

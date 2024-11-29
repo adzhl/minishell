@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 12:12:16 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/28 15:22:41 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/29 11:51:06 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	builtin_echo(char **args, t_mshell *shell)
 	i = handle_n_option(args, &newline);
 	while (args[i])
 	{
-		expanded = expand_argument(args[i]);
+		expanded = expand_argument(args[i], shell);
 		if (!expanded)
 			return (1);
 		printf("%s", expanded);

@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:19:09 by etien             #+#    #+#             */
-/*   Updated: 2024/11/28 22:13:13 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/29 11:58:34 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,11 @@ void	word_token(int *tok, char **s, char *es);
 bool	check_for_token(char **ss, char *es, char *toks);
 
 // Parsing functions
-t_cmd	*parse_cmd(char *s);
-t_cmd	*parse_pipe(char **ss, char *es);
-t_cmd	*parse_exec(char **ss, char *es);
+t_cmd	*parse_cmd(char *s, t_mshell *shell);
+t_cmd	*parse_pipe(char **ss, char *es, t_mshell *shell);
+t_cmd	*parse_exec(char **ss, char *es, t_mshell *shell);
 void	malloc_argv(char *s, t_exec_cmd *cmd);
-t_cmd	*parse_redir(t_cmd *cmd, char **ss, char *es);
+t_cmd	*parse_redir(t_cmd *cmd, char **ss, char *es, t_mshell *shell);
 
 // Run command functions
 void	run_cmd(t_cmd *cmd, t_mshell *shell);
