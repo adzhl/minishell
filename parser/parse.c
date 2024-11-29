@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 12:04:18 by etien             #+#    #+#             */
-/*   Updated: 2024/11/29 11:59:24 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/29 12:26:41 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,22 +141,22 @@ void	malloc_argv(char *s, t_exec_cmd *cmd)
 // constructor will incorporate the existing cmd tree and extend it.
 t_cmd	*parse_redir(t_cmd *cmd, char **ss, char *es, t_mshell *shell)
 {
-	int		tok;
-	char	*st;
-	char	*et;
+	int			tok;
+	t_tok_pos	*tok_pos;
 
+	tok_pos = NULL;
 	while (check_for_token(ss, es, "<>"))
 	{
 		tok = get_token(ss, es, 0, 0);
-		get_token(ss, es, &st, &et);
+		get_token(ss, es, &(tok_pos->st), &(tok_pos->et));
 		if (tok == '<')
-			cmd = redir_cmd(st, et, REDIR_INPUT, cmd);
+			cmd = redir_cmd(tok_pos, REDIR_INPUT, cmd, shell);
 		else if (tok == '-')
-			cmd = redir_cmd(st, et, REDIR_HEREDOC, cmd);
+			cmd = redir_cmd(tok_pos, REDIR_HEREDOC, cmd, shell);
 		else if (tok == '>')
-			cmd = redir_cmd(st, et, REDIR_OUTPUT, cmd);
+			cmd = redir_cmd(tok_pos, REDIR_OUTPUT, cmd, shell);
 		else if (tok == '+')
-			cmd = redir_cmd(st, et, REDIR_APPEND, cmd);
+			cmd = redir_cmd(tok_pos, REDIR_APPEND, cmd, shell);
 	}
 	return (cmd);
 }

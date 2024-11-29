@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:29:21 by etien             #+#    #+#             */
-/*   Updated: 2024/11/29 11:54:15 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/29 12:25:07 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ t_cmd	*exec_cmd(void)
 // File and heredoc fields are mutually exclusive, so file remains NULL for
 // heredocs, and heredoc remains NULL for file-based redirections.
 // Heredoc fd and mode are set to -1 to avoid confusion with valid values.
-t_cmd	*redir_cmd(char *st, char *et, int redir_mode, t_cmd *subcmd, t_mshell *shell)
+t_cmd	*redir_cmd(t_tok_pos *tok_pos,
+			int redir_mode, t_cmd *subcmd, t_mshell *shell)
 {
 	t_redir_cmd	*cmd;
 	char		*eof;
@@ -63,12 +64,12 @@ t_cmd	*redir_cmd(char *st, char *et, int redir_mode, t_cmd *subcmd, t_mshell *sh
 	cmd->type = REDIR;
 	init_redir(redir_mode, cmd);
 	if (redir_mode != REDIR_HEREDOC)
-		cmd->file = ft_substr(st, 0, et - st);
+		cmd->file = ft_substr(tok_pos->st, 0, tok_pos->et - tok_pos->st);
 	else
 	{
 		cmd->mode = -1;
 		cmd->fd = -1;
-		eof = ft_substr(st, 0, et - st);
+		eof = ft_substr(tok_pos->st, 0, tok_pos->et - tok_pos->st);
 		cmd->heredoc = handle_heredoc(&eof, shell);
 		free(eof);
 	}
