@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 13:24:23 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/27 12:52:48 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/29 08:51:55 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	builtin_exit(char **args, t_mshell *shell)
 	if (args[2])
 	{
 		print_exit_error(NULL, "too many arguments");
+		set_exit_status(shell, 1);
 		return (1);
 	}
 	exit_code = ft_atoi(args[1]);
@@ -79,17 +80,17 @@ int	builtin_exit(char **args, t_mshell *shell)
 	return (exit_return);
 }
 
-/* #include <stdio.h>
+// int	main(int argc, char *argv[], char *envp[]) {
+// 	(void)argc;
+// 	(void)argv;
+// 	t_mshell shell;
 
-int	main(int argc, char *argv[], char *envp[]) {
-	(void)argc;
-	(void)argv;
-
-	char *testcase[3] = {"exit", "10293409370", NULL};
-	int result = builtin_exit(testcase, envp);
-	if (result == 0)
-		printf("Exit called successfully\n");
-	else
-		printf("Error\n");
-	return (result);
-} */
+// 	shell.last_exit_status = 0;
+// 	printf("Exit status before: %d\n", get_exit_status(&shell));
+// 	shell.env = copy_env(envp);
+// 	char *testcase[3] = {"exit", "1234984", NULL};
+// 	int result = builtin_exit(testcase, &shell);
+// 	printf("Exit status after: %d\n", get_exit_status(&shell));
+// 	free_array(shell.env);
+// 	return (result);
+// }
