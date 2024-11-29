@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 12:04:18 by etien             #+#    #+#             */
-/*   Updated: 2024/11/28 22:02:46 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/29 11:59:24 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@
 // This function is the entry point for parsing and will call parse_pipe
 // to start building the parsing tree.
 // The input buffer is passed in as a parameter to the function.
-t_cmd	*parse_cmd(char *s)
+t_cmd	*parse_cmd(char *s, t_mshell *shell)
 {
 	t_cmd	*cmd;
 	char	*es;
 
 	es = s + ft_strlen(s);
-	cmd = parse_pipe(&s, es);
+	cmd = parse_pipe(&s, es, shell);
 	return (cmd);
 }
 
@@ -46,15 +46,15 @@ t_cmd	*parse_cmd(char *s)
 // The right command will be parsed with a recursive call to itself in case
 // there are more pipes to be parsed.
 // If there are multiple pipes, the parsing tree is expanded downwards.
-t_cmd	*parse_pipe(char **ss, char *es)
+t_cmd	*parse_pipe(char **ss, char *es, t_mshell *shell)
 {
 	t_cmd	*cmd;
 
-	cmd = parse_exec(ss, es);
+	cmd = parse_exec(ss, es, shell);
 	if (check_for_token(ss, es, "|"))
 	{
 		get_token(ss, es, 0, 0);
-		cmd = pipe_cmd(cmd, parse_pipe(ss, es));
+		cmd = pipe_cmd(cmd, parse_pipe(ss, es, shell));
 	}
 	return (cmd);
 }
@@ -72,7 +72,7 @@ t_cmd	*parse_pipe(char **ss, char *es)
 // to be interspersed between command arguments,
 // e.g. command arg1 > output.txt arg2 < input.txt
 // Both argv and argv[i] are dynamically-allocated.
-t_cmd	*parse_exec(char **ss, char *es)
+t_cmd	*parse_exec(char **ss, char *es, t_mshell *shell)
 {
 	t_cmd		*root;
 	t_exec_cmd	*cmd;
@@ -82,7 +82,7 @@ t_cmd	*parse_exec(char **ss, char *es)
 
 	root = exec_cmd();
 	cmd = (t_exec_cmd *)root;
-	root = parse_redir(root, ss, es);
+	root = parse_redir(root, ss, es, shell);
 	malloc_argv(*ss, cmd);
 	i = 0;
 	while (*ss < es && !check_for_token(ss, es, "|"))
@@ -90,7 +90,7 @@ t_cmd	*parse_exec(char **ss, char *es)
 		get_token(ss, es, &st, &et);
 		cmd->argv[i] = ft_substr(st, 0, et - st);
 		i++;
-		root = parse_redir(root, ss, es);
+		root = parse_redir(root, ss, es, shell);
 	}
 	cmd->argv[i] = 0;
 	return (root);
@@ -139,7 +139,7 @@ void	malloc_argv(char *s, t_exec_cmd *cmd)
 // operators in a row, e.g. command > file1 < file2 >> file3.
 // Since cmd is reused, if there are multiple redirections, the REDIR
 // constructor will incorporate the existing cmd tree and extend it.
-t_cmd	*parse_redir(t_cmd *cmd, char **ss, char *es)
+t_cmd	*parse_redir(t_cmd *cmd, char **ss, char *es, t_mshell *shell)
 {
 	int		tok;
 	char	*st;

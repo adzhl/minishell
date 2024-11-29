@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:29:21 by etien             #+#    #+#             */
-/*   Updated: 2024/11/28 22:03:35 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/29 11:54:15 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_cmd	*exec_cmd(void)
 // File and heredoc fields are mutually exclusive, so file remains NULL for
 // heredocs, and heredoc remains NULL for file-based redirections.
 // Heredoc fd and mode are set to -1 to avoid confusion with valid values.
-t_cmd	*redir_cmd(char *st, char *et, int redir_mode, t_cmd *subcmd)
+t_cmd	*redir_cmd(char *st, char *et, int redir_mode, t_cmd *subcmd, t_mshell *shell)
 {
 	t_redir_cmd	*cmd;
 	char		*eof;
@@ -69,7 +69,7 @@ t_cmd	*redir_cmd(char *st, char *et, int redir_mode, t_cmd *subcmd)
 		cmd->mode = -1;
 		cmd->fd = -1;
 		eof = ft_substr(st, 0, et - st);
-		cmd->heredoc = handle_heredoc(&eof);
+		cmd->heredoc = handle_heredoc(&eof, shell);
 		free(eof);
 	}
 	if (subcmd->type == REDIR)

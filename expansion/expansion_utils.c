@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:26:13 by etien             #+#    #+#             */
-/*   Updated: 2024/11/18 15:00:51 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/29 11:50:32 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,12 @@
 // 2) $(digit) should expand to nothing.
 // 3) $ on its own should be treated as a string literal.
 // If the three checks are passed, the variable complies with the
-// VAR format. We then check for its existence in ENV.
+// VAR format. We then check for its existence in our local ENV copy.
 // If the variables exists, it will be appended to the expanded string.
 // Otherwise, nothing is appended.
-// Note: getenv returns a pointer to static memory, so it does not
-//       have to be freed. If the variable does not exist in ENV, getenv
-//       simply returns a NULL pointer.
-char	*sub_in_var(char **s, char *expanded_s)
+// Note: We don't have to free var_value because it is a pointer to our
+//       local ENV copy that will be freed in the main function.
+char	*sub_in_var(char **s, char *expanded_s, t_mshell *shell)
 {
 	char	*start;
 	char	*var_name;
@@ -33,7 +32,7 @@ char	*sub_in_var(char **s, char *expanded_s)
 
 	(*s)++;
 	if (**s == '?')
-		return (append_exit_status(s, expanded_s));
+		return (append_exit_status(s, expanded_s, shell));
 	if (ft_isdigit(**s))
 		return ((*s)++, expanded_s);
 	if (!(ft_isalnum(**s) || **s == '_'))
@@ -42,7 +41,7 @@ char	*sub_in_var(char **s, char *expanded_s)
 	while (**s && (ft_isalnum(**s) || **s == '_'))
 		(*s)++;
 	var_name = ft_substr(start, 0, *s - start);
-	var_value = getenv(var_name);
+	var_value = get_env_value(shell->env, var_name);
 	free(var_name);
 	if (!var_value)
 		return (expanded_s);
@@ -66,12 +65,12 @@ char	*append_expansion(char *expanded_s, char *expansion)
 // and append it to the expanded string.
 // Since ft_itoa returns dynamically-allocated memory, we have
 // to free it after appending the string.
-char	*append_exit_status(char **s, char *expanded_s)
+char	*append_exit_status(char **s, char *expanded_s, t_mshell *shell)
 {
 	char	*exit_status;
 
 	(*s)++;
-	exit_status = ft_itoa(0);
+	exit_status = ft_itoa(get_exit_status(shell));
 	expanded_s = append_expansion(expanded_s, exit_status);
 	free(exit_status);
 	return (expanded_s);

@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 10:59:56 by etien             #+#    #+#             */
-/*   Updated: 2024/11/29 11:21:52 by etien            ###   ########.fr       */
+/*   Updated: 2024/11/29 11:28:50 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 // variables expanded as specified by the quotes.
 // The function will return the dynamically-allocated expanded string and free
 // the original string.
-char	*expand_argument(char *s)
+char	*expand_argument(char *s, t_mshell *shell)
 {
 	char	opening_quote;
 	int		in_quote;
@@ -55,7 +55,7 @@ char	*expand_argument(char *s)
 			toggle_quotes(&s, &opening_quote, &in_quote, CLOSING_QUOTE);
 		else if (*s == '$' && ((in_quote && opening_quote == DQ)
 				|| (!in_quote && !opening_quote)))
-			expanded_s = sub_in_var(&s, expanded_s);
+			expanded_s = sub_in_var(&s, expanded_s, shell);
 		else
 			expanded_s = append_str(&s, expanded_s, EXP_ARGUMENT, opening_quote);
 	}
@@ -85,7 +85,7 @@ void	toggle_quotes(char **s, char *opening_quote, int *in_quote, int quote)
 // and only performs variable expansion.
 // A local pointer will preserve the starting pointer to the original heredoc.
 // The function will return the expanded heredoc and free the original heredoc.
-char	*expand_heredoc(char *hd)
+char	*expand_heredoc(char *hd, t_mshell *shell)
 {
 	char	*expanded_hd;
 	char	*s;
@@ -97,7 +97,7 @@ char	*expand_heredoc(char *hd)
 	while (*s)
 	{
 		if (*s == '$')
-			expanded_hd = sub_in_var(&s, expanded_hd);
+			expanded_hd = sub_in_var(&s, expanded_hd, shell);
 		else
 			expanded_hd = append_str(&s, expanded_hd, EXP_HEREDOC, 0);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 13:37:56 by etien             #+#    #+#             */
-/*   Updated: 2024/11/28 10:04:55 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/11/29 11:55:52 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	main(int argc, char **argv, char **envp)
 		add_history(input);
 		if (syntax_error(input))
 			continue ;
-		ast = parse_cmd(input);
+		ast = parse_cmd(input, &shell);
 		run_cmd_control(input, ast, &shell);
 		free_ast(ast);
 		free_array(shell.env);
