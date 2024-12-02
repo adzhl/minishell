@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 20:01:18 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/12/02 09:34:20 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/02 13:01:43 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,12 @@ int	update_env_value(char **env, const char *name, const char *value)
 			if (!temp)
 				return (0);
 			new_var = ft_strjoin(temp, value);
-			free(temp);
 			if (!new_var)
+			{
+				free(temp);
 				return (0);
+			}
+			free(temp);
 			free(env[i]);
 			env[i] = new_var;
 			return (1);
@@ -59,3 +62,5 @@ int	update_env_value(char **env, const char *name, const char *value)
 // 	builtin_env(NULL, &shell);
 // 	return (0);
 // }
+
+// builtin/builtin_env.c utils/update_env_value.c utils/copy_env.c libft/libft.a
