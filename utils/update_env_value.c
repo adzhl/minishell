@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 20:01:18 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/27 10:39:50 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/02 09:34:20 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,3 +43,19 @@ int	update_env_value(char **env, const char *name, const char *value)
 	}
 	return (0);
 }
+
+// int main(int argc, char **argv, char **envp)
+// {
+// 	(void)argc;
+// 	(void)argv;
+// 	t_mshell shell;
+
+// 	shell.env = copy_env(envp);
+// 	printf("Env Before update\n");
+// 	builtin_env(NULL, &shell);
+// 	printf("\n");
+// 	update_env_value(shell.env, "testing", "new value");
+// 	printf("Env After:\n");
+// 	builtin_env(NULL, &shell);
+// 	return (0);
+// }
