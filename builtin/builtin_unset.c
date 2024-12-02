@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:04:01 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/12/02 08:08:17 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/02 11:28:52 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,17 @@ int	builtin_unset(char **args, t_mshell *shell)
 // 	printf("Initial env:\n");
 // 	builtin_env(NULL, &shell);
 // 	printf("\n");
+// 	// printf("export list before:\n");
+// 	// char *args2[] = {"export", NULL};
+// 	// builtin_export(args2, &shell);
+// 	// printf("\n");
 // 	char *args1[] = {"unset", "testing", NULL};
 // 	printf("env after:\n");
 // 	builtin_unset(args1, &shell);
 // 	builtin_env(NULL, &shell);
+// 	printf("\n");
+// 	// printf("export list after:\n");
+// 	// builtin_export(args2, &shell);
 // 	free_array(shell.env);
 // 	return (0);
 // }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
+/*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 12:12:16 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/29 11:51:06 by etien            ###   ########.fr       */
+/*   Updated: 2024/12/02 11:26:44 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ static int	handle_n_option(char **args, int *newline)
  */
 int	builtin_echo(char **args, t_mshell *shell)
 {
-	int	i;
-	int	newline;
-	char *expanded;
+	int		i;
+	int		newline;
+	char	*expanded;
 
 	(void)shell;
 	i = handle_n_option(args, &newline);
