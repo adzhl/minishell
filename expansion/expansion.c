@@ -6,19 +6,11 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 10:59:56 by etien             #+#    #+#             */
-/*   Updated: 2024/11/29 14:46:08 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/02 11:39:30 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-// TO-DO: have a way to store exit status of the last executed command
-// so that it can be expanded when $? is called.
-// $? is neither global nor stored in ENV.
-// Bash keeps it as part of the shell's internal state.
-// ChatGPT recommended creating a shell_state_struct that will contain
-// last command exit status, environment variables, current working
-// directory, etc.
 
 // This function is responsible for expanding arguments and will involve both:
 // - Literal expansion: removal of outside quotes
@@ -53,11 +45,12 @@ char	*expand_argument(char *s, t_mshell *shell)
 			toggle_quotes(&s, &opening_quote, &in_quote, OPENING_QUOTE);
 		else if (*s == opening_quote && in_quote)
 			toggle_quotes(&s, &opening_quote, &in_quote, CLOSING_QUOTE);
-		else if (*s == '$' && ((in_quote && opening_quote == DQ)
-				|| (!in_quote && !opening_quote)))
+		else if (*s == '$' && ((in_quote && opening_quote == DQ) || (!in_quote
+					&& !opening_quote)))
 			expanded_s = sub_in_var(&s, expanded_s, shell);
 		else
-			expanded_s = append_str(&s, expanded_s, EXP_ARGUMENT, opening_quote);
+			expanded_s = append_str(&s, expanded_s, EXP_ARGUMENT,
+					opening_quote);
 	}
 	return (expanded_s);
 }
