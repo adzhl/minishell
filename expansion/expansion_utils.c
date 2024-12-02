@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
+/*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:26:13 by etien             #+#    #+#             */
-/*   Updated: 2024/11/29 11:50:32 by etien            ###   ########.fr       */
+/*   Updated: 2024/12/02 11:37:56 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ char	*append_expansion(char *expanded_s, char *expansion)
 	return (joined_s);
 }
 
-// TO-DO: Link this function to access latest process exit code.
 // This function will pull the exit status from the shell struct
 // and append it to the expanded string.
 // Since ft_itoa returns dynamically-allocated memory, we have
