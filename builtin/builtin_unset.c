@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:04:01 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/12/02 11:28:52 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/02 13:56:46 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,9 @@ static void	print_unset_error(char *arg)
 int	builtin_unset(char **args, t_mshell *shell)
 {
 	int	i;
-	int	exit_status;
 	int	var_index;
 
-	exit_status = 0;
+	set_exit_status(shell, 0);
 	if (!args[1])
 		return (0);
 	i = 1;
@@ -56,7 +55,7 @@ int	builtin_unset(char **args, t_mshell *shell)
 		if (!valid_var_name(args[i]))
 		{
 			print_unset_error(args[i]);
-			exit_status = 1;
+			set_exit_status(shell, 1);
 		}
 		else
 		{
@@ -66,7 +65,7 @@ int	builtin_unset(char **args, t_mshell *shell)
 		}
 		i++;
 	}
-	return (exit_status);
+	return (0);
 }
 
 // int main(int argc, char **argv, char **envp)

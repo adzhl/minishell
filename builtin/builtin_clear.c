@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 12:24:46 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/27 13:02:53 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/02 13:31:59 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int	builtin_clear(char **args, t_mshell *shell)
 	const char	*clear_sequence;
 
 	(void)args;
-	(void)shell;
 	clear_sequence = "\033[H\033[J";
 	if (write(STDOUT_FILENO, clear_sequence, 6) == -1)
 		return (1);
+	set_exit_status(shell, 0);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 12:12:16 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/12/02 11:26:44 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/02 13:37:50 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	builtin_echo(char **args, t_mshell *shell)
 	int		newline;
 	char	*expanded;
 
-	(void)shell;
 	i = handle_n_option(args, &newline);
 	while (args[i])
 	{
@@ -72,6 +71,7 @@ int	builtin_echo(char **args, t_mshell *shell)
 	}
 	if (newline)
 		printf("\n");
+	set_exit_status(shell, 0);
 	return (0);
 }
 

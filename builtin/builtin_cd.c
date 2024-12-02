@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:57:06 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/12/02 11:28:21 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/02 13:34:05 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,16 @@ static int	handle_no_args(char **env, char **path)
 /**
  * Update env value when changing directories
  */
-static int	update_pwd(char **env, char *curr_dir, char *new_dir)
+static int	update_pwd(t_mshell *shell, char *curr_dir, char *new_dir)
 {
 	if (!getcwd(new_dir, PATH_MAX))
 	{
 		print_cd_error(NULL, "getcwd failed");
 		return (1);
 	}
-	update_env_value(env, "OLDPWD", curr_dir);
-	update_env_value(env, "PWD", new_dir);
+	update_env_value(shell->env, "OLDPWD", curr_dir);
+	update_env_value(shell->env, "PWD", new_dir);
+	set_exit_status(shell, 0);
 	return (0);
 }
 
@@ -83,9 +84,10 @@ int	builtin_cd(char **args, t_mshell *shell)
 	if (chdir(path) == -1)
 	{
 		print_cd_error(args[1], "No such file or directory");
+		set_exit_status(shell, 1);
 		return (1);
 	}
-	return (update_pwd(shell->env, curr_dir, new_dir));
+	return (update_pwd(shell, curr_dir, new_dir));
 }
 
 // int main(int argc, char **argv, char **envp)
