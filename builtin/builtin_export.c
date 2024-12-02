@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:58:14 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/12/02 09:26:32 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/02 11:29:15 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,10 +125,10 @@ int	builtin_export(char **args, t_mshell *shell)
 // 	printf("\n");
 
 //     // printf("Test: Update existing variable\n");
-//     // char *args2[] = {"export", "NEW_VAR=updated_value", NULL};
-//     // builtin_export(args2, &shell);
-// 	// builtin_env(NULL, &shell);
-// 	// printf("\n");
+//     char *args2[] = {"export", "NEW_VAR=updated_value", NULL};
+//     builtin_export(args2, &shell);
+// 	builtin_env(NULL, &shell);
+// 	printf("\n");
 
 //     // printf("Test: Invalid variable\n");
 //     // char *args3[] = {"export", "2INVALID=value", NULL};

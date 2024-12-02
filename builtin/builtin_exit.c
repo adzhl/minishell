@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 13:24:23 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/29 08:51:55 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/02 11:30:14 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	builtin_exit(char **args, t_mshell *shell)
 // 	shell.last_exit_status = 0;
 // 	printf("Exit status before: %d\n", get_exit_status(&shell));
 // 	shell.env = copy_env(envp);
-// 	char *testcase[3] = {"exit", "1234984", NULL};
+// 	char *testcase[] = {"exit", "123", NULL};
 // 	int result = builtin_exit(testcase, &shell);
 // 	printf("Exit status after: %d\n", get_exit_status(&shell));
 // 	free_array(shell.env);

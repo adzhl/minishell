@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:57:06 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/12/02 09:00:10 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/02 11:28:21 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,11 @@ int	builtin_cd(char **args, t_mshell *shell)
 	char	new_dir[PATH_MAX];
 
 	(void)args;
-	if (!args[1] && handle_no_args(shell->env, &path))
-		return (1);
+	if (!args[1] || (ft_strcmp(args[1], "~") == 0))
+	{
+		if (handle_no_args(shell->env, &path))
+			return (1);
+	}
 	else if (args[1])
 		path = args[1];
 	if (!getcwd(curr_dir, PATH_MAX))
