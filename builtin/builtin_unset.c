@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:04:01 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/27 13:05:32 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/02 08:08:17 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,3 +68,21 @@ int	builtin_unset(char **args, t_mshell *shell)
 	}
 	return (exit_status);
 }
+
+// int main(int argc, char **argv, char **envp)
+// {
+// 	(void)argc;
+// 	(void)argv;
+// 	t_mshell shell;
+
+// 	shell.env = copy_env(envp);
+// 	printf("Initial env:\n");
+// 	builtin_env(NULL, &shell);
+// 	printf("\n");
+// 	char *args1[] = {"unset", "testing", NULL};
+// 	printf("env after:\n");
+// 	builtin_unset(args1, &shell);
+// 	builtin_env(NULL, &shell);
+// 	free_array(shell.env);
+// 	return (0);
+// }

@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:57:06 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/27 13:30:49 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/02 09:00:10 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,3 +84,30 @@ int	builtin_cd(char **args, t_mshell *shell)
 	}
 	return (update_pwd(shell->env, curr_dir, new_dir));
 }
+
+// int main(int argc, char **argv, char **envp)
+// {
+// 	(void)argc;
+// 	(void)argv;
+// 	t_mshell shell;
+
+// 	shell.env = copy_env(envp);
+// 	printf("Initial pwd:\n");
+// 	builtin_pwd(NULL, &shell);
+// 	printf("\n");
+// 	printf("Initial env:\n");
+// 	builtin_env(NULL, &shell);
+// 	printf("\n");
+// 	char *arg1[] = {"cd", "builtin", NULL};
+// 	builtin_cd(arg1, &shell);
+// 	printf("After changing directory:\n");
+// 	builtin_pwd(NULL, &shell);
+// 	printf("\n");
+// 	char *arg2[] = {"cd", "../heredoc", NULL};
+// 	builtin_cd(arg2, &shell);
+// 	builtin_pwd(NULL, &shell);
+// 	printf("Env after changing directory:\n");
+// 	builtin_env(NULL, &shell);
+// 	free_array(shell.env);
+// 	return (0);
+// }
