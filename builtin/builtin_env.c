@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 09:43:12 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/27 13:39:17 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/02 13:38:26 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	builtin_env(char **args, t_mshell *shell)
 			ft_putendl_fd(shell->env[i], STDOUT_FILENO);
 		i++;
 	}
+	set_exit_status(shell, 0);
 	return (0);
 }
 

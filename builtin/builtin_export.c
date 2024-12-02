@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:58:14 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/12/02 11:29:15 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/02 13:50:24 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,17 @@ static void	print_export_error(char *arg)
  * 2. Duplicate the new variable to end of env
  * 3. Add NULL terminator at the end
  */
-int	add_to_env(char **env, const char *new_var)
+int	add_to_env(t_mshell *shell, const char *new_var)
 {
 	int		size;
 	char	*new_str;
 
-	size = get_env_size(env);
+	size = get_env_size(shell->env);
 	new_str = ft_strdup(new_var);
 	if (!new_str)
 		return (1);
-	env[size] = new_str;
-	env[size + 1] = NULL;
+	shell->env[size] = new_str;
+	shell->env[size + 1] = NULL;
 	return (0);
 }
 
@@ -52,7 +52,7 @@ int	add_to_env(char **env, const char *new_var)
  * 4. Update value for variable if it already exists
  * 5. If variable is new, add variable to env
  */
-static int	handle_equal(char **env, char *arg, char *equal_sign)
+static int	handle_equal(t_mshell *shell, char *arg, char *equal_sign)
 {
 	char	var_name[PATH_MAX];
 	int		name_len;
@@ -62,10 +62,11 @@ static int	handle_equal(char **env, char *arg, char *equal_sign)
 	if (!valid_var_name(var_name))
 	{
 		print_export_error(arg);
+		set_exit_status(shell, 1);
 		return (1);
 	}
-	if (!update_env_value(env, var_name, equal_sign + 1))
-		return (add_to_env(env, arg));
+	if (!update_env_value(shell->env, var_name, equal_sign + 1))
+		return (add_to_env(shell, arg));
 	return (0);
 }
 
@@ -90,20 +91,22 @@ int	builtin_export(char **args, t_mshell *shell)
 	while (args[i])
 	{
 		equal_sign = ft_strchr(args[i], '=');
-		if (equal_sign && handle_equal(shell->env, args[i], equal_sign))
+		if (equal_sign && handle_equal(shell, args[i], equal_sign))
 			return (1);
 		else if (!equal_sign)
 		{
 			if (!valid_var_name(args[i]))
 			{
 				print_export_error(args[i]);
+				set_exit_status(shell, 1);
 				return (1);
 			}
-			if (add_to_env(shell->env, args[i]))
+			if (add_to_env(shell, args[i]))
 				return (1);
 		}
 		i++;
 	}
+	set_exit_status(shell, 0);
 	return (0);
 }
 
