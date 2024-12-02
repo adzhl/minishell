@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:58:14 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/27 13:06:20 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/02 09:26:32 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,42 +111,43 @@ int	builtin_export(char **args, t_mshell *shell)
 // {
 //     (void)argc;
 //     (void)argv;
+// 	t_mshell shell;
 
-//     char **env = create_env_copy(envp);
-// 	printf("Initial env");
-// 	builtin_env(NULL, env);
+//     shell.env = copy_env(envp);
+// 	printf("Initial env:\n");
+// 	builtin_env(NULL, &shell);
 // 	printf("\n");
 
 //     printf("Test: Add new variable\n");
 //     char *args1[] = {"export", "NEW_VAR=value", NULL};
-//     builtin_export(args1, env);
-// 	builtin_env(NULL, env);
+//     builtin_export(args1, &shell);
+// 	builtin_env(NULL, &shell);
 // 	printf("\n");
 
-//     printf("Test: Update existing variable\n");
-//     char *args2[] = {"export", "NEW_VAR=updated_value", NULL};
-//     builtin_export(args2, env);
-// 	builtin_env(NULL, env);
-// 	printf("\n");
+//     // printf("Test: Update existing variable\n");
+//     // char *args2[] = {"export", "NEW_VAR=updated_value", NULL};
+//     // builtin_export(args2, &shell);
+// 	// builtin_env(NULL, &shell);
+// 	// printf("\n");
 
-//     printf("Test: Invalid variable\n");
-//     char *args3[] = {"export", "2INVALID=value", NULL};
-//     builtin_export(args3, env);
-// 	builtin_env(NULL, env);
-// 	printf("\n");
+//     // printf("Test: Invalid variable\n");
+//     // char *args3[] = {"export", "2INVALID=value", NULL};
+//     // builtin_export(args3, &shell);
+// 	// builtin_env(NULL, &shell);
+// 	// printf("\n");
 
-// 	printf("Test: variable without value\n");
-// 	char *args4[] = {"export", "No_value==", NULL};
-// 	builtin_export(args4, env);
-// 	printf("\n");
-// 	builtin_env(NULL, env);
-// 	printf("\n");
+// 	// printf("Test: variable without value\n");
+// 	// char *args4[] = {"export", "No_value", NULL};
+// 	// builtin_export(args4, &shell);
+// 	// printf("\n");
+// 	// builtin_env(NULL, &shell);
+// 	// printf("\n");
 
 //     printf("Final Environment:\n");
 //     char *args5[] = {"export", NULL};
-//     builtin_export(args5, env);
+//     builtin_export(args5, &shell);
 
-//     free_array(env);
+//     free_array(shell.env);
 
 //     return (0);
 // }
