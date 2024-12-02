@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
+/*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 13:37:56 by etien             #+#    #+#             */
-/*   Updated: 2024/11/29 11:55:52 by etien            ###   ########.fr       */
+/*   Updated: 2024/12/02 11:09:35 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	shell.env = copy_env(envp);
+	shell.last_exit_status = 0;
 	while (1)
 	{
-		shell.env = copy_env(envp);
-		shell.last_exit_status = 0;
 		input = readline("minishell$ ");
 		if (!input)
 			break ;
@@ -40,7 +40,7 @@ int	main(int argc, char **argv, char **envp)
 		ast = parse_cmd(input, &shell);
 		run_cmd_control(input, ast, &shell);
 		free_ast(ast);
-		free_array(shell.env);
 	}
+	free_array(shell.env);
 	return (EXIT_SUCCESS);
 }
