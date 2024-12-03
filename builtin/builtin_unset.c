@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:04:01 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/12/02 13:56:46 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/03 10:00:22 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
  */
 static void	remove_var(char **env, int index)
 {
+	free(env[index]);
 	while (env[index])
 	{
 		env[index] = env[index + 1];
