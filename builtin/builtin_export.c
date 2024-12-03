@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:58:14 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/12/03 10:01:13 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/03 10:17:13 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ static void	print_export_error(char *arg)
 	ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
 }
 
-static char **alloc_space(char **env, int size)
+static char	**alloc_space(char **env, int size)
 {
-	int i;
-	char **new_env;
+	int		i;
+	char	**new_env;
 
 	new_env = ft_calloc(size + 2, sizeof(char *));
 	if (!new_env)
@@ -46,7 +46,6 @@ static char **alloc_space(char **env, int size)
 	return (new_env);
 }
 
-
 /**
  * Function to add a new variable to env
  *
@@ -58,7 +57,7 @@ int	add_to_env(t_mshell *shell, const char *new_var)
 {
 	int		size;
 	char	*new_str;
-	char **new_env;
+	char	**new_env;
 
 	size = get_env_size(shell->env);
 	new_env = alloc_space(shell->env, size);
@@ -68,7 +67,6 @@ int	add_to_env(t_mshell *shell, const char *new_var)
 	if (!new_str)
 	{
 		free_array(new_env);
-		//shell->env = NULL;
 		return (1);
 	}
 	shell->env = new_env;
@@ -140,8 +138,7 @@ int	builtin_export(char **args, t_mshell *shell)
 		}
 		i++;
 	}
-	set_exit_status(shell, 0);
-	return (0);
+	return (set_exit_status(shell, 0), 0);
 }
 
 // int main(int argc, char **argv, char **envp)
