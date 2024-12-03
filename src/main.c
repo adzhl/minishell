@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 13:37:56 by etien             #+#    #+#             */
-/*   Updated: 2024/12/02 11:09:35 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/02 13:28:37 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,17 @@ int	main(int argc, char **argv, char **envp)
 	{
 		input = readline("minishell$ ");
 		if (!input)
+		{
+			//free_array(shell.env);
 			break ;
+		}
 		add_history(input);
 		if (syntax_error(input))
 			continue ;
 		ast = parse_cmd(input, &shell);
 		run_cmd_control(input, ast, &shell);
 		free_ast(ast);
+		//free(input);
 	}
 	free_array(shell.env);
 	return (EXIT_SUCCESS);
