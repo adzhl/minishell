@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
+/*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:47:31 by etien             #+#    #+#             */
-/*   Updated: 2024/11/29 11:20:48 by etien            ###   ########.fr       */
+/*   Updated: 2024/12/04 17:59:38 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@
 # include "utils.h"
 
 // Error messages
-# define EXEC_ERR ": command not found"
+# define EXEC_ERR "msh: command not found: "
 # define SYNTAX_PIPE "minishell: syntax error near unexpected token `|'"
 # define SYNTAX_QUOTES "minishell: syntax error: unclosed quotes"
 # define SYNTAX_REDIR "minishell: syntax error near unexpected token \
