@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:51:24 by etien             #+#    #+#             */
-/*   Updated: 2024/11/28 08:51:56 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/04 17:57:49 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,17 @@ void	run_cmd(t_cmd *cmd, t_mshell *shell)
 			if (execve(cmd_path, ecmd->argv, shell->env) == -1)
 			{
 				free(cmd_path);
-				ft_putstr_fd(ecmd->argv[0], STDERR_FILENO);
-				ft_putendl_fd(EXEC_ERR, STDERR_FILENO);
+				ft_putstr_fd(EXEC_ERR, STDERR_FILENO);
+				ft_putendl_fd(ecmd->argv[0], STDERR_FILENO);
 			}
 			free(cmd_path);
+		}
+		else
+		{
+			ft_putstr_fd(EXEC_ERR, STDERR_FILENO);
+			ft_putendl_fd(ecmd->argv[0], STDERR_FILENO);
+			set_exit_status(shell, 127);
+			exit(127);
 		}
 	}
 	else if (cmd->type == REDIR)
