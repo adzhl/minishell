@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:58:14 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/12/03 10:17:13 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/04 19:56:32 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,28 +117,28 @@ int	builtin_export(char **args, t_mshell *shell)
 	int		i;
 	char	*equal_sign;
 
+	set_exit_status(shell, 0);
 	if (!args[1])
-		return (print_sorted_env(shell->env));
+		return (set_exit_status(shell, print_sorted_env(shell->env)));
 	i = 1;
 	while (args[i])
 	{
 		equal_sign = ft_strchr(args[i], '=');
 		if (equal_sign && handle_equal(shell, args[i], equal_sign))
-			return (1);
+			return (set_exit_status(shell, 1), 1);
 		else if (!equal_sign)
 		{
 			if (!valid_var_name(args[i]))
 			{
 				print_export_error(args[i]);
 				set_exit_status(shell, 1);
-				return (1);
 			}
-			if (add_to_env(shell, args[i]))
-				return (1);
+			else if (find_var_name(shell->env, args[i]) == -1)
+				set_exit_status(shell, add_to_env(shell, args[i]));
 		}
 		i++;
 	}
-	return (set_exit_status(shell, 0), 0);
+	return (0);
 }
 
 // int main(int argc, char **argv, char **envp)
