@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:51:24 by etien             #+#    #+#             */
-/*   Updated: 2024/12/04 17:57:49 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/04 18:35:27 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,32 +30,16 @@ void	run_cmd(t_cmd *cmd, t_mshell *shell)
 		set_pipe(pcmd, shell);
 	else if (cmd->type == EXEC)
 	{
-		if (ecmd->argv[0] == 0)
+		if (!ecmd->argv[0] || (is_builtin(ecmd->argv[0]) && execute_builtin(ecmd->argv[0], ecmd->argv, shell) != 0))
 			exit(EXIT_FAILURE);
 		if (is_builtin(ecmd->argv[0]))
-		{
-			if (execute_builtin(ecmd->argv[0], ecmd->argv, shell) != 0)
-				exit(EXIT_FAILURE);
 			exit(EXIT_SUCCESS);
-		}
 		cmd_path = find_path(ecmd->argv[0], shell);
-		if (cmd_path)
-		{
-			if (execve(cmd_path, ecmd->argv, shell->env) == -1)
-			{
-				free(cmd_path);
-				ft_putstr_fd(EXEC_ERR, STDERR_FILENO);
-				ft_putendl_fd(ecmd->argv[0], STDERR_FILENO);
-			}
-			free(cmd_path);
-		}
-		else
-		{
-			ft_putstr_fd(EXEC_ERR, STDERR_FILENO);
-			ft_putendl_fd(ecmd->argv[0], STDERR_FILENO);
-			set_exit_status(shell, 127);
-			exit(127);
-		}
+		if (!cmd_path)
+			cmd_error(cmd_path, ecmd, shell, 0);
+		if (execve(cmd_path, ecmd->argv, shell->env) == -1)
+			cmd_error(cmd_path, ecmd, shell, 1);
+		free(cmd_path);
 	}
 	else if (cmd->type == REDIR)
 		set_redirection(rcmd, shell);
