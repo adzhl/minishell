@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:51:24 by etien             #+#    #+#             */
-/*   Updated: 2024/12/04 18:35:27 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/06 09:44:39 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	run_cmd(t_cmd *cmd, t_mshell *shell)
 	t_pipe_cmd	*pcmd;
 	t_redir_cmd	*rcmd;
 	t_exec_cmd	*ecmd;
-	char *cmd_path;
+	char		*cmd_path;
 
 	cmd_typecasting(cmd, &pcmd, &rcmd, &ecmd);
 	if (!cmd)
@@ -30,7 +30,8 @@ void	run_cmd(t_cmd *cmd, t_mshell *shell)
 		set_pipe(pcmd, shell);
 	else if (cmd->type == EXEC)
 	{
-		if (!ecmd->argv[0] || (is_builtin(ecmd->argv[0]) && execute_builtin(ecmd->argv[0], ecmd->argv, shell) != 0))
+		if (!ecmd->argv[0] || (is_builtin(ecmd->argv[0])
+				&& execute_builtin(ecmd->argv[0], ecmd->argv, shell) != 0))
 			exit(EXIT_FAILURE);
 		if (is_builtin(ecmd->argv[0]))
 			exit(EXIT_SUCCESS);
@@ -51,7 +52,7 @@ void	run_cmd(t_cmd *cmd, t_mshell *shell)
 // The parent process will wait for both children to terminate.
 // Even though fork is called twice, only two child processes are created
 // because each child will exit when run_cmd is called.
-void	set_pipe(t_pipe_cmd	*pcmd, t_mshell *shell)
+void	set_pipe(t_pipe_cmd *pcmd, t_mshell *shell)
 {
 	int	pipefd[2];
 
@@ -67,7 +68,7 @@ void	set_pipe(t_pipe_cmd	*pcmd, t_mshell *shell)
 	{
 		dup2(pipefd[READ], STDIN_FILENO);
 		close_pipes(pipefd);
-		run_cmd(pcmd->right,shell);
+		run_cmd(pcmd->right, shell);
 		exit(EXIT_SUCCESS);
 	}
 	close_pipes(pipefd);
