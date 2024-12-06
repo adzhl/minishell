@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:47:31 by etien             #+#    #+#             */
-/*   Updated: 2024/12/06 14:06:18 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/06 16:47:30 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ typedef struct s_mshell
 bool		syntax_error(char *input);
 void		print_error(char *err_msg, char *input, char *s);
 void setup_signal_handling(void);
+void handle_signal(int signum);
 
 #endif
