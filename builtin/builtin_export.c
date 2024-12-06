@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:58:14 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/12/04 19:56:32 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/06 10:41:48 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,17 +88,26 @@ static int	handle_equal(t_mshell *shell, char *arg, char *equal_sign)
 {
 	char	var_name[PATH_MAX];
 	int		name_len;
+	int var_index;
 
 	name_len = equal_sign - arg;
 	ft_strlcpy(var_name, arg, name_len + 1);
 	if (!valid_var_name(var_name))
 	{
 		print_export_error(arg);
-		set_exit_status(shell, 1);
-		return (1);
+		return(set_exit_status(shell, 1), 1);
 	}
-	if (!update_env_value(shell->env, var_name, equal_sign + 1))
-		return (add_to_env(shell, arg));
+	var_index = find_var_name(shell->env, var_name);
+	if (var_index != -1)
+	{
+		if (update_env_value(shell->env, var_name, equal_sign + 1))
+			return (1);
+	}
+	else
+	{
+		if (add_to_env(shell, arg))
+			return (1);
+	}
 	return (0);
 }
 
