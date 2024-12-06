@@ -1,7 +1,7 @@
 NAME = minishell
 
 SRC = \
-$(addprefix src/, error.c main.c) \
+$(addprefix src/, error.c main.c signal.c) \
 $(addprefix parser/, clean_up.c constructors.c parse.c run_utils.c run.c token.c) \
 $(addprefix heredoc/, delimiter.c heredoc.c) \
 $(addprefix expansion/, append_utils.c expansion_utils.c expansion.c) \
