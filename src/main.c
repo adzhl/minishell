@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 13:37:56 by etien             #+#    #+#             */
-/*   Updated: 2024/12/06 14:37:51 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/06 15:47:34 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,12 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		}
 		if (g_signal_received == SIGINT)
-			continue ;
-		add_history(input);
+		{
+			set_exit_status(&shell, 130);
+			g_signal_received = 0;
+		}
+		if (*input)
+			add_history(input);
 		if (syntax_error(input))
 			continue ;
 		ast = parse_cmd(input, &shell);
