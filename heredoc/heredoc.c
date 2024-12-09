@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:48:51 by etien             #+#    #+#             */
-/*   Updated: 2024/12/06 17:32:15 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/09 22:26:32 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	collect_heredoc_input(int pipefd[2], char *eof)
 		if (!hd_line)
 		{
 			write(STDOUT_FILENO, "\n", 1);
-			break;
+			break ;
 		}
 		if (ft_strcmp(hd_line, eof) == 0)
 		{

@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:51:24 by etien             #+#    #+#             */
-/*   Updated: 2024/12/09 22:15:03 by etien            ###   ########.fr       */
+/*   Updated: 2024/12/09 22:22:12 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	run_cmd(t_cmd *cmd, t_mshell *shell)
 	else if (cmd->type == EXEC)
 	{
 		if (is_builtin(ecmd->argv[0])
-				&& execute_builtin(ecmd->argv[0], ecmd->argv, shell) != 0)
+			&& execute_builtin(ecmd->argv[0], ecmd->argv, shell) != 0)
 			exit(EXIT_FAILURE);
 		if (is_builtin(ecmd->argv[0]))
 			exit(EXIT_SUCCESS);

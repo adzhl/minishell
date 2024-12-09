@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:58:14 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/12/06 10:41:48 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/09 22:32:58 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,14 @@ static int	handle_equal(t_mshell *shell, char *arg, char *equal_sign)
 {
 	char	var_name[PATH_MAX];
 	int		name_len;
-	int var_index;
+	int		var_index;
 
 	name_len = equal_sign - arg;
 	ft_strlcpy(var_name, arg, name_len + 1);
 	if (!valid_var_name(var_name))
 	{
 		print_export_error(arg);
-		return(set_exit_status(shell, 1), 1);
+		return (set_exit_status(shell, 1), 1);
 	}
 	var_index = find_var_name(shell->env, var_name);
 	if (var_index != -1)
