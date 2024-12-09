@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 12:04:18 by etien             #+#    #+#             */
-/*   Updated: 2024/11/29 12:48:19 by etien            ###   ########.fr       */
+/*   Updated: 2024/12/09 20:45:51 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ t_cmd	*parse_exec(char **ss, char *es, t_mshell *shell)
 		root = parse_redir(root, ss, es, shell);
 	}
 	cmd->argv[i] = 0;
+	expand_argv(cmd->argv, shell);
 	return (root);
 }
 
