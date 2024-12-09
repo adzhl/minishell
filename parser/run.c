@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:51:24 by etien             #+#    #+#             */
-/*   Updated: 2024/12/09 18:57:57 by etien            ###   ########.fr       */
+/*   Updated: 2024/12/09 22:15:03 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	run_cmd(t_cmd *cmd, t_mshell *shell)
 		set_pipe(pcmd, shell);
 	else if (cmd->type == EXEC)
 	{
-		if (!(ecmd->argv[0]) || (is_builtin(ecmd->argv[0])
-				&& execute_builtin(ecmd->argv[0], ecmd->argv, shell) != 0))
+		if (is_builtin(ecmd->argv[0])
+				&& execute_builtin(ecmd->argv[0], ecmd->argv, shell) != 0)
 			exit(EXIT_FAILURE);
 		if (is_builtin(ecmd->argv[0]))
 			exit(EXIT_SUCCESS);
@@ -79,8 +79,14 @@ void	set_pipe(t_pipe_cmd *pcmd, t_mshell *shell)
 // This function will set up the correct redirection depending
 // on whether it is a file or a heredoc. In both cases, it will
 // call run_cmd to continue descending down the parsing tree.
+// The first if condition is to handle the edge case where
+// "<< EOF" is not followed by any command. The function returns
+// to prevent any redirection from taking place. Control can then
+// be returned to the prompt without any input residues.
 void	set_redirection(t_redir_cmd *rcmd, t_mshell *shell)
 {
+	if (!get_standalone_cmd((t_cmd *)rcmd))
+		return ;
 	if (rcmd->file)
 		open_fd(rcmd);
 	else if (rcmd->heredoc)
