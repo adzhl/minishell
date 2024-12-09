@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 10:59:56 by etien             #+#    #+#             */
-/*   Updated: 2024/12/02 11:39:30 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/09 21:01:27 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@
 // the function correctly processes nested and mixed quotes, performing
 // expansions as required. The function returns a new string with
 // variables expanded as specified by the quotes.
-// The function will return the dynamically-allocated expanded string and free
-// the original string.
+// The function will return a dynamically-allocated expanded string.
 char	*expand_argument(char *s, t_mshell *shell)
 {
 	char	opening_quote;
@@ -70,6 +69,25 @@ void	toggle_quotes(char **s, char *opening_quote, int *in_quote, int quote)
 		*opening_quote = 0;
 		*in_quote = 0;
 		(*s)++;
+	}
+}
+
+// This function will expand each of the arguments in the argument array
+// before the command is passed for execution. It will free the original
+// argument and replace it with the expanded argument.
+void	expand_argv(char **argv, t_mshell *shell)
+{
+	char	*expanded_arg;
+	int		i;
+
+	expanded_arg = NULL;
+	i = 0;
+	while (argv[i])
+	{
+		expanded_arg = expand_argument(argv[i], shell);
+		free(argv[i]);
+		argv[i] = expanded_arg;
+		i++;
 	}
 }
 
