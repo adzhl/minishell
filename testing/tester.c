@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:43:10 by etien             #+#    #+#             */
-/*   Updated: 2024/11/15 14:01:09 by etien            ###   ########.fr       */
+/*   Updated: 2024/12/09 18:35:24 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	main(int ac, char **av, char **envp)
 		if (*input)
 		{
 			add_history(input);
-			cmd_tree = parse_cmd(input);
+			cmd_tree = parse_cmd(input, NULL);
 			if (cmd_tree)
 			{
 				print_tree(cmd_tree, 0);
