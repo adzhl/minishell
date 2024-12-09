@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:47:31 by etien             #+#    #+#             */
-/*   Updated: 2024/12/06 16:47:30 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/09 22:28:34 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@
 # define SYNTAX_REDIR "minishell: syntax error near unexpected token \
 `<' or '>' "
 
-extern volatile sig_atomic_t g_signal_received;
+extern volatile sig_atomic_t	g_signal_received;
 
 // Struct to store env and exit status
 typedef struct s_mshell
@@ -66,9 +66,9 @@ typedef struct s_mshell
 }			t_mshell;
 
 // Error functions
-bool		syntax_error(char *input);
-void		print_error(char *err_msg, char *input, char *s);
-void setup_signal_handling(void);
-void handle_signal(int signum);
+bool	syntax_error(char *input);
+void	print_error(char *err_msg, char *input, char *s);
+void	setup_signal_handling(void);
+void	handle_signal(int signum);
 
 #endif

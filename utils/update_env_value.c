@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update_env_value.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 20:01:18 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/12/06 10:28:17 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/09 22:38:59 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	update_env_value(char **env, const char *name, const char *value)
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], name, len) == 0 && (env[i][len] == '='
-				|| env[i][len] == '\0'))
+			|| env[i][len] == '\0'))
 		{
 			temp = ft_strjoin(name, "=");
 			if (!temp)
