@@ -3,16 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
+/*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 11:01:26 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/12/09 22:40:58 by etien            ###   ########.fr       */
+/*   Updated: 2024/12/10 10:18:20 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 volatile sig_atomic_t	g_signal_received = 0;
+
+void	handle_signal_heredoc(t_mshell *shell, int status)
+{
+	int	sig;
+
+	signal(SIGINT, handle_signal);
+	if (WIFSIGNALED(status))
+	{
+		sig = WTERMSIG(status);
+		if (sig == SIGINT)
+			set_exit_status(shell, 130);
+	}
+	else
+		set_exit_status(shell, 0);
+}
 
 void	handle_signal(int signum)
 {
