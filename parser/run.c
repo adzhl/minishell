@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
+/*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:51:24 by etien             #+#    #+#             */
-/*   Updated: 2024/12/09 22:22:12 by etien            ###   ########.fr       */
+/*   Updated: 2024/12/10 14:40:41 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	run_cmd(t_cmd *cmd, t_mshell *shell)
 		set_pipe(pcmd, shell);
 	else if (cmd->type == EXEC)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		if (is_builtin(ecmd->argv[0])
 			&& execute_builtin(ecmd->argv[0], ecmd->argv, shell) != 0)
 			exit(EXIT_FAILURE);
@@ -37,9 +39,9 @@ void	run_cmd(t_cmd *cmd, t_mshell *shell)
 			exit(EXIT_SUCCESS);
 		cmd_path = find_path(ecmd->argv[0], shell);
 		if (!cmd_path)
-			cmd_error(cmd_path, ecmd, shell, 0);
+			cmd_error(cmd_path, ecmd, 0);
 		if (execve(cmd_path, ecmd->argv, shell->env) == -1)
-			cmd_error(cmd_path, ecmd, shell, 1);
+			cmd_error(cmd_path, ecmd, 1);
 		free(cmd_path);
 	}
 	else if (cmd->type == REDIR)
@@ -55,25 +57,34 @@ void	run_cmd(t_cmd *cmd, t_mshell *shell)
 void	set_pipe(t_pipe_cmd *pcmd, t_mshell *shell)
 {
 	int	pipefd[2];
+	pid_t pid_left;
+	pid_t pid_right;
+	int status;
 
 	pipe(pipefd);
-	if (fork() == 0)
+	pid_left = fork();
+	if (pid_left == 0)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		dup2(pipefd[WRITE], STDOUT_FILENO);
 		close_pipes(pipefd);
 		run_cmd(pcmd->left, shell);
 		exit(EXIT_SUCCESS);
 	}
-	if (fork() == 0)
+	pid_right = fork();
+	if (pid_right == 0)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		dup2(pipefd[READ], STDIN_FILENO);
 		close_pipes(pipefd);
 		run_cmd(pcmd->right, shell);
 		exit(EXIT_SUCCESS);
 	}
 	close_pipes(pipefd);
-	wait(NULL);
-	wait(NULL);
+    waitpid(pid_left, &status, 0);
+    waitpid(pid_right, &status, 0);
 }
 
 // This function will set up the correct redirection depending

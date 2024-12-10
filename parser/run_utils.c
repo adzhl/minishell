@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 16:10:16 by etien             #+#    #+#             */
-/*   Updated: 2024/11/29 08:26:00 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/10 14:33:37 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 void	run_cmd_control(char *input, t_cmd *ast, t_mshell *shell)
 {
 	bool	has_pipe;
+	int status;
+	pid_t pid;
 
 	has_pipe = ft_strchr(input, '|');
 	free(input);
@@ -30,12 +32,17 @@ void	run_cmd_control(char *input, t_cmd *ast, t_mshell *shell)
 		run_builtin(ast, shell);
 	else
 	{
-		if (fork() == 0)
+		pid = fork();
+		if (pid == 0)
 		{
+			signal(SIGINT, SIG_DFL);
+			signal(SIGQUIT, SIG_DFL);
 			run_cmd(ast, shell);
 			exit(EXIT_SUCCESS);
 		}
-		wait(NULL);
+		waitpid(pid, &status, 0);
+		signal(SIGINT, handle_signal);
+		handle_child_exit(status, shell);
 	}
 }
 
