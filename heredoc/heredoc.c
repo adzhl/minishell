@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
+/*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:48:51 by etien             #+#    #+#             */
-/*   Updated: 2024/12/09 22:26:32 by etien            ###   ########.fr       */
+/*   Updated: 2024/12/10 10:18:34 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ char	*handle_heredoc(char **eof, t_mshell *shell)
 	pid_t	pid;
 	char	*hd_content;
 	bool	expand_hd;
+	int		status;
 
 	hd_content = NULL;
 	expand_hd = true;
@@ -32,12 +33,11 @@ char	*handle_heredoc(char **eof, t_mshell *shell)
 		collect_heredoc_input(pipefd, *eof);
 	else if (pid > 0)
 	{
-		signal(SIGINT, SIG_IGN);
 		close(pipefd[WRITE]);
 		read_heredoc_input(&hd_content, pipefd[0]);
 		close(pipefd[READ]);
-		waitpid(pid, NULL, 0);
-		signal(SIGINT, handle_signal);
+		waitpid(pid, &status, 0);
+		handle_signal_heredoc(shell, status);
 	}
 	if (expand_hd)
 		hd_content = expand_heredoc(hd_content, shell);
@@ -54,14 +54,13 @@ void	collect_heredoc_input(int pipefd[2], char *eof)
 	char	*hd_line;
 
 	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
 	close(pipefd[READ]);
 	while (1)
 	{
 		hd_line = readline("> ");
 		if (!hd_line)
 		{
-			write(STDOUT_FILENO, "\n", 1);
+			ft_putendl_fd(HEREDOC_ERR, STDOUT_FILENO);
 			break ;
 		}
 		if (ft_strcmp(hd_line, eof) == 0)
@@ -94,6 +93,7 @@ void	read_heredoc_input(char **hd_content, int pipefd_read)
 	int		bytes_read;
 	int		total_bytes;
 
+	signal(SIGINT, SIG_IGN);
 	total_bytes = 0;
 	bytes_read = read(pipefd_read, buffer, sizeof(buffer));
 	while (bytes_read > 0)
