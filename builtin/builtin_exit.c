@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 13:24:23 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/12/02 11:30:14 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/11 11:16:11 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ int	builtin_exit(char **args, t_mshell *shell)
 	if (!is_numeric(args[1]))
 	{
 		print_exit_error(args[1], "numeric argument required");
-		set_exit_status(shell, 255);
-		exit(255);
+		set_exit_status(shell, 2);
+		exit(2);
 	}
 	if (args[2])
 	{
@@ -77,7 +77,7 @@ int	builtin_exit(char **args, t_mshell *shell)
 	exit_code = ft_atoi(args[1]);
 	exit_return = (unsigned char)(exit_code % 256);
 	set_exit_status(shell, exit_return);
-	return (exit_return);
+	exit(exit_return);
 }
 
 // int	main(int argc, char *argv[], char *envp[]) {
