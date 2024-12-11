@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update_env_value.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
+/*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 20:01:18 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/12/09 22:38:59 by etien            ###   ########.fr       */
+/*   Updated: 2024/12/11 09:06:14 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,15 @@
  */
 int	update_env_value(char **env, const char *name, const char *value)
 {
-	int		i;
 	int		len;
 	char	*temp;
 	char	*new_var;
 
 	len = ft_strlen(name);
-	i = 0;
-	while (env[i])
+	while (*env)
 	{
-		if (ft_strncmp(env[i], name, len) == 0 && (env[i][len] == '='
-			|| env[i][len] == '\0'))
+		if (ft_strncmp(*env, name, len) == 0 && ((*env)[len] == '='
+			|| (*env)[len] == '\0'))
 		{
 			temp = ft_strjoin(name, "=");
 			if (!temp)
@@ -36,11 +34,11 @@ int	update_env_value(char **env, const char *name, const char *value)
 			free(temp);
 			if (!new_var)
 				return (1);
-			free(env[i]);
-			env[i] = new_var;
+			free(*env);
+			*env = new_var;
 			return (0);
 		}
-		i++;
+		env++;
 	}
 	return (1);
 }

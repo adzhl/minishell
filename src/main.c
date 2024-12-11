@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 13:37:56 by etien             #+#    #+#             */
-/*   Updated: 2024/12/06 15:47:34 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/11 09:20:57 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,25 +25,16 @@ int	main(int argc, char **argv, char **envp)
 	t_cmd		*ast;
 	t_mshell	shell;
 
-	(void)argc;
-	(void)argv;
-	shell.env = copy_env(envp);
-	shell.last_exit_status = 0;
-	setup_signal_handling();
+	((void)argc, (void)argv);
+	init_shell(&shell, envp);
 	while (1)
 	{
 		g_signal_received = 0;
 		input = readline("minishell$ ");
 		if (!input)
-		{
-			write(STDOUT_FILENO, "exit\n", 5);
-			break ;
-		}
+			exit_shell();
 		if (g_signal_received == SIGINT)
-		{
-			set_exit_status(&shell, 130);
-			g_signal_received = 0;
-		}
+			handle_signal_main(&shell);
 		if (*input)
 			add_history(input);
 		if (syntax_error(input))
@@ -54,4 +45,23 @@ int	main(int argc, char **argv, char **envp)
 	}
 	free_array(shell.env);
 	return (EXIT_SUCCESS);
+}
+
+void	init_shell(t_mshell *shell, char **envp)
+{
+	shell->env = copy_env(envp);
+	shell->last_exit_status = 0;
+	setup_signal_handling();
+}
+
+void	handle_signal_main(t_mshell *shell)
+{
+	set_exit_status(shell, 130);
+	g_signal_received = 0;
+}
+
+void	exit_shell(void)
+{
+	ft_putendl_fd("exit", STDOUT_FILENO);
+	exit(EXIT_SUCCESS);
 }

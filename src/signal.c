@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 11:01:26 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/12/10 14:52:30 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/11 09:01:52 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,12 @@ void	handle_signal_heredoc(t_mshell *shell, int status)
 	}
 	else
 		set_exit_status(shell, 0);
+}
+
+void	handle_child_signal(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 }
 
 void	handle_child_exit(int status, t_mshell *shell)

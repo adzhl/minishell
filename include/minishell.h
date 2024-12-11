@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:47:31 by etien             #+#    #+#             */
-/*   Updated: 2024/12/10 14:55:31 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/11 09:24:29 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@
 
 // program header files
 # include "builtin.h"
+# include "execution.h"
 # include "expansion.h"
 # include "heredoc.h"
 # include "parser.h"
@@ -56,7 +57,8 @@
 # define SYNTAX_REDIR \
 	"minishell: syntax error near unexpected token \
 `<' or '>' "
-# define HEREDOC_ERR "msh: warning: heredoc delimited by end-of-file (wanted 'eof')"
+# define HEREDOC_ERR \
+	"msh: warning: heredoc delimited by end-of-file (wanted 'eof')"
 
 extern volatile sig_atomic_t	g_signal_received;
 
@@ -66,6 +68,11 @@ typedef struct s_mshell
 	char						**env;
 	int							last_exit_status;
 }								t_mshell;
+
+// Main functions
+void							init_shell(t_mshell *shell, char **envp);
+void							handle_signal_main(t_mshell *shell);
+void							exit_shell(void);
 
 // Error functions
 bool							syntax_error(char *input);
@@ -77,6 +84,7 @@ void							setup_signal_handling(void);
 void							handle_signal(int signum);
 void							handle_signal_heredoc(t_mshell *shell,
 									int status);
+void							handle_child_signal(void);
 void							handle_child_exit(int status, t_mshell *shell);
 
 #endif
