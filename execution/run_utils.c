@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 16:10:16 by etien             #+#    #+#             */
-/*   Updated: 2024/12/10 14:33:37 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/11 08:59:26 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 void	run_cmd_control(char *input, t_cmd *ast, t_mshell *shell)
 {
 	bool	has_pipe;
-	int status;
-	pid_t pid;
+	int		status;
+	pid_t	pid;
 
 	has_pipe = ft_strchr(input, '|');
 	free(input);
@@ -35,8 +35,7 @@ void	run_cmd_control(char *input, t_cmd *ast, t_mshell *shell)
 		pid = fork();
 		if (pid == 0)
 		{
-			signal(SIGINT, SIG_DFL);
-			signal(SIGQUIT, SIG_DFL);
+			handle_child_signal();
 			run_cmd(ast, shell);
 			exit(EXIT_SUCCESS);
 		}
@@ -93,8 +92,8 @@ void	close_pipes(int *pipefd)
 }
 
 // This is a helper function for parsing tree node typecasting.
-void	cmd_typecasting(t_cmd *cmd,
-	t_pipe_cmd **pcmd, t_redir_cmd **rcmd, t_exec_cmd **ecmd)
+void	cmd_typecasting(t_cmd *cmd, t_pipe_cmd **pcmd, t_redir_cmd **rcmd,
+		t_exec_cmd **ecmd)
 {
 	if (pcmd)
 		*pcmd = (t_pipe_cmd *)cmd;
