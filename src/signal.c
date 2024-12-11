@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 11:01:26 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/12/11 09:01:52 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/11 14:49:00 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	handle_signal(int signum)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
-		rl_clear_history();
 	}
 }
 
@@ -31,6 +30,12 @@ void	setup_signal_handling(void)
 {
 	signal(SIGINT, handle_signal);
 	signal(SIGQUIT, SIG_IGN);
+}
+
+void	handle_child_signal(int signum)
+{
+	if (signum == SIGINT)
+		write(STDOUT_FILENO, "\n", 1);
 }
 
 void	handle_signal_heredoc(t_mshell *shell, int status)
@@ -46,12 +51,6 @@ void	handle_signal_heredoc(t_mshell *shell, int status)
 	}
 	else
 		set_exit_status(shell, 0);
-}
-
-void	handle_child_signal(void)
-{
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
 }
 
 void	handle_child_exit(int status, t_mshell *shell)

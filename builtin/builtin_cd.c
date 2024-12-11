@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:57:06 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/12/11 13:05:04 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/11 14:51:06 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	builtin_cd(char **args, t_mshell *shell)
 	if (args[2])
 	{
 		print_cd_error(NULL, "too many arguments");
-		return(set_exit_status(shell, 1), 1);
+		return (set_exit_status(shell, 1), 1);
 	}
 	else if (args[1])
 		path = args[1];

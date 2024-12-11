@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 07:51:07 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/12/11 08:58:14 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/11 14:48:20 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	setup_child(int inputfd, int outputfd, int *pipefd)
 {
-	handle_child_signal();
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	if (inputfd)
 		dup2(inputfd, STDIN_FILENO);
 	if (outputfd)
