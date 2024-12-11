@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:28:56 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/11/27 13:31:35 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/11 09:41:53 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_builtin	*init_builtin(void)
 	static t_builtin	builtins[] = {{"echo", builtin_echo}, {"cd", \
 		builtin_cd}, {"pwd", builtin_pwd}, {"export", builtin_export}, \
 		{"unset", builtin_unset}, {"env", builtin_env}, {"exit", \
-		builtin_exit}, {"clear", builtin_clear}, {NULL, NULL}};
+		builtin_exit}, {NULL, NULL}};
 
 	return (builtins);
 }
