@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:29:21 by etien             #+#    #+#             */
-/*   Updated: 2024/11/29 12:25:07 by etien            ###   ########.fr       */
+/*   Updated: 2024/12/12 10:59:25 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,17 @@ t_cmd	*redir_cmd(t_tok_pos *tok_pos,
 			int redir_mode, t_cmd *subcmd, t_mshell *shell)
 {
 	t_redir_cmd	*cmd;
+	char		*file;
 	char		*eof;
 
 	cmd = malloc(sizeof(*cmd));
-	ft_memset(cmd, 0, sizeof(*cmd));
-	cmd->type = REDIR;
 	init_redir(redir_mode, cmd);
 	if (redir_mode != REDIR_HEREDOC)
-		cmd->file = ft_substr(tok_pos->st, 0, tok_pos->et - tok_pos->st);
+	{
+		file = ft_substr(tok_pos->st, 0, tok_pos->et - tok_pos->st);
+		cmd->file = expand_argument(file, shell);
+		free(file);
+	}
 	else
 	{
 		cmd->mode = -1;
@@ -79,10 +82,12 @@ t_cmd	*redir_cmd(t_tok_pos *tok_pos,
 	return ((t_cmd *)cmd);
 }
 
-// This function initializes the file descriptors and file
-// opening mode for redirections that involve files.
+// This function initializes the node fields and type, file descriptors
+// and file opening mode for redirections that involve files.
 void	init_redir(int redir_mode, t_redir_cmd *cmd)
 {
+	ft_memset(cmd, 0, sizeof(*cmd));
+	cmd->type = REDIR;
 	if (redir_mode == REDIR_INPUT)
 	{
 		cmd->mode = O_RDONLY;
