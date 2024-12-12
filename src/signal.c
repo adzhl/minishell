@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 11:01:26 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/12/12 13:05:53 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/12 15:11:40 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void	handle_child_exit(int status, t_mshell *shell)
 {
 	int	sig;
 
+	if (shell->last_exit_status == 130)
+		return ;
 	if (WIFSIGNALED(status))
 	{
 		sig = WTERMSIG(status);
