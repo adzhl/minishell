@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:48:51 by etien             #+#    #+#             */
-/*   Updated: 2024/12/10 10:18:34 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/12 16:06:04 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	read_heredoc_input(char **hd_content, int pipefd_read)
 	int		bytes_read;
 	int		total_bytes;
 
-	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, handle_child_signal);
 	total_bytes = 0;
 	bytes_read = read(pipefd_read, buffer, sizeof(buffer));
 	while (bytes_read > 0)
