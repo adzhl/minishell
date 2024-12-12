@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:47:31 by etien             #+#    #+#             */
-/*   Updated: 2024/12/11 14:51:25 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/12 11:14:33 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,11 @@
 
 // Error messages
 # define EXEC_ERR "msh: command not found: "
-# define SYNTAX_PIPE "minishell: syntax error near unexpected token `|'"
-# define SYNTAX_QUOTES "minishell: syntax error: unclosed quotes"
-# define SYNTAX_REDIR \
-	"minishell: syntax error near unexpected token \
-`<' or '>' "
-# define HEREDOC_ERR \
-	"msh: warning: heredoc delimited by end-of-file (wanted 'eof')"
+# define SYNTAX_PIPE "msh: syntax error near unexpected token `|'"
+# define SYNTAX_QUOTES "msh: syntax error: unclosed quotes"
+# define SYNTAX_REDIR "msh: syntax error near unexpected token `<' or '>'"
+# define HEREDOC_ERR "msh: warning: here-document delimited by end-of-file \
+(wanted 'EOF')"
 
 extern volatile sig_atomic_t	g_signal_received;
 
