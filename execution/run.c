@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:51:24 by etien             #+#    #+#             */
-/*   Updated: 2024/12/12 12:09:37 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/12 13:07:57 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	set_pipe(t_pipe_cmd *pcmd, t_mshell *shell)
 	int		pipefd[2];
 	pid_t	pid_left;
 	pid_t	pid_right;
-	int		status;
+	int		status_right;
 
 	pipe(pipefd);
 	pid_left = fork();
@@ -62,8 +62,8 @@ void	set_pipe(t_pipe_cmd *pcmd, t_mshell *shell)
 		exit(EXIT_SUCCESS);
 	}
 	close_pipes(pipefd);
-	waitpid(pid_left, &status, 0);
-	waitpid(pid_right, &status, 0);
+	waitpid(pid_right, &status_right, 0);
+	handle_child_exit(status_right, shell);
 }
 
 // This function will set up the correct redirection depending
