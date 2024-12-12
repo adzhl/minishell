@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 16:10:16 by etien             #+#    #+#             */
-/*   Updated: 2024/12/11 16:20:01 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/12 12:30:03 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	run_cmd_control(char *input, t_cmd *ast, t_mshell *shell)
 			signal(SIGINT, SIG_DFL);
 			signal(SIGQUIT, SIG_DFL);
 			run_cmd(ast, shell);
-			exit(EXIT_SUCCESS);
+			exit(shell->last_exit_status);
 		}
 		signal(SIGINT, handle_child_signal);
 		waitpid(pid, &status, 0);
