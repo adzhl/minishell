@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:51:24 by etien             #+#    #+#             */
-/*   Updated: 2024/12/13 11:06:23 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/13 12:44:15 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,11 @@ void	set_redirection(t_redir_cmd *rcmd, t_mshell *shell)
 	if (rcmd->file)
 		open_fd(rcmd);
 	else if (rcmd->heredoc)
+	{
 		pipe_heredoc(rcmd);
+		if (!rcmd->heredoc)
+			return ;
+	}
 	run_cmd(rcmd->cmd, shell);
 }
 
@@ -113,6 +117,8 @@ void	pipe_heredoc(t_redir_cmd *rcmd)
 {
 	int	pipefd[2];
 
+	if (!rcmd->heredoc)
+		return ;
 	pipe(pipefd);
 	write(pipefd[WRITE], rcmd->heredoc, ft_strlen(rcmd->heredoc));
 	close(pipefd[WRITE]);
