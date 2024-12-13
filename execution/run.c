@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:51:24 by etien             #+#    #+#             */
-/*   Updated: 2024/12/12 13:07:57 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/13 11:06:23 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ void	set_pipe(t_pipe_cmd *pcmd, t_mshell *shell)
 	{
 		setup_child(0, pipefd[WRITE], pipefd);
 		run_cmd(pcmd->left, shell);
-		exit(EXIT_SUCCESS);
+		exit(shell->last_exit_status);
 	}
 	pid_right = fork();
 	if (pid_right == 0)
 	{
 		setup_child(pipefd[READ], 0, pipefd);
 		run_cmd(pcmd->right, shell);
-		exit(EXIT_SUCCESS);
+		exit(shell->last_exit_status);
 	}
 	close_pipes(pipefd);
 	waitpid(pid_right, &status_right, 0);
