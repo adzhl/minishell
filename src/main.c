@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 13:37:56 by etien             #+#    #+#             */
-/*   Updated: 2024/12/11 09:20:57 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/14 11:15:34 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	main(int argc, char **argv, char **envp)
 	init_shell(&shell, envp);
 	while (1)
 	{
+		if (shell.abort_exec)
+			shell.abort_exec = false;
 		g_signal_received = 0;
 		input = readline("minishell$ ");
 		if (!input)
@@ -43,14 +45,14 @@ int	main(int argc, char **argv, char **envp)
 		run_cmd_control(input, ast, &shell);
 		free_ast(ast);
 	}
-	free_array(shell.env);
-	return (EXIT_SUCCESS);
+	return (free_array(shell.env), EXIT_SUCCESS);
 }
 
 void	init_shell(t_mshell *shell, char **envp)
 {
 	shell->env = copy_env(envp);
 	shell->last_exit_status = 0;
+	shell->abort_exec = false;
 	setup_signal_handling();
 }
 

@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 11:01:26 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/12/12 16:06:09 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/14 11:19:13 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ void	handle_signal_heredoc(t_mshell *shell, int status)
 	{
 		sig = WTERMSIG(status);
 		if (sig == SIGINT)
+		{
 			set_exit_status(shell, 130);
+			shell->abort_exec = true;
+		}
 	}
 	else if (WIFEXITED(status))
 		set_exit_status(shell, WEXITSTATUS(status));

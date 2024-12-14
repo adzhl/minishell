@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:51:24 by etien             #+#    #+#             */
-/*   Updated: 2024/12/13 12:44:15 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/14 11:14:42 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ void	set_redirection(t_redir_cmd *rcmd, t_mshell *shell)
 		open_fd(rcmd);
 	else if (rcmd->heredoc)
 	{
-		pipe_heredoc(rcmd);
-		if (!rcmd->heredoc)
+		pipe_heredoc(rcmd, shell);
+		if (shell->abort_exec)
 			return ;
 	}
 	run_cmd(rcmd->cmd, shell);
@@ -113,11 +113,11 @@ void	open_fd(t_redir_cmd *rcmd)
 // Since heredocs are typically temporary files, the heredoc string
 // can be immediately freed after it has been written to the pipe for
 // memory efficiency.
-void	pipe_heredoc(t_redir_cmd *rcmd)
+void	pipe_heredoc(t_redir_cmd *rcmd, t_mshell *shell)
 {
 	int	pipefd[2];
 
-	if (!rcmd->heredoc)
+	if (shell->abort_exec)
 		return ;
 	pipe(pipefd);
 	write(pipefd[WRITE], rcmd->heredoc, ft_strlen(rcmd->heredoc));
