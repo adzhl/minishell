@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:51:24 by etien             #+#    #+#             */
-/*   Updated: 2024/12/14 11:14:42 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/14 18:39:06 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	set_pipe(t_pipe_cmd *pcmd, t_mshell *shell)
 	pid_t	pid_left;
 	pid_t	pid_right;
 	int		status_right;
+	int		status_left;
 
 	pipe(pipefd);
 	pid_left = fork();
@@ -62,6 +63,7 @@ void	set_pipe(t_pipe_cmd *pcmd, t_mshell *shell)
 		exit(shell->last_exit_status);
 	}
 	close_pipes(pipefd);
+	waitpid(pid_left, &status_left, 0);
 	waitpid(pid_right, &status_right, 0);
 	handle_child_exit(status_right, shell);
 }
