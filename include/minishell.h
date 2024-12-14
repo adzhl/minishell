@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:47:31 by etien             #+#    #+#             */
-/*   Updated: 2024/12/12 15:25:27 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/14 11:14:17 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 // open, close
 # include <fcntl.h>
 // PATH_MAX
-# include <linux/limits.h>
+# include <limits.h>
 
 // boolean data type
 # include <stdbool.h>
@@ -64,6 +64,7 @@ typedef struct s_mshell
 {
 	char						**env;
 	int							last_exit_status;
+	bool						abort_exec;
 }								t_mshell;
 
 // Main functions
