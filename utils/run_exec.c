@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
+/*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 07:32:27 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/12/12 14:43:51 by etien            ###   ########.fr       */
+/*   Updated: 2024/12/16 17:04:55 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	run_exec(t_mshell *shell, t_exec_cmd *ecmd)
 		exit(EXIT_SUCCESS);
 	cmd_path = find_path(ecmd->argv[0], shell);
 	if (!cmd_path)
-		cmd_error(cmd_path, ecmd, 0);
+		cmd_error(cmd_path, ecmd);
 	if (execve(cmd_path, ecmd->argv, shell->env) == -1)
-		cmd_error(cmd_path, ecmd, 1);
+		cmd_error(cmd_path, ecmd);
 	free(cmd_path);
 }
 
