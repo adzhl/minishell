@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:48:51 by etien             #+#    #+#             */
-/*   Updated: 2024/12/12 16:06:04 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/16 16:57:44 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*handle_heredoc(char **eof, t_mshell *shell)
 	bool	expand_hd;
 	int		status;
 
-	hd_content = NULL;
+	hd_content = ft_strdup("");
 	expand_hd = true;
 	check_delimiter(eof, &expand_hd);
 	pipe(pipefd);
