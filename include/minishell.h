@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:47:31 by etien             #+#    #+#             */
-/*   Updated: 2024/12/16 09:06:22 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/16 16:24:32 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@
 # include "utils.h"
 
 // Error messages
-# define EXEC_ERR "msh: command not found: "
-# define NO_ACCESS "msh: permission denied: "
+# define EXEC_ERR ": command not found"
+# define NO_ACCESS ": Permission denied"
 # define SYNTAX_PIPE "msh: syntax error near unexpected token `|'"
 # define SYNTAX_QUOTES "msh: syntax error: unclosed quotes"
 # define SYNTAX_REDIR "msh: syntax error near unexpected token `<' or '>'"
