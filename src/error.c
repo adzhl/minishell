@@ -6,11 +6,27 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:56:35 by etien             #+#    #+#             */
-/*   Updated: 2024/11/19 10:41:43 by etien            ###   ########.fr       */
+/*   Updated: 2024/12/16 17:51:57 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+// This function will return true if the input consists entirely of
+// whitespace so that the shell can reprompt the user.
+bool	empty_line_error(char *input)
+{
+	char	*s;
+
+	s = input;
+	while (*s)
+	{
+		if (!ft_strchr(WHITESPACE, *s))
+			return (false);
+		s++;
+	}
+	return (free(input), true);
+}
 
 // This function will return true if syntax errors are detected
 // in the input. The input is first duplicated, and the starting
