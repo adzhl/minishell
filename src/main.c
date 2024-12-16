@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 13:37:56 by etien             #+#    #+#             */
-/*   Updated: 2024/12/14 11:15:34 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/16 13:26:52 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int argc, char **argv, char **envp)
 		if (shell.abort_exec)
 			shell.abort_exec = false;
 		g_signal_received = 0;
-		input = readline("minishell$ ");
+		input = expand_input(readline("minishell$ "), &shell);
 		if (!input)
 			exit_shell();
 		if (g_signal_received == SIGINT)

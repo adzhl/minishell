@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 14:16:29 by etien             #+#    #+#             */
-/*   Updated: 2024/12/09 20:33:48 by etien            ###   ########.fr       */
+/*   Updated: 2024/12/16 13:43:00 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ char	*expand_argument(char *s, t_mshell *shell);
 void	toggle_quotes(char **s, char *opening_quote, int *in_quote, int quote);
 void	expand_argv(char **argv, t_mshell *shell);
 char	*expand_heredoc(char *heredoc, t_mshell *shell);
+char	*expand_input(char *input, t_mshell *shell);
 
 // Expansion util functions
 char	*sub_in_var(char **s, char *expanded_s, t_mshell *shell);
@@ -47,5 +48,6 @@ char	*append_str(char **s, char *expanded_s, int mode, char opening_quote);
 char	*append_for_argument(char **s, char opening_quote);
 char	*append_for_delimiter(char **s, char opening_quote);
 char	*append_for_heredoc(char **s);
+char	*append_str_input(char **s, char *expanded_s, char *opening_quote);
 
 #endif

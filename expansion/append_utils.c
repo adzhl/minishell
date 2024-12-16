@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 12:49:49 by etien             #+#    #+#             */
-/*   Updated: 2024/11/28 21:34:42 by etien            ###   ########.fr       */
+/*   Updated: 2024/12/16 13:32:26 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,31 @@ char	*append_for_heredoc(char **s)
 	while (**s && **s != '$')
 		(*s)++;
 	return (ft_substr(start, 0, *s - start));
+}
+
+// Separate append_str function for input because we have to toggle
+// opening quotes in the while loop. The loop will break if:
+// 1) No quotes: Until a quote or $ sign is encountered.
+// 2) Single/double quotes: A matching quote is encountered.
+char	*append_str_input(char **s, char *expanded_s, char *opening_quote)
+{
+	char	*start;
+	char	*append_s;
+	char	*joined_s;
+
+	start = *s;
+	while (**s)
+	{
+		if (!(*opening_quote) && (**s == SQ || **s == DQ))
+			*opening_quote = **s;
+		else if ((!(*opening_quote) && (**s == SQ || **s == DQ || **s == '$'))
+			|| (**s == *opening_quote))
+			break ;
+		(*s)++;
+	}
+	append_s = ft_substr(start, 0, *s - start);
+	joined_s = ft_strjoin(expanded_s, append_s);
+	free(append_s);
+	free(expanded_s);
+	return (joined_s);
 }

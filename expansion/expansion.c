@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 10:59:56 by etien             #+#    #+#             */
-/*   Updated: 2024/12/09 21:01:27 by etien            ###   ########.fr       */
+/*   Updated: 2024/12/16 13:27:03 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,4 +113,34 @@ char	*expand_heredoc(char *hd, t_mshell *shell)
 			expanded_hd = append_str(&s, expanded_hd, EXP_HEREDOC, 0);
 	}
 	return (free(hd), expanded_hd);
+}
+
+// This function will expand the input.
+// Input expansion only performs variable expansion for strings that are
+// not in quotes.
+// The function will free the input string and return a dynamically-allocated
+// expanded input string.
+char	*expand_input(char *input, t_mshell *shell)
+{
+	char	*s;
+	char	opening_quote;
+	char	*expanded_s;
+
+	if (!input)
+		return (NULL);
+	s = input;
+	opening_quote = 0;
+	expanded_s = ft_strdup("");
+	while (*s)
+	{
+		if ((*s == SQ || *s == DQ) && !opening_quote)
+			opening_quote = *s;
+		else if (*s == opening_quote)
+			opening_quote = 0;
+		if (*s == '$' && !opening_quote)
+			expanded_s = sub_in_var(&s, expanded_s, shell);
+		else
+			expanded_s = append_str_input(&s, expanded_s, &opening_quote);
+	}
+	return (free(input), expanded_s);
 }
