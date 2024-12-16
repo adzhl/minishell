@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:47:31 by etien             #+#    #+#             */
-/*   Updated: 2024/12/16 17:03:40 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:50:47 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void							handle_signal_main(t_mshell *shell);
 void							exit_shell(void);
 
 // Error functions
+bool							empty_line_error(char *input);
 bool							syntax_error(char *input);
 void							print_error(char *err_msg, char *input,
 									char *s);
