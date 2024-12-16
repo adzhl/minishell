@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
+/*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 09:27:54 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/12/12 14:37:32 by etien            ###   ########.fr       */
+/*   Updated: 2024/12/16 17:05:02 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int						get_env_size(char **env);
 int						set_exit_status(t_mshell *shell, int status);
 int						get_exit_status(t_mshell *shell);
 char					*find_path(char *cmd, t_mshell *shell);
-void					cmd_error(char *cmd_path, t_exec_cmd *ecmd, int mode);
+void					cmd_error(char *cmd_path, t_exec_cmd *ecmd);
 void					run_exec(t_mshell *shell, t_exec_cmd *ecmd);
 void					shift_argv(t_exec_cmd *ecmd);
 void					setup_child(int inputfd, int outputfd, int *pipefd);

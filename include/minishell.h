@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:47:31 by etien             #+#    #+#             */
-/*   Updated: 2024/12/16 16:24:32 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:03:40 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@
 
 // boolean data type
 # include <stdbool.h>
+
+// Error handling
+# include <errno.h>
 
 // program header files
 # include "builtin.h"
