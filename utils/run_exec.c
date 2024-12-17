@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 07:32:27 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/12/16 17:04:55 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/17 08:01:43 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,16 @@ void	run_exec(t_mshell *shell, t_exec_cmd *ecmd)
 	free(cmd_path);
 }
 
-// If argv[0] is an empty string, the while loop will shift the
-// argument array to skip past it.
+// As long as argv[0] is an empty string, the while loop will keep
+// shifting the argument array to skip past it.
 void	shift_argv(t_exec_cmd *ecmd)
 {
 	int	i;
 
 	i = 0;
-	if (ecmd->argv[0] && ft_strcmp(ecmd->argv[0], "") == 0)
+	while (ecmd->argv[0] && ft_strcmp(ecmd->argv[0], "") == 0)
 	{
+		i = 0;
 		free(ecmd->argv[0]);
 		while (ecmd->argv[i])
 		{
