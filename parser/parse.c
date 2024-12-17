@@ -6,7 +6,7 @@
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 12:04:18 by etien             #+#    #+#             */
-/*   Updated: 2024/12/09 20:45:51 by etien            ###   ########.fr       */
+/*   Updated: 2024/12/17 07:58:03 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,10 +132,8 @@ void	malloc_argv(char *s, t_exec_cmd *cmd)
 // GRAMMAR: [REDIR] [REDIR]
 // This function will set up the REDIR nodes and apply the correct
 // fd and mode based on the redirection symbol detected.
-// Before any REDIR nodes are created, the function checks that the
-// redirection token is followed by a word token.
-// The word token will either be the file name or the EOF for the heredoc.
-// If the word token is absent, an error is thrown and the AST will be freed.
+// The redirection symbol should be followed by a word token that will
+// either be the file name or the EOF for the heredoc.
 // The while loop allows this function to parse multiple redirection
 // operators in a row, e.g. command > file1 < file2 >> file3.
 // Since cmd is reused, if there are multiple redirections, the REDIR
