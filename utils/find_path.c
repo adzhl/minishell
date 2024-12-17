@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 08:30:00 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/12/16 16:00:04 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/17 08:19:57 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,14 @@
 
 /**
  * If the first argument is ".program" or "./program", this function will
- * append to the current directory and check if it is executable
+ * check if it is executable
  */
 char	*relative_path(char *cmd)
 {
-	char	*temp;
-	char	*append_path;
-	char	*full_path;
-	char	cwd[PATH_MAX];
-
 	if (cmd[0] == '/' || (cmd[0] == '.' && cmd[1] == '/'))
 	{
-		temp = getcwd(cwd, sizeof(cwd));
-		append_path = ft_strjoin(temp, "/");
-		if (!append_path)
-			return (NULL);
-		full_path = ft_strjoin(append_path, cmd);
-		free(append_path);
-		if (access(full_path, F_OK | X_OK) == 0)
-			return (full_path);
-		free(full_path);
+		if (access(cmd, F_OK | X_OK) == 0)
+			return (cmd);
 		return (NULL);
 	}
 	return (NULL);
