@@ -4,10 +4,10 @@ SRC = \
 $(addprefix src/, error.c main.c signal.c) \
 $(addprefix parser/, clean_up.c constructors.c parse.c token.c) \
 $(addprefix heredoc/, delimiter.c heredoc.c) \
-$(addprefix execution/, run.c run_utils.c) \
+$(addprefix execution/, run_exec.c run_pipe.c run_redir.c run_utils.c run.c) \
 $(addprefix expansion/, append_utils.c expansion_utils.c expansion.c) \
 $(addprefix builtin/, builtin_cd.c builtin_echo.c builtin_env.c builtin_exit.c builtin_export.c builtin_pwd.c builtin_unset.c builtin.c) \
-$(addprefix utils/, copy_env.c export_utils.c find_var_name.c free_array.c get_env_value.c update_env_value.c valid_var_name.c exit_status.c find_path.c cmd_error.c run_exec.c setup_child.c set_builtin_redir.c)
+$(addprefix utils/, copy_env.c export_utils.c find_var_name.c free_array.c get_env_value.c update_env_value.c valid_var_name.c exit_status.c find_path.c cmd_error.c)
 
 # $(addprefix testing/, parser_visualizer.c tester.c) \
 

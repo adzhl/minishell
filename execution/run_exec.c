@@ -5,13 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/11 07:32:27 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/12/17 08:01:43 by etien            ###   ########.fr       */
+/*   Created: 2024/12/18 17:23:48 by etien             #+#    #+#             */
+/*   Updated: 2024/12/18 17:40:18 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+// This function contains the main logic for command execution.
 void	run_exec(t_mshell *shell, t_exec_cmd *ecmd)
 {
 	char	*cmd_path;
