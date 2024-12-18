@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 16:10:16 by etien             #+#    #+#             */
-/*   Updated: 2024/12/12 12:30:03 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/18 16:54:59 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	run_builtin(t_cmd *cmd, t_mshell *shell)
 		}
 	}
 	else if (cmd->type == REDIR)
-		set_redirection(rcmd, shell);
+		set_builtin_redir(rcmd, shell);
 }
 
 // This function will fetch the name of the standalone command.
