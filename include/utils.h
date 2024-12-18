@@ -6,7 +6,7 @@
 /*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 09:27:54 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/12/16 17:05:02 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/18 16:54:31 by abinti-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,6 @@ void					cmd_error(char *cmd_path, t_exec_cmd *ecmd);
 void					run_exec(t_mshell *shell, t_exec_cmd *ecmd);
 void					shift_argv(t_exec_cmd *ecmd);
 void					setup_child(int inputfd, int outputfd, int *pipefd);
+void					set_builtin_redir(t_redir_cmd *rcmd, t_mshell *shell);
 
 #endif
