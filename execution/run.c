@@ -3,14 +3,75 @@
 /*                                                        :::      ::::::::   */
 /*   run.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:51:24 by etien             #+#    #+#             */
-/*   Updated: 2024/12/16 07:55:30 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/18 17:32:49 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+// This function checks for pipe symbols in the input to identify
+// standalone built-in commands. Standalone built-in commands must be
+// executed in the parent process to ensure that changes to the environment
+// variables (ENV) persist across subsequent commands. For all other types
+// of commands, a child process must be forked manually before run_cmd is
+// called. This prevents the execve call from terminating the parent process.
+// The goal is to ensure that control returns to the shell prompt after
+// execution, avoiding an immediate program exit.
+void	run_cmd_control(char *input, t_cmd *ast, t_mshell *shell)
+{
+	bool	has_pipe;
+	int		status;
+	pid_t	pid;
+
+	has_pipe = ft_strchr(input, '|');
+	free(input);
+	if (!has_pipe && is_builtin(get_standalone_cmd(ast)))
+		run_builtin(ast, shell);
+	else
+	{
+		pid = fork();
+		if (pid == 0)
+		{
+			signal(SIGINT, SIG_DFL);
+			signal(SIGQUIT, SIG_DFL);
+			run_cmd(ast, shell);
+			exit(shell->last_exit_status);
+		}
+		signal(SIGINT, handle_child_signal);
+		waitpid(pid, &status, 0);
+		signal(SIGINT, handle_signal);
+		handle_child_exit(status, shell);
+	}
+}
+
+// This function is similar to the run_cmd function, except it
+// is only run when there is a standalone built-in command.
+// Standalone commands do not have pipes so PIPE nodes are
+// omitted in the if-else checks.
+void	run_builtin(t_cmd *cmd, t_mshell *shell)
+{
+	t_redir_cmd	*rcmd;
+	t_exec_cmd	*ecmd;
+
+	cmd_typecasting(cmd, NULL, &rcmd, &ecmd);
+	if (!cmd)
+		return ;
+	else if (cmd->type == REDIR)
+		set_builtin_redir(rcmd, shell);
+	else if (cmd->type == EXEC)
+	{
+		if (ecmd->argv[0] == 0)
+			return ;
+		if (is_builtin(ecmd->argv[0]))
+		{
+			if (execute_builtin(ecmd->argv[0], ecmd->argv, shell) != 0)
+				return ;
+		}
+	}
+}
 
 // This function will walk the parsing tree and execute the commands.
 // If the current node is an EXEC node, it will execute, otherwise
@@ -27,103 +88,8 @@ void	run_cmd(t_cmd *cmd, t_mshell *shell)
 		exit(EXIT_FAILURE);
 	if (cmd->type == PIPE)
 		set_pipe(pcmd, shell);
-	else if (cmd->type == EXEC)
-		run_exec(shell, ecmd);
 	else if (cmd->type == REDIR)
 		set_redirection(rcmd, shell);
-}
-
-// This function will set up the pipes, fork two child processes and
-// call run_cmd in each child process to continue descending down the
-// left and right trees respectively.
-// The parent process will wait for both children to terminate.
-// Even though fork is called twice, only two child processes are created
-// because each child will exit when run_cmd is called.
-void	set_pipe(t_pipe_cmd *pcmd, t_mshell *shell)
-{
-	int		pipefd[2];
-	pid_t	pid_left;
-	pid_t	pid_right;
-	int		status_right;
-	int		status_left;
-
-	pipe(pipefd);
-	pid_left = fork();
-	if (pid_left == 0)
-	{
-		setup_child(0, pipefd[WRITE], pipefd);
-		run_cmd(pcmd->left, shell);
-		exit(shell->last_exit_status);
-	}
-	pid_right = fork();
-	if (pid_right == 0)
-	{
-		setup_child(pipefd[READ], 0, pipefd);
-		run_cmd(pcmd->right, shell);
-		exit(shell->last_exit_status);
-	}
-	close_pipes(pipefd);
-	waitpid(pid_left, &status_left, 0);
-	waitpid(pid_right, &status_right, 0);
-	handle_child_exit(status_right, shell);
-}
-
-// This function will set up the correct redirection depending
-// on whether it is a file or a heredoc. In both cases, it will
-// call run_cmd to continue descending down the parsing tree.
-// The first if condition is to handle the edge case where
-// "<< EOF" is not followed by any command. The function returns
-// to prevent any redirection from taking place. Control can then
-// be returned to the prompt without any input residues.
-void	set_redirection(t_redir_cmd *rcmd, t_mshell *shell)
-{
-	if (!get_standalone_cmd((t_cmd *)rcmd))
-		return ;
-	if (rcmd->file)
-		open_fd(rcmd);
-	else if (rcmd->heredoc)
-	{
-		if (shell->abort_exec)
-			return ;
-		pipe_heredoc(rcmd);
-	}
-	run_cmd(rcmd->cmd, shell);
-}
-
-// This function handles opening file descriptors for the REDIR nodes.
-// If the third parameter in open() is omitted, file permissions default to
-// the shell's umask (typically 022, which results in 0644 permissions). The
-// more generous 0666 permissions will allow us to open the newly-created file.
-// In a sequence of REDIR nodes, later redirections overwrite earlier ones
-// because dup2 continuously reconfigures STDIN or STDOUT as we traverse
-// down the chain.
-void	open_fd(t_redir_cmd *rcmd)
-{
-	int	redir_fd;
-
-	redir_fd = open(rcmd->file, rcmd->mode, 0666);
-	if (redir_fd < 0)
-	{
-		perror(rcmd->file);
-		exit(EXIT_FAILURE);
-	}
-	dup2(redir_fd, rcmd->fd);
-}
-
-// This function will write the heredoc to a pipe so that it will
-// have a file descriptor that can interact with the dup2 function.
-// Since heredocs are typically temporary files, the heredoc string
-// can be immediately freed after it has been written to the pipe for
-// memory efficiency.
-void	pipe_heredoc(t_redir_cmd *rcmd)
-{
-	int	pipefd[2];
-
-	pipe(pipefd);
-	write(pipefd[WRITE], rcmd->heredoc, ft_strlen(rcmd->heredoc));
-	close(pipefd[WRITE]);
-	dup2(pipefd[READ], STDIN_FILENO);
-	close(pipefd[READ]);
-	free(rcmd->heredoc);
-	rcmd->heredoc = NULL;
+	else if (cmd->type == EXEC)
+		run_exec(shell, ecmd);
 }

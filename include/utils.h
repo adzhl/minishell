@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abinti-a <abinti-a@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: etien <etien@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 09:27:54 by abinti-a          #+#    #+#             */
-/*   Updated: 2024/12/18 16:54:31 by abinti-a         ###   ########.fr       */
+/*   Updated: 2024/12/18 17:35:01 by etien            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,5 @@ int						set_exit_status(t_mshell *shell, int status);
 int						get_exit_status(t_mshell *shell);
 char					*find_path(char *cmd, t_mshell *shell);
 void					cmd_error(char *cmd_path, t_exec_cmd *ecmd);
-void					run_exec(t_mshell *shell, t_exec_cmd *ecmd);
-void					shift_argv(t_exec_cmd *ecmd);
-void					setup_child(int inputfd, int outputfd, int *pipefd);
-void					set_builtin_redir(t_redir_cmd *rcmd, t_mshell *shell);
 
 #endif
