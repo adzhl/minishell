@@ -76,7 +76,7 @@ END
 ---
 
 ## 📚 Dependencies
-- Libft: Your custom library for common utility functions.
+- Libft: A custom library for common utility functions.
 
 ---
 
