@@ -26,16 +26,16 @@ It provides a command-line interface to execute commands, handle pipes, redirect
 ## 🛠️ How to Build
 1. Clone the repository:
 ```bash
-   git clone https://github.com/adzhl/minishell.git
-   ```
+git clone https://github.com/adzhl/minishell.git
+```
 2. Navigate to the project directory:
 ```bash
-   cd minishell
+cd minishell
    ```
 3. Build the program using the Makefile:
 ```bash
-   make
-   ```
+make
+```
 
 ---
 
@@ -43,8 +43,8 @@ It provides a command-line interface to execute commands, handle pipes, redirect
 Run the shell:
 
 ```bash
-   ./minishell
-   ```
+./minishell
+```
 ### Example Commands
 ```bash
 $ echo Hello, world!
@@ -55,7 +55,7 @@ $ cat << END
 This is a here-document.
 Type "END" to finish.
 END
-   ```
+```
 
 ---
 
