@@ -8,16 +8,16 @@ It provides a command-line interface to execute commands, handle pipes, redirect
 ## 🚀 Features
 - Interactive prompt with history using readline.
 - Built-in commands:
-  - echo (with -n option)
-  - cd (relative/absolute paths)
-  - pwd (print working directory)
-  - export (add environment variables)
-  - unset (remove environment variables)
-  - env (print environment variables)
-  - exit (exit the shell)
-- Supports redirections (<, >, <<, >>) and pipes (|).
-- Environment variable expansion ($VAR) and special variable ($? for exit status).
-- Handles signals (Ctrl-C, Ctrl-D, Ctrl-\) like Bash in interactive mode.
+  - `echo` (with `-n` option)
+  - `cd` (relative/absolute paths)
+  - `pwd` (print working directory)
+  - `export` (add environment variables)
+  - `unset` (remove environment variables)
+  - `env` (print environment variables)
+  - `exit` (exit the shell)
+- Supports redirections (`<`, `>`, `<<`, `>>`) and pipes (`|`).
+- Environment variable expansion (`$VAR`) and special variable (`$?` for exit status).
+- Handles signals (`Ctrl-C`, `Ctrl-D`, `Ctrl-\`) like Bash in interactive mode.
 - Robust parsing for single and double quotes.
 - Memory-leak-free custom code.
 
@@ -60,18 +60,18 @@ END
 ---
 
 ## ⚙️ Makefile Targets
-- make or make all: Compile the project.
-- make clean: Remove object files.
-- make fclean: Remove object files and the binary.
-- make re: Recompile the entire project.
+- `make` or `make all`: Compile the project.
+- `make clean`: Remove object files.
+- `make fclean`: Remove object files and the binary.
+- `make re`: Recompile the entire project.
 
 ---
 
 ## 🛑 External Functions Used
 - readline: Provides a user-friendly command line interface.
-- Process Management: fork, execve, wait, pipe, etc.
-- File Operations: open, read, write, close, etc.
-- Signal Handling: signal, sigaction, etc.
+- Process Management: `fork`, `execve`, `wait`, `pipe`, etc.
+- File Operations: `open`, `read`, `write`, `close`, `etc`.
+- Signal Handling: `signal`, etc.
 
 ---
 
@@ -81,4 +81,4 @@ END
 ---
 
 ## 🐛 Known Issues
-- readline may cause memory leaks (this is acceptable as per the subject).
+- `readline` may cause memory leaks (this is acceptable as per the subject).
